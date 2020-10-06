@@ -14,13 +14,7 @@ const Tab2: React.FC<RouteComponentProps> = (props) => {
       </IonHeader>
       <IonContent fullscreen>
         <IonButton color="primary" size="large" expand="block" onClick={() => props.history.push('clubRegistration')}>Register Your Club!</IonButton>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
-            <IonButtons>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
+        <IonButton onClick={() => props.history.push('signIn')}>View Sign In Page</IonButton>
         <ExploreContainer name="Tab 2 page" />
       </IonContent>
     </IonPage>

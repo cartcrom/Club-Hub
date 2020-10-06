@@ -11,9 +11,16 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
+
+/* SignIn */
+import SignIn from './pages/SignIn';
+
+/* Tabs */
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+
+/* Club Registration */
 import ClubTypes from './pages/club-registration/ClubTypes';
 import ClubColleges from './pages/club-registration/ClubColleges';
 import ClubSocials from './pages/club-registration/ClubSocials';
@@ -39,6 +46,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -52,6 +60,7 @@ const App: React.FC = () => (
           <Route path="/clubColleges" component={ClubColleges} />
           <Route path="/clubSocials" component={ClubSocials} />
           <Route path="/daysOfWeek" component={DaysOfWeek} />
+          <Route path="/signIn" component={SignIn} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

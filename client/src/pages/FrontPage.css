@@ -1,0 +1,27 @@
+ion-content {
+    --background: linear-gradient(#FD89FF, #7B87F2);
+}
+
+ion-chip {
+    width: 80%;
+}
+
+ion-chip ion-label {
+    text-align: center;
+}
+
+#logo {
+    padding-top: 30%;
+}
+
+#name {
+    color: white;
+    font: bold 20px "Proxima Nova Rg", Helvetica, sans-serif;
+    padding-top: 16px;
+}
+
+.center {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
