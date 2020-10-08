@@ -1,14 +1,25 @@
+/* Background + Header + Footer */
+
 ion-content {
     --background: linear-gradient(#FD89FF, #7B87F2);
+    text-align: center;
+    display: flex;
 }
 
-ion-chip {
-    width: 80%;
+ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
 }
 
-ion-chip ion-label {
+ion-footer {
     text-align: center;
 }
+
+ion-back-button {
+    --color: white;
+}
+
+/* Formatting for Logo */
 
 #logo {
     padding-top: 30%;
@@ -18,10 +29,43 @@ ion-chip ion-label {
     color: white;
     font: bold 20px "Proxima Nova Rg", Helvetica, sans-serif;
     padding-top: 16px;
+    margin: 0;
 }
 
-.center {
+/* Custom chip css */
+
+.chip-button, .chip-button-outline, .chip-input {
+    width: 80%;
+    height: 50px;
+    --border-radius: 25px;
+    margin: 10px auto;
+}
+
+.chip-button {
+    --background: white;
     text-align: center;
-    display: block;
-    margin: 0 auto;
+    --color: #7B87F2;
+}
+
+.chip-button-outline, .chip-input {
+    --background: transparent;
+    --border-width: 2px;
+    --border-color: white;
+    --color: white;
+}
+
+.chip-input {
+    text-align: left;
+}
+
+.chip-input ion-input {
+    --placeholder-opacity: white;
+}
+
+/* Dividing Lines */
+
+hr {
+    height: 5px;
+    background: white;
+    margin: 15px 0;
 }
