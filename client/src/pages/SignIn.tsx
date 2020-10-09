@@ -3,8 +3,9 @@ import { IonContent, IonChip, IonLabel, IonPage, IonFooter, IonToolbar, IonTitle
 import { chevronBackOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
 import logo from '../images/CHLogo.png'
+import { RouteComponentProps } from 'react-router';
 
-const SignIn: React.FC = () => {
+const SignIn: React.FC<RouteComponentProps> = (props) =>{
     return (
         <IonPage>
             <IonHeader>
@@ -32,7 +33,7 @@ const SignIn: React.FC = () => {
 
                 <hr />
 
-                <IonItem className="chip-button">
+                <IonItem button className="chip-button" onClick={() => props.history.push('tab2')}>
                     <IonLabel>Login</IonLabel>
                 </IonItem>
             </IonFooter>
