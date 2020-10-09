@@ -8,19 +8,19 @@ const SignIn: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
+                <IonToolbar className="transparent">
                     <IonButtons slot="start">
-                        <IonBackButton text=""/>
+                        <IonBackButton text="" className="white-color"/>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent fullscreen className="gradient-content">
                 <img src={logo} alt="ClubHub Logo" id="logo"/>
                 <p id="name">ClubHub</p>
             </IonContent>
 
-            <IonFooter>
+            <IonFooter className="centerElements transparent">
                 <IonItem className="chip-input">
                     <IonIcon src={personOutline} slot="start"></IonIcon>
                     <IonInput placeholder="email address"></IonInput>

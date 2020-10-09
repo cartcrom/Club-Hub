@@ -1,21 +1,21 @@
 /* Background + Header + Footer */
 
-ion-content {
+.gradient-content {
     --background: linear-gradient(#FD89FF, #7B87F2);
     text-align: center;
     display: flex;
 }
 
-ion-toolbar {
+.transparent {
     --background: transparent;
     --border-color: transparent;
 }
 
-ion-footer {
+.center-elements {
     text-align: center;
 }
 
-ion-back-button {
+.white-color {
     --color: white;
 }
 
