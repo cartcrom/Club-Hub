@@ -1,8 +1,8 @@
 import React from 'react';
-import { IonContent, IonChip, IonLabel, IonPage, IonFooter, IonToolbar, IonTitle, IonHeader, IonButtons, IonBackButton, IonInput, IonIcon, IonItem} from '@ionic/react';
-import { chevronBackOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
+import { IonContent, IonLabel, IonPage, IonFooter, IonToolbar, IonHeader, IonButtons, IonBackButton, IonInput, IonIcon, IonItem} from '@ionic/react';
+import { lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
-import logo from '../images/CHLogo.png'
+import logo from '../../images/CHLogo.png'
 import { RouteComponentProps } from 'react-router';
 
 const SignIn: React.FC<RouteComponentProps> = (props) =>{
@@ -21,7 +21,7 @@ const SignIn: React.FC<RouteComponentProps> = (props) =>{
                 <p id="name">ClubHub</p>
             </IonContent>
 
-            <IonFooter className="centerElements transparent">
+            <IonFooter className="transparent">
                 <IonItem className="chip-input">
                     <IonIcon src={personOutline} slot="start"></IonIcon>
                     <IonInput placeholder="email address"></IonInput>
@@ -31,9 +31,11 @@ const SignIn: React.FC<RouteComponentProps> = (props) =>{
                     <IonInput placeholder="password"></IonInput>
                 </IonItem>
 
-                <hr />
+                <IonItem detail={false} class="center-elements transparent" id="forgot-password" href="https://support.google.com/accounts/answer/41078?co=GENIE.Platform%3DDesktop&hl=en">
+                    <IonLabel>Forgot password?</IonLabel>
+                </IonItem>
 
-                <IonItem button className="chip-button" onClick={() => props.history.push('tab2')}>
+                <IonItem button detail={false} className="chip-button bottom-button" onClick={() => props.history.push('tab2')}>
                     <IonLabel>Login</IonLabel>
                 </IonItem>
             </IonFooter>

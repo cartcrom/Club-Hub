@@ -13,7 +13,9 @@ import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
 
 /* SignIn */
-import SignIn from './pages/SignIn';
+import SignIn from './pages/front-pages/SignIn';
+import SignUp from './pages/front-pages/SignUp';
+import FrontPage from './pages/front-pages/FrontPage';
 
 /* Tabs */
 import Tab1 from './pages/Tab1';
@@ -61,6 +63,8 @@ const App: React.FC = () => (
           <Route path="/clubSocials" component={ClubSocials} />
           <Route path="/daysOfWeek" component={DaysOfWeek} />
           <Route path="/signIn" component={SignIn} />
+          <Route path="/signUp" component={SignUp} />
+          <Route path="/frontPage" component={FrontPage} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
