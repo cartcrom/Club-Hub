@@ -4,7 +4,11 @@ import './FrontPage.css';
 import logo from '../../images/CHLogo.png'
 import { RouteComponentProps } from 'react-router';
 
-const FrontPage: React.FC<RouteComponentProps> = (props) =>{
+interface LoginProps extends RouteComponentProps {
+    setLogin: Function
+}
+
+const FrontPage: React.FC<LoginProps> = (props) => {
     return (
         <IonPage>
             <IonContent fullscreen className="gradient-content">
@@ -14,17 +18,17 @@ const FrontPage: React.FC<RouteComponentProps> = (props) =>{
 
             <IonFooter className="transparent">
 
-                <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('signUp')}>
+                <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('signup')}>
                     <IonLabel>I'm a new user</IonLabel>
                 </IonItem>
 
-                <IonItem button detail={false} className="chip-button" onClick={() => props.history.push('signIn')}>
-                    <IonLabel>Login</IonLabel>
+                <IonItem button detail={false} className="chip-button" onClick={() => props.history.push('signin')}>
+                    <IonLabel>I have an account</IonLabel>
                 </IonItem>
 
                 <hr/>
 
-                <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('tab2')}>
+                <IonItem button detail={false} className="chip-button-outline" onClick={() => {props.setLogin(true);}}>
                     <IonLabel>Continue as guest</IonLabel>
                 </IonItem>
             </IonFooter>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -10,7 +10,7 @@ import {
   IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { homeOutline, searchOutline, listCircleOutline, personOutline} from 'ionicons/icons';
 
 /* SignIn */
 import SignIn from './pages/front-pages/SignIn';
@@ -21,6 +21,7 @@ import FrontPage from './pages/front-pages/FrontPage';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Tab4 from './pages/Tab4';
 
 /* Club Registration */
 import ClubTypes from './pages/club-registration/ClubTypes';
@@ -28,6 +29,8 @@ import ClubColleges from './pages/club-registration/ClubColleges';
 import ClubSocials from './pages/club-registration/ClubSocials';
 import DaysOfWeek from './pages/club-registration/DaysOfWeek';
 import ClubRegistration from './pages/club-registration/ClubRegistration';
+
+import Test from './Test';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -48,42 +51,86 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// This code mimics getting login authentication from the server
+function fakeAuth(username : string, password : string, callback : Function) {
+  setTimeout(callback, 100)
+}
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
+type AppState = {
+  isAuthenticated: boolean
+}
+
+// Clock has no properties, but the current state is of type AppState
+// The generic parameters in the Component typing allow to pass props
+// and state. Since we don't have props, we pass an empty object.
+export default class App extends Component<{}, AppState> {
+
+  // Before the component mounts, we initialise our state
+  componentWillMount() {
+    this.setState({
+      isAuthenticated: false
+    });
+  }
+
+  // After the component did mount, we set the state
+  componentDidMount() {
+  }
+
+  setLogin = (login : boolean) => {
+    fakeAuth("fake username", "fake password", () => {this.setState({isAuthenticated : login});})
+  }
+
+  // render will know everything!
+  render() {
+    return (
+      <IonApp>
+      { (this.state.isAuthenticated) ?
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/test" render = {(props) => <Test {...props} t={this.setLogin}/>} exact={true} />
+            <Route path="/feed" component={Tab1} exact={true} />
+            <Route path="/explore" component={Tab2} exact={true} />
+            <Route path="/clubs" component={Tab3} />
+            <Route path="/profile" component={Tab4} />
+            <Route path="/clubRegistration" component={ClubRegistration} />
+            <Route path="/clubTypes" component={ClubTypes} />
+            <Route path="/clubColleges" component={ClubColleges} />
+            <Route path="/clubSocials" component={ClubSocials} />
+            <Route path="/daysOfWeek" component={DaysOfWeek} />
+            <Route render={() => <Redirect to="/feed" />} exact={true} />
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="feed" href="/feed">
+              <IonIcon icon={homeOutline} />
+              <IonLabel>FEED</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="explore" href="/explore">
+              <IonIcon icon={searchOutline} />
+              <IonLabel>EXPLORE</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="clubs" href="/clubs">
+              <IonIcon icon={listCircleOutline} />
+              <IonLabel>MY CLUBS</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="profile" href="/profile">
+              <IonIcon icon={personOutline} />
+              <IonLabel>ME</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+      :
+      <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/tab1" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/clubRegistration" component={ClubRegistration} />
-          <Route path="/clubTypes" component={ClubTypes} />
-          <Route path="/clubColleges" component={ClubColleges} />
-          <Route path="/clubSocials" component={ClubSocials} />
-          <Route path="/daysOfWeek" component={DaysOfWeek} />
-          <Route path="/signIn" component={SignIn} />
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/frontPage" component={FrontPage} />
-          <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
+          <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} />}/>
+          <Route path="/signup" render={(props) => <SignUp {...props} setLogin={this.setLogin} />} />
+          <Route path="/login"  render={(props) => <FrontPage {...props} setLogin={this.setLogin} />} />
+          <Route render={() => <Redirect to="/login" />} exact={true} />
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
-
-export default App;
+      </IonReactRouter>
+      }
+    </IonApp>
+    )
+  }
+}

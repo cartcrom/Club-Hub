@@ -1,25 +1,22 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonButton, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
+import { RouteComponentProps } from 'react-router';
 
-const Tab3: React.FC = () => {
+const Tab3: React.FC<RouteComponentProps> = (props) => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
-      </IonContent>
-    </IonPage>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>My Clubs</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent fullscreen>
+      <IonButton color="primary" size="large" expand="block" onClick={() => props.history.push('clubRegistration')}>Register Your Club!</IonButton>
+      <ExploreContainer name="Tab 2 page" />
+    </IonContent>
+  </IonPage>
   );
 };
 

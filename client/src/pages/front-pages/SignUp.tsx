@@ -5,7 +5,11 @@ import './FrontPage.css';
 import logo from '../../images/CHLogo.png'
 import { RouteComponentProps } from 'react-router';
 
-const SignUp: React.FC<RouteComponentProps> = (props) =>{
+interface LoginProps extends RouteComponentProps {
+    setLogin: Function
+}
+
+const SignUp: React.FC<LoginProps> = (props) =>{
     return (
         <IonPage>
             <IonHeader>
@@ -39,7 +43,7 @@ const SignUp: React.FC<RouteComponentProps> = (props) =>{
                     <IonInput placeholder="School"></IonInput>
                 </IonItem>
 
-                <IonItem button detail={false} className="chip-button bottom-button" onClick={() => props.history.push('tab2')}>
+                <IonItem button detail={false} className="chip-button bottom-button" onClick={() => {props.setLogin(true);}}>
                     <IonLabel>Create New Acount</IonLabel>
                 </IonItem>
             </IonFooter>
