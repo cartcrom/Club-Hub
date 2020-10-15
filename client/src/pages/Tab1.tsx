@@ -1,35 +1,44 @@
-import React from 'react';
-import { IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import React, { useRef } from 'react';
+import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab1.css';
-import { Icon } from 'ionicons/dist/types/components/icon/icon';
+
+import john from '../images/john.jpg'
+import heart from '../images/rsz_heart.png'
+import ice from '../images/rsz_ice_cream.jpg'
+
 
 const Tab1: React.FC = () => {
+  
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Event Feed</IonTitle>
+        <IonToolbar className="header">
+          <IonTitle >ClubHub</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
           <IonInfiniteScroll>
             <IonList>
-              <IonItem button>
-                <IonImg src={"/Users/lukeunderwood/Desktop/Club-Hub/client/public/assets/icon/favicon.png"}></IonImg>
+              <IonItem>
                 <IonCol>
-                  <IonTitle>Club Picnic</IonTitle>
-                  <IonText>May 4th | 6pm-7pm | Dexter Lawn</IonText>
+                  <IonItemDivider className="club-banner" > 
+                    <IonRow>
+                      <IonImg src={ice}></IonImg>
+                      <IonCol>Cal Poly Ice Cream Club</IonCol>
+                    </IonRow>
+                  </IonItemDivider>
+                  <IonRow><IonImg src={john}></IonImg></IonRow>
+                  <IonItemDivider className="details">
+                    <IonCol>Agressive Ice Cream Eating</IonCol>
+                    <IonCol>May 2nd</IonCol>
+                    <IonCol>12pm - 5pm</IonCol>
+                  </IonItemDivider>
+                  <IonRow>
+                    <IonImg src={heart}></IonImg>
+                    <IonCol>Eat ice cream angrily</IonCol>
+                  </IonRow>
                 </IonCol>
-                <IonText>Come enjoy some delicious food at our club social!</IonText>
-              </IonItem>
-              <IonItem button>
-              <IonImg src={"/client/public/assets/icon/favicon.ico"}></IonImg>
-                <IonCol>
-                  <IonTitle>Event Name</IonTitle>
-                  <IonText>Date of Event at Location of Event</IonText>
-                </IonCol>
-                <IonText>Short Description of Event</IonText>
               </IonItem>
             </IonList>
           </IonInfiniteScroll>

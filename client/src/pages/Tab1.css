@@ -1,0 +1,15 @@
+.club-banner {
+    --background: rgba(232, 236, 241, 1);
+    --color: #000000;
+}
+
+.header{
+    --background: linear-gradient(145deg, rgba(255,112,147,1) 0%, rgba(119,64,255,1) 75%, rgba(83,55,255,1) 100%);
+    --color: #FFFFFF;
+    text-align: center;
+}
+
+.details{
+    --background: rgba(232, 236, 241, 1);
+    --color: #000000;
+}
