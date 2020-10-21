@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import './global_styles.css';
 import { Redirect, Route } from 'react-router-dom';
 import {
+  setupConfig,
   IonApp,
   IonIcon,
   IonLabel,
@@ -9,6 +11,7 @@ import {
   IonTabButton,
   IonTabs
 } from '@ionic/react';
+
 import { IonReactRouter } from '@ionic/react-router';
 import { homeOutline, searchOutline, listCircleOutline, personOutline} from 'ionicons/icons';
 
@@ -18,7 +21,7 @@ import SignUp from './pages/front-pages/SignUp';
 import FrontPage from './pages/front-pages/FrontPage';
 
 /* Tabs */
-import Tab1 from './pages/Tab1';
+import Feed from './pages/Feed';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Tab4 from './pages/Tab4';
@@ -51,6 +54,10 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+setupConfig({
+  mode: 'ios'
+});
+
 // This code mimics getting login authentication from the server
 function fakeAuth(username : string, password : string, callback : Function) {
   setTimeout(callback, 100)
@@ -68,7 +75,7 @@ export default class App extends Component<{}, AppState> {
   // Before the component mounts, we initialise our state
   componentWillMount() {
     this.setState({
-      isAuthenticated: false
+      isAuthenticated: true
     });
   }
 
@@ -86,10 +93,11 @@ export default class App extends Component<{}, AppState> {
       <IonApp>
       { (this.state.isAuthenticated) ?
       <IonReactRouter>
-        <IonTabs>
+        
+        <IonTabs> 
           <IonRouterOutlet>
             <Route path="/test" render = {(props) => <Test {...props} t={this.setLogin}/>} exact={true} />
-            <Route path="/feed" component={Tab1} exact={true} />
+            <Route path="/feed" component={Feed} exact={true} />
             <Route path="/explore" component={Tab2} exact={true} />
             <Route path="/clubs" component={Tab3} />
             <Route path="/profile" component={Tab4} />

@@ -1,5 +1,6 @@
 {
-  "name": "photo-gallery",
+  "name": "Club Hub",
+  "mode" : "ios",
   "integrations": {
     "capacitor": {}
   },

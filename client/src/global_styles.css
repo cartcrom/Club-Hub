@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Proxima Nova';
+    src: local('Proxima Nova'), url('./fonts/ProximaNova-Regular.otf') format('opentype');
+  }
+
+ion-title {
+    font-family: 'Proxima Nova';
+    font-size: 16pt;
+}

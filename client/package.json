@@ -56,5 +56,5 @@
   "devDependencies": {
     "@capacitor/cli": "2.4.1"
   },
-  "description": "An Ionic project"
+  "description": "CSC 308 Project for clubs"
 }
