@@ -1,20 +1,23 @@
 .header{
-    --background: rgba(218, 47, 141, 1);
     --color: #000000;
     text-align: center;
+    --background: transparent;
+    --border-width: 2px;
+    --border-color: rgb(185, 106, 185);
 }
 
-.tag {
-    display:inline-block;
-    padding:0.3em 1.2em;
-    margin:0 0.3em 0.3em 0;
-    border-radius:2em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-size: 10px;
-    font-family:'Roboto',sans-serif;
-    background-color:#4eb5f1;
-    text-align:center;
-    transition: all 0.2s;
+
+.tag{
+    font-size: 10px
 }
+
+.listHeader{
+    padding-left: 10px;
+    font: bold 18px "Proxima Nova Rg", Helvetica, sans-serif;
+}
+
+.cardHeader{
+    padding-left: 10px;
+}
+
 

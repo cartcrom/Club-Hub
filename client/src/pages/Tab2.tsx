@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import { RouteComponentProps } from 'react-router';
@@ -18,40 +18,25 @@ const Tab2: React.FC<RouteComponentProps> = (props) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonItemDivider>
-          <IonSearchbar value={text} placeholder="Search Clubs" onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
-        </IonItemDivider>
+        
+          <IonSearchbar  className="search" value={text} placeholder="Search Clubs" onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
+       
+        <IonRow>
           <IonGrid>
-            <IonRow>
-              <IonCol>
-                <IonItem  className="tag" detail={false}>Recreational</IonItem>
-              </IonCol>
-              <IonCol>
-                <IonItem  button className="tag" detail={false}>Food</IonItem>
-              </IonCol>
-              <IonCol>
-                <IonItem  button className="tag" detail={false}>Poppin'</IonItem>
-              </IonCol>
-            </IonRow>
+            <IonChip className="tag">Recreational</IonChip>
+            <IonChip  className="tag">Food</IonChip>
+            <IonChip className="tag">Poppin'</IonChip>
           </IonGrid>
-        <IonText>Recommended</IonText>
-        <IonGrid>
+        </IonRow>
+        <IonText className="listHeader">Recommended</IonText>
           <IonCol>
             <IonCard button>
               <IonImg src={club}></IonImg>
-              <IonCardTitle>Club Soda</IonCardTitle>
+              <IonCardTitle className="cardHeader">Club Soda</IonCardTitle>
               <IonGrid>
-                <IonRow>
-                  <IonCol>
-                    <IonItem color="medium">Recreational</IonItem>
-                  </IonCol>
-                  <IonCol>
-                    <IonItem color="medium">Food</IonItem>
-                  </IonCol>
-                  <IonCol>
-                    <IonItem color="medium">Poppin'</IonItem>
-                  </IonCol>
-                </IonRow>
+                <IonChip className="tag">Recreational</IonChip>
+                <IonChip className="tag">Food</IonChip>
+                <IonChip className="tag">Poppin'</IonChip>
               </IonGrid>
             </IonCard>
           </IonCol>
@@ -61,7 +46,6 @@ const Tab2: React.FC<RouteComponentProps> = (props) => {
               <IonCardTitle>Club Name</IonCardTitle>
             </IonCard>
           </IonCol>
-        </IonGrid>
       </IonContent>
     </IonPage>
   );

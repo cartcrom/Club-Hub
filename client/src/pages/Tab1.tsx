@@ -24,8 +24,10 @@ const Tab1: React.FC = () => {
                 <IonCol>
                   <IonItemDivider className="club-banner" > 
                     <IonRow>
-                      <IonImg src={ice}></IonImg>
-                      <IonCol>Cal Poly Ice Cream Club</IonCol>
+                      <IonImg src={ice} className="image"></IonImg>
+                      <IonCol>
+                        <IonText>Cal Poly Ice Cream Club</IonText>
+                      </IonCol>
                     </IonRow>
                   </IonItemDivider>
                   <IonRow><IonImg src={john}></IonImg></IonRow>
