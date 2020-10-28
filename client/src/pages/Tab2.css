@@ -1,0 +1,23 @@
+.header{
+    --color: #000000;
+    text-align: center;
+    --background: transparent;
+    --border-width: 2px;
+    --border-color: rgb(185, 106, 185);
+}
+
+
+.tag{
+    font-size: 10px
+}
+
+.listHeader{
+    padding-left: 10px;
+    font: bold 18px "Proxima Nova Rg", Helvetica, sans-serif;
+}
+
+.cardHeader{
+    padding-left: 10px;
+}
+
+

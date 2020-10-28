@@ -2,24 +2,28 @@ import React, { useRef } from 'react';
 import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Feed.css';
 import '../global_styles.css';
+import Post from '../components/Post';
+import Event from '../components/Event';
+import Club from '../components/Club';
 
 import john from '../images/john.jpg'
-import heart from '../images/rsz_heart.png'
 import ice from '../images/rsz_ice_cream.jpg'
 
 
 function fetch_posts() {
 
   // Call backend here to get posts, for now use this sample data
-  let test_post : Post_Data = {club_name: "Cal Poly Ice Cream Club", club_image: ice,
-  description: "Eat ice cream angrily", date: "May 2nd", time: "12pm - 5pm", title: "Agressive Ice Cream Eating", image: john}
-  let post_data = [test_post]
 
-  let posts : Array<JSX.Element> = [];
-  post_data.forEach((data : Post_Data) => 
-    posts.push(<Post key={data.title} post={data}/>)  
+  let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+
+  let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
+  let posts : Array<Post> = [test_event]
+
+  let feed : Array<JSX.Element> = [];
+  posts.forEach((post : Post) => 
+    feed.push(post.getFeedItem())
   )
-  return posts;
+  return feed;
 }
 
 const Feed: React.FC = () => {
@@ -43,44 +47,5 @@ const Feed: React.FC = () => {
     </IonPage>
   );
 };
-
-interface Post_Data {
-  club_name: string;
-  club_image: string;
-  description: string;
-  date: string;
-  image: string;
-  time: string;
-  title: string;
-}
-
-interface PostProps {
-  post: Post_Data;
-}
-
-const Post: React.FC<PostProps> = (props) => {
-  return (
-    <IonItem>
-      <IonCol>
-        <IonItemDivider className="club-banner" > 
-          <IonRow>
-            <IonImg src={props.post.club_image}></IonImg>
-            <IonCol>{props.post.club_name}</IonCol>
-          </IonRow>
-        </IonItemDivider>
-        <IonRow><IonImg src={props.post.image}></IonImg></IonRow>
-        <IonItemDivider className="details">
-          <IonCol>{props.post.title}</IonCol>
-          <IonCol>{props.post.date}</IonCol>
-          <IonCol>{props.post.time}</IonCol>
-        </IonItemDivider>
-        <IonRow>
-          <IonImg src={heart}></IonImg>
-          <IonCol>{props.post.description}</IonCol>
-        </IonRow>
-      </IonCol>
-    </IonItem>
-  )
-}
 
 export default Feed;

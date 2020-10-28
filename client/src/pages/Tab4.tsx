@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 
 const Tab4: React.FC<RouteComponentProps> = (props) => {
   return (
-    <IonPage>
+  <IonPage>
     <IonHeader>
       <IonToolbar>
         <IonTitle>User Settings</IonTitle>
