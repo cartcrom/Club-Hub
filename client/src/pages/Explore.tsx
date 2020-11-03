@@ -1,51 +1,63 @@
-import React, { useRef } from 'react';
-import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import './Feed.css';
-import '../global_styles.css';
+import React, { useState } from 'react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import ExploreContainer from '../components/ExploreContainer';
+import './Tab2.css';
+import { RouteComponentProps } from 'react-router';
 import Post from '../components/Post';
 import Event from '../components/Event';
+import ClubCard from '../components/ClubCard';
 import Club from '../components/Club';
 
-import john from '../images/john.jpg'
-import ice from '../images/rsz_ice_cream.jpg'
-
+import club from '../images/ClubSoda.jpg'
+import ice from '../images/rsz_ice_cream.jpg';
+import john from '../images/john.jpg';
 
 function fetch_posts() {
 
   // Call backend here to get posts, for now use this sample data
 
-  let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+  let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], []);
 
-  let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
-  let posts : Array<Post> = [test_event]
+  //let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
+  let test_card = new ClubCard(test_club, 2, club, ["Recreational", "Food", "Poppin'"]);
+  let cards : Array<ClubCard> = [test_card];
 
   let feed : Array<JSX.Element> = [];
-  posts.forEach((post : Post) => 
-    feed.push(post.getFeedItem())
+  cards.forEach((card : ClubCard) => 
+    feed.push(card.getExploreItem())
   )
   return feed;
 }
 
-const Feed: React.FC = () => {
+const Tab2: React.FC<RouteComponentProps> = (props) => {
   
+  const [text, setText] = useState<string>();
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar className="header">
-          <IonTitle >ClubHub</IonTitle>
+          <IonTitle>Explore</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-          <IonInfiniteScroll>
-            <IonList>
-              {fetch_posts()}
-            </IonList>
-          </IonInfiniteScroll>
-
+      <IonContent>
+        
+          <IonSearchbar  className="search" value={text} placeholder="Search Clubs" onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
+       
+        <IonRow>
+          <IonGrid>
+            <IonChip className="tag">Recreational</IonChip>
+            <IonChip  className="tag">Food</IonChip>
+            <IonChip className="tag">Poppin'</IonChip>
+          </IonGrid>
+        </IonRow>
+        <IonText className="listHeader">Recommended</IonText>
+        <IonList>
+          {fetch_posts()}
+        </IonList>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Feed;
+export default Tab2;
