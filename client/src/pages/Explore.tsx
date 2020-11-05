@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab2.css';
+import './Explore.css';
 import { RouteComponentProps } from 'react-router';
 import Post from '../components/Post';
 import Event from '../components/Event';
@@ -15,11 +15,13 @@ import john from '../images/john.jpg';
 function fetch_posts() {
 
   // Call backend here to get posts, for now use this sample data
+  //Needed information: Club Name, Club id, Club description, club profile picture, club banner picture, club leadedrs, club school, club tags, meeting, social media, events
+  //Note: not all the things listed above may always be necessary, but currently I use the existing club struct which needs all those pieces of info.
 
   let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], []);
 
-  //let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
   let test_card = new ClubCard(test_club, 2, club, ["Recreational", "Food", "Poppin'"]);
+
   let cards : Array<ClubCard> = [test_card];
 
   let feed : Array<JSX.Element> = [];
