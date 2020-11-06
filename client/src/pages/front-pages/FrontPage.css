@@ -68,6 +68,11 @@
     margin-top: 50px;
 }
 
+#form-button {
+    font-size: 18px;
+    margin-top: 50px;
+}
+
 /* Dividing Lines */
 
 hr {
@@ -81,4 +86,23 @@ hr {
 #forgot-password {
     --color: white;
     text-decoration: underline;
+}
+
+/* Form Error */
+.form-error {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.form-error ion-icon {
+    font-size: 20px;
+}
+
+.form-error ion-label {
+    padding-left: 10px;
+    font-size: 15px;
 }
