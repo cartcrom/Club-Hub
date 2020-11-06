@@ -1,14 +1,18 @@
 export default class Student {
-  name : String;
+  fn : string;
+  ln: string;
   id: Number;
-  school: String;
-  email: String;
+  school: string;
+  email: string;
+  interests: Array<string>;
 
-  constructor(name : String, id: number, school: String, email: String) {
-    this.name = name;
+  constructor(fn : string, ln: string, id: number, school: string, email: string, interests: Array<string>) {
+    this.fn = fn;
+    this.ln = ln;
     this.id = id;
     this.school = school;
     this.email = email;
+    this.interests = interests;
   }
 
   // Method

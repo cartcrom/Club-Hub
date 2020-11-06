@@ -22,7 +22,7 @@ import FrontPage from './pages/front-pages/FrontPage';
 
 /* Tabs */
 import Feed from './pages/Feed';
-import Tab2 from './pages/Tab2';
+import Explore from './pages/Explore';
 import Tab3 from './pages/Tab3';
 import Tab4 from './pages/Tab4';
 
@@ -100,7 +100,7 @@ export default class App extends Component<{}, AppState> {
           <IonRouterOutlet>
             <Route path="/test" render = {(props) => <Test {...props} t={this.setLogin}/>} exact={true} />
             <Route path="/feed" component={Feed} exact={true} />
-            <Route path="/explore" component={Tab2} exact={true} />
+            <Route path="/explore" component={Explore} exact={true} />
             <Route path="/clubs" component={Tab3} />
             <Route path="/profile" component={Tab4} />
             <Route path="/clubRegistration" component={ClubRegistration} />

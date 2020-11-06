@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Proxima Nova';
+    src: local('Proxima Nova'), url('../fonts/ProximaNova-Regular.otf') format('opentype');
+  }
+
+@font-face {
+    font-family: 'Proxima Nova Bold';
+    src: local('Proxima Nova'), url('../fonts/Proxima Nova Bold.otf') format('opentype');
+}
+
+.club-item {
+    font-family: 'Proxima Nova' !important;
+    font-size: 14pt !important;
+    padding: 10pt 0 10pt 0;
+}
+
+.settings-label {
+    font-family: 'Proxima Nova' !important;
+    font-size: 16pt !important;
+}
+
+.divider {
+    border-bottom: 1pt solid lightgray;
+}
+
+
+.data {
+    font-family: 'Proxima Nova' !important;
+    font-size: 12pt !important;
+    line-height: 20pt !important;
+}
+
+.data ion-label {
+    font-family: 'Proxima Nova Bold' !important;
+    font-size: 12pt !important;
+}
+
+.data ion-button {
+    font-family: 'Proxima Nova' !important;
+    font-size: 12pt !important;
+    height: 20pt;
+    width:100%;
+}
+
+.settings-card {
+    padding: 7pt 3pt 0pt 0 !important;
+}
+
+.settings-card tags {
+    
+    justify-content:center;
+}
+
+
+.tag {
+    font-family: 'Proxima Nova' !important;
+    font-size: 12pt !important;
+
+    padding: 0 10pt;
+
+    margin: 5pt;
+    background-color: #61FF76;
+    font-size: 12pt;
+}
