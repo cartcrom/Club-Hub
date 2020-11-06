@@ -32,6 +32,7 @@ import ClubColleges from './pages/club-registration/ClubColleges';
 import ClubSocials from './pages/club-registration/ClubSocials';
 import DaysOfWeek from './pages/club-registration/DaysOfWeek';
 import ClubRegistration from './pages/club-registration/ClubRegistration';
+import AddEvent from './pages/AddEvent'
 
 import Test from './Test';
 
@@ -104,6 +105,7 @@ export default class App extends Component<{}, AppState> {
             <Route path="/clubs" component={Tab3} />
             <Route path="/profile" component={Tab4} />
             <Route path="/clubRegistration" component={ClubRegistration} />
+            <Route path="/addEvent" component={AddEvent} />
             <Route path="/clubTypes" component={ClubTypes} />
             <Route path="/clubColleges" component={ClubColleges} />
             <Route path="/clubSocials" component={ClubSocials} />

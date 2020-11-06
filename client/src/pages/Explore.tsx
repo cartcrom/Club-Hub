@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Explore.css';
 import { RouteComponentProps } from 'react-router';
@@ -11,6 +11,21 @@ import Club from '../components/Club';
 import club from '../images/ClubSoda.jpg'
 import ice from '../images/rsz_ice_cream.jpg';
 import john from '../images/john.jpg';
+
+import add from '../images/add.png'
+
+const AddButton = (props: RouteComponentProps) => {
+    return(
+      <IonItem lines="none" button onClick={() => props.history.push('addEvent')}>
+        <IonAvatar slot="start">
+          <img className="club-image" src={add} />
+        </IonAvatar>
+        <IonLabel className="club-item">
+          {"Add an Event"}
+        </IonLabel>
+      </IonItem>
+    )
+  }
 
 function fetch_posts() {
 
@@ -31,7 +46,7 @@ function fetch_posts() {
   return feed;
 }
 
-const Tab2: React.FC<RouteComponentProps> = (props) => {
+const Explore: React.FC<RouteComponentProps> = (props) => {
   
   const [text, setText] = useState<string>();
 
@@ -57,9 +72,10 @@ const Tab2: React.FC<RouteComponentProps> = (props) => {
         <IonList>
           {fetch_posts()}
         </IonList>
+        <AddButton {...props} />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab2;
+export default Explore;

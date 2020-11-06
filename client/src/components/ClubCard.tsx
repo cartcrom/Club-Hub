@@ -17,22 +17,23 @@ export default class Post {
   }
 
   getTags(){
+    let id = 0;
     let tags : Array<String> = ["Recreational", "Food"]
     let tagList : Array<JSX.Element> = [];
     tags.forEach((string : String) => 
-        tagList.push(<IonChip className="tag">{string}</IonChip>)
+        tagList.push(<IonChip key={id = id + 1} className="tag">{string}</IonChip>)
   )
   return tagList;
   }
 
   getExploreItem(){
       return(
-        <IonCard button>
-        <IonImg src={this.image}></IonImg>
-        <IonCardTitle className="cardHeader">{this.club.name}</IonCardTitle>
-        <IonGrid>
-          {this.getTags()}
-        </IonGrid>
+        <IonCard key={this.id} button>
+            <IonImg src={this.image}></IonImg>
+            <IonCardTitle className="cardHeader">{this.club.name}</IonCardTitle>
+            <IonGrid>
+                {this.getTags()}
+            </IonGrid>
       </IonCard>
       )
   }
