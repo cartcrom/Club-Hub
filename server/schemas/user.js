@@ -13,6 +13,14 @@ const uSchema = new Schema({
         type: String,
         required: true,
     },
+    gender: {
+        type: String,
+        required: false
+    },
+    dp: {
+        type: String,
+        required: false,
+    },
     email: {
         type: String,
         required: true,
@@ -25,9 +33,21 @@ const uSchema = new Schema({
         type: Array,
         default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
     },
-    instrests: {
-        type: Array,
-        default: [],
+    interests: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {} /// [{"sport": ["water sport", "football", "baseball"]}, {...}]
+    },
+    school: {
+        type: String,
+        required: false,
+    },
+    major: {
+        type: String,
+        required: false,
+    },
+    collegeOf: {
+        type: String,
+        required: false,
     },
     reviews_given: {
         type: Array,

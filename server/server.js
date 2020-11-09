@@ -73,9 +73,16 @@ app.post("/login", (req, res) => {
   })
 });
 
+app.post("/verify/user", (req, res) => {
+  auth.verify_user(req.body.id).then((result) => {
+    res.send(result);
+  });
+});
 
 app.post("/SignUp", (req, res) => {
-  console.log("* Sign Up route called with this req:*", req.body)
+  auth.sign_up(req.body).then((user) => {
+    req.session.user = user;
+  })
 })
 
 server.listen(5000, () => console.log("backend online at 8080"));
