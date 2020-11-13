@@ -10,17 +10,9 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const auth = require("./verification/auth")
+const helper = require("./helperFunc/helper")
 
-//Data Base Connection   #######################################################################
-const url =
-  "mongodb+srv://jay:jay1234@cluster0.m4k6h.gcp.mongodb.net/CollabX?retryWrites=true&w=majority";
-//mongo connection
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-var conn = mongoose.connection;
-var db = mongoose.connection.db;
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-//files database ###############################################################################
 const session = require("express-session");
 var FileStore = require("session-file-store")(session);
 // const User = require("./user");
@@ -68,8 +60,29 @@ app.use(express.json());
 ///////////////////////////////////////////////////////////////////////////////////////
 
 //Routes ##############################################################################
-app.get("/", (req, res) => {
-  res.send("sup?");
+app.post("/login", (req, res) => {
+  console.log("*Login route called with this req:*", req.body)
+  auth.login(req.body.email, req.body.password).then((user) => {
+    if (user) {
+      req.session.user = user;
+      helper.object_trimmer(user, ["password"]).then((usr) => {
+        console.log("logged in as#", usr.name)
+        res.send(usr)
+      })
+    }
+  })
 });
+
+app.post("/verify/user", (req, res) => {
+  auth.verify_user(req.body.id).then((result) => {
+    res.send(result);
+  });
+});
+
+app.post("/SignUp", (req, res) => {
+  auth.sign_up(req.body).then((user) => {
+    req.session.user = user;
+  })
+})
 
 server.listen(5000, () => console.log("backend online at 8080"));

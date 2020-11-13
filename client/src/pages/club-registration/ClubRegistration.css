@@ -1,0 +1,18 @@
+.center {
+    display: flex;
+    align-items: center;
+    
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+#profile-holder {
+    padding-top: 25px;
+}
+
+#profile {
+    width: 100px;
+    height: 100px;
+}

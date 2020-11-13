@@ -1,8 +1,25 @@
-import React from 'react';
-import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonAvatar, IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
+import { Plugins, CameraResultType} from '@capacitor/core';
+import './ClubRegistration.css'
 
 const ClubRegistration: React.FC<RouteComponentProps> = (props) => {
+
+  const {Camera} = Plugins;
+  const [profile, setProfile] = useState<string | undefined>(require('../../images/avatar.svg'));
+  const [profileUploaded, setProfileUploaded] = useState<boolean>(false);
+  const takePhoto = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    setProfile(image.webPath);
+    setProfileUploaded(true)
+  }
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -13,7 +30,13 @@ const ClubRegistration: React.FC<RouteComponentProps> = (props) => {
       <IonContent fullscreen>
 
         <IonItemGroup>
-          <IonItemDivider color="medium">
+          <div className="center vertical" id="profile-holder">
+            <IonAvatar id="profile">
+              <img src={profile} />
+            </IonAvatar>
+            <IonButton fill="clear" onClick={() => takePhoto()}>{profileUploaded ? 'Change' : 'Upload'}</IonButton>
+          </div>
+          <IonItemDivider>
             <IonLabel>General Info</IonLabel>
           </IonItemDivider>
           <IonItem>
@@ -24,13 +47,10 @@ const ClubRegistration: React.FC<RouteComponentProps> = (props) => {
             <IonLabel position="floating">Description</IonLabel>
             <IonTextarea></IonTextarea>
           </IonItem>
-          <IonItem detail button>
-            <IonLabel>Add Profile Picture</IonLabel>
-          </IonItem>
         </IonItemGroup>
 
         <IonItemGroup>
-          <IonItemDivider color="medium">
+          <IonItemDivider>
             <IonLabel>Meetings</IonLabel>
           </IonItemDivider>
           <IonItem detail button onClick={() => props.history.push('daysOfWeek')}>
@@ -53,7 +73,7 @@ const ClubRegistration: React.FC<RouteComponentProps> = (props) => {
 
 
         <IonItemGroup>
-          <IonItemDivider color="medium">
+          <IonItemDivider>
             <IonLabel>More Info</IonLabel>
           </IonItemDivider>
 
