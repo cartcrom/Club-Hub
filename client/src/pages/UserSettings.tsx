@@ -8,7 +8,7 @@ import './UserSettings.css';
 let test_student = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"]);
 
 
-const Tab4: React.FC<RouteComponentProps> = (props) => {
+const UserSettings: React.FC<RouteComponentProps> = (props) => {
   return (
   <IonPage>
     <IonHeader>
@@ -81,4 +81,4 @@ const Tab4: React.FC<RouteComponentProps> = (props) => {
   );
 };
 
-export default Tab4;
+export default UserSettings;

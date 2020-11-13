@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonContent, IonItem, IonItemDivider, IonAvatar, IonLabel, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
-import './Tab3.css';
+import './MyClubs.css';
 import Club from '../components/Club';
 import { RouteComponentProps } from 'react-router';
 
@@ -8,22 +8,12 @@ import john from '../images/john.jpg';
 import ice from '../images/rsz_ice_cream.jpg';
 import add from '../images/add.png'
 
-let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+let test_club = new Club("Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
 let test_club2 = new Club("John Club", 1, "A club for people who like John", john, john, [], "Cal Poly SLO", [], undefined, [], [])
 let test_club3 = new Club("John Club 2", 1, "A club for people who like John even more", john, john, [], "Cal Poly SLO", [], undefined, [], [])
 
-const ClubView = (props : {club: Club}) => {
-  return(
-    <IonItem lines="none" button onClick={() => { }}>
-      <IonAvatar slot="start">
-        <img src={props.club.profileImage} />
-      </IonAvatar>
-      <IonLabel className="club-item">
-        {props.club.name}
-      </IonLabel>
-    </IonItem>
-  )
-}
+let my_lead_clubs = [test_club, test_club2];
+let my_clubs = [test_club3];
 
 const AddButton = (props: RouteComponentProps) => {
   return(
@@ -38,7 +28,32 @@ const AddButton = (props: RouteComponentProps) => {
   )
 }
 
-const Tab3: React.FC<RouteComponentProps> = (props) => {
+const MyClubs: React.FC<RouteComponentProps> = (props) => {
+
+  const selectClub = (name : string) => {
+    props.history.push('clubRegistration')
+  }
+
+  const ClubView = (data : {club: Club}) => {
+    return(
+      <IonItem lines="none" button onClick={() => {props.history.push('club/' + data.club.name) }}>
+        <IonAvatar slot="start">
+          <img src={data.club.profileImage} />
+        </IonAvatar>
+        <IonLabel className="club-item">
+          {data.club.name}
+        </IonLabel>
+      </IonItem>
+    )
+  }
+
+  let lead_clubs_view : Array<JSX.Element> = [];
+  my_lead_clubs.forEach(club => lead_clubs_view.push(<ClubView key={club.name} club={club}/>))
+  
+  let clubs_view : Array<JSX.Element> = [];
+  my_clubs.forEach(club => clubs_view.push(<ClubView key={club.name} club={club}/>))
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -53,8 +68,7 @@ const Tab3: React.FC<RouteComponentProps> = (props) => {
               {"Clubs I lead"}
             </IonLabel>
           </IonItem>
-          <ClubView club={test_club}/>
-          <ClubView club={test_club2}/>
+          { lead_clubs_view }
           <AddButton {...props} />
 
           <div className="divider"/>
@@ -65,7 +79,7 @@ const Tab3: React.FC<RouteComponentProps> = (props) => {
             </IonLabel>
           </IonItem>
 
-          <ClubView club={test_club3}/>
+          { clubs_view }
 
         </IonInfiniteScroll>
       </IonContent>
@@ -73,4 +87,4 @@ const Tab3: React.FC<RouteComponentProps> = (props) => {
   );
 };
 
-export default Tab3;
+export default MyClubs;
