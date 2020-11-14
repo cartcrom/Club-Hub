@@ -32,7 +32,14 @@ import ClubColleges from './pages/club-registration/ClubColleges';
 import ClubSocials from './pages/club-registration/ClubSocials';
 import DaysOfWeek from './pages/club-registration/DaysOfWeek';
 import ClubRegistration from './pages/club-registration/ClubRegistration';
-import AddEvent from './pages/AddEvent'
+import AddEvent from './pages/AddEvent';
+
+/* Interest Quiz */
+import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
+import InterestQuizPg1 from './pages/interest-quiz/InterestQuizPg1';
+import InterestQuizPg2 from './pages/interest-quiz/InterestQuizPg2';
+import InterestQuizPg3 from './pages/interest-quiz/InterestQuizPg3';
+import InterestQuizPg4 from './pages/interest-quiz/InterestQuizPg4';
 
 import Test from './Test';
 
@@ -54,6 +61,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
+
 
 
 // put 'md' here for android view, put 'ios' here for ios view
@@ -78,7 +87,7 @@ export default class App extends Component<{}, AppState> {
   // Before the component mounts, we initialise our state
   componentWillMount() {
     this.setState({
-      isAuthenticated: true
+      isAuthenticated: false
     });
   }
 
@@ -110,6 +119,7 @@ export default class App extends Component<{}, AppState> {
             <Route path="/clubColleges" component={ClubColleges} />
             <Route path="/clubSocials" component={ClubSocials} />
             <Route path="/daysOfWeek" component={DaysOfWeek} />
+            
             <Route render={() => <Redirect to="/feed" />} exact={true} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
@@ -138,6 +148,11 @@ export default class App extends Component<{}, AppState> {
           <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} />}/>
           <Route path="/signup" render={(props) => <SignUp {...props} setLogin={this.setLogin} />} />
           <Route path="/login"  render={(props) => <FrontPage {...props} setLogin={this.setLogin} />} />
+          <Route path="/interestQuiz" render={(props) => <InterestQuizIntro {...props} />}/>
+          <Route path="/interestQuizPg1" render={(props) => <InterestQuizPg1 {...props} />}/>
+          <Route path="/interestQuizPg2" render={(props) => <InterestQuizPg2 {...props} />}/>
+          <Route path="/interestQuizPg3" render={(props) => <InterestQuizPg3 {...props} />}/>
+          <Route path="/interestQuizPg4" render={(props) => <InterestQuizPg4 {...props} />}/>
           <Route render={() => <Redirect to="/login" />} exact={true} />
         </IonRouterOutlet>
       </IonReactRouter>
