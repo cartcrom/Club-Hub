@@ -18,6 +18,7 @@ type SignUpInfo = {
     password: string;
 }
 
+
 const SignUp: React.FC<LoginProps> = (props) =>{
 
     const {control, handleSubmit, errors} = useForm<SignUpInfo>();
@@ -25,7 +26,7 @@ const SignUp: React.FC<LoginProps> = (props) =>{
     const registerUser = (data: SignUpInfo) => {
         data.college = getCollege(data.email);
         console.log(data); /* TODO: Send data to backend */
-        props.setLogin(true);
+        /*props.setLogin(true);*/
     }
 
     return (
@@ -94,9 +95,10 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                             )}
                         />
                     </IonItem>
-                    <IonButton expand="block" type="submit" className="chip-button" id="form-button">
-                        Create New Account
-                    </IonButton>
+                    <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('interestQuiz')}>
+                        <IonLabel>Create New Account</IonLabel>
+                    </IonItem>
+                    
                 </form>
             </IonFooter>
         </IonPage>
