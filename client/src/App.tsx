@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
+
 import './global_styles.css';
 import { Redirect, Route } from 'react-router-dom';
 import {
@@ -23,8 +25,9 @@ import FrontPage from './pages/front-pages/FrontPage';
 /* Tabs */
 import Feed from './pages/Feed';
 import Explore from './pages/Explore';
-import Tab3 from './pages/Tab3';
-import Tab4 from './pages/Tab4';
+import MyClubs from './pages/MyClubs';
+import ClubProfile from './pages/ClubProfile';
+import UserSettings from './pages/UserSettings';
 
 /* Club Registration */
 import ClubTypes from './pages/club-registration/ClubTypes';
@@ -89,6 +92,17 @@ export default class App extends Component<{}, AppState> {
     this.setState({
       isAuthenticated: false
     });
+
+    axios.get(`http://localhost:5000`)
+      .catch(error => {
+        console.log(
+          "Error: ",
+          error
+        );
+      })
+      .then(res => {
+        console.log(res);
+      })
   }
 
   // After the component did mount, we set the state
@@ -111,8 +125,9 @@ export default class App extends Component<{}, AppState> {
             <Route path="/test" render = {(props) => <Test {...props} t={this.setLogin}/>} exact={true} />
             <Route path="/feed" component={Feed} exact={true} />
             <Route path="/explore" component={Explore} exact={true} />
-            <Route path="/clubs" component={Tab3} />
-            <Route path="/profile" component={Tab4} />
+            <Route path="/myclubs" component={MyClubs} />
+            <Route path="/club/:name" component={ClubProfile} />            
+            <Route path="/profile" component={UserSettings} />            
             <Route path="/clubRegistration" component={ClubRegistration} />
             <Route path="/addEvent" component={AddEvent} />
             <Route path="/clubTypes" component={ClubTypes} />
@@ -131,7 +146,7 @@ export default class App extends Component<{}, AppState> {
               <IonIcon icon={searchOutline} />
               <IonLabel>EXPLORE</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="clubs" href="/clubs">
+            <IonTabButton tab="clubs" href="/myclubs">
               <IonIcon icon={listCircleOutline} />
               <IonLabel>MY CLUBS</IonLabel>
             </IonTabButton>

@@ -3,7 +3,7 @@ import Student from './Student';
 //import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 export default class Club {
-  name : String;
+  name : string;
   id: Number;
   description: string;
   profileImage: string;
