@@ -26,9 +26,13 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
         });
     }
 
+    submitQuiz = () => {
+        this.props.history.push("/feed");
+    }
+
     nextPage = () => {
         if (this.state.page >= 4) {
-            this.props.history.push("/feed");
+            this.submitQuiz();
         }
         else
         this.setState({

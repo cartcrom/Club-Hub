@@ -96,8 +96,9 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                             )}
                         />
                     </IonItem>
-                    <IonButton type="submit" className="chip-button-outline">
-                        <IonLabel>Create New Account</IonLabel>
+
+                    <IonButton expand="block" type="submit" className="chip-button" id="form-button">
+                        Create New Account
                     </IonButton>
                     
                 </form>

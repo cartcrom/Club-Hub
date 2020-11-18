@@ -15,7 +15,7 @@ const InterestQuizIntro = (props: InterestQuizProps) => {
         <IonPage>
             <IonContent fullscreen >
                 <h2 id="title">Interest Quiz</h2>
-                <p>now let's take a short quiz to find the best clubs for you</p>
+                <p className="quiz-p">now let's take a short quiz to find the best clubs for you</p>
                 <IonItem button detail={false} className="gradient-button" onClick={() => props.nextPage()}>
                     <IonLabel>let's go!</IonLabel>
                 </IonItem>
