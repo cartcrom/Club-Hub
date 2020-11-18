@@ -1,6 +1,5 @@
 const User = require("../schemas/user");
 
-
 function login(email, pass) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, (err, docs) => {
@@ -12,11 +11,11 @@ function login(email, pass) {
                 }
                 else {
                     console.log("Acoount Found:\n Password Matched: ", docs.password === pass, "\n email verified: ", docs.isVerified)
-                    resolve(false)
+                    reject('Incorrect email or password')
                 }
             } else {
                 console.log("account doesn't exists for: ", email)
-                resolve(false)
+                reject('Incorrect email')
             }
         })
     })
@@ -26,10 +25,16 @@ function login(email, pass) {
 
 function sign_up(details) {
     return new Promise(function (resolve, reject) {
-        var user = new User()
-        user.name = details.name
-        user.school = details.college
-        user.save().then((obj) => { resolve(obj) })
+        if(details.email.includes('edu', details.email.length - 3)) {
+            let user = new User()
+            user.name = details.name
+            user.email = details.email
+            user.password = details.password
+            user.save().then((obj) => { resolve(obj) })
+        }
+        else {
+            reject('Email must end with .edu')
+        }
     })
 }
 
