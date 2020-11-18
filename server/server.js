@@ -100,7 +100,6 @@ app.get("/", (req, res) => {
     res.send("hey");
 });
 
-server.listen(5000, () => console.log("backend online at 5000"));
 app.get("/test", (req, res) => {
   res.send('Success');
 });

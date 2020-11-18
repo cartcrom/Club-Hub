@@ -23,28 +23,19 @@ const SignUp: React.FC<LoginProps> = (props) =>{
     const {control, handleSubmit, setError, errors} = useForm<SignUpInfo>();
     const axios = require('axios').default;
 
-<<<<<<< HEAD
-    const {control, handleSubmit, errors} = useForm<SignUpInfo>();
 
-    const registerUser = (data: SignUpInfo) => {
-        data.college = getCollege(data.email);
-        console.log(data); /* TODO: Send data to backend */
-        console.log("HERE");
-        props.setLogin(true);
-=======
     const registerUser = async (info: SignUpInfo) => {
         console.log('submitting')
         try {
             const res = await axios.post('http://localhost:5000/SignUp', info);
             console.log(res.data);
             props.history.push('interestQuiz');
-            // props.setLogin(true);
+            props.setLogin(true);
         }
         catch (err) {
             console.log(err.response.data);
             setError("password", {message: err.response.data});
         }
->>>>>>> dfd55a42d60162bca51125c5785cef49f0feb23e
     }
 
     return (
