@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { IonContent, IonLabel, IonSelect, IonPage, IonProgressBar, IonFooter, IonItem, IonIcon,IonInput, IonHeader, IonToolbar, IonButton, IonSelectOption} from '@ionic/react';
-import './InterestQuiz.css'
-import { RouteComponentProps } from 'react-router';
+import './InterestQuiz.css';
 
+interface InterestQuizProps {
+    nextPage: Function
+}
 
-const InterestQuizPg1 = (props: RouteComponentProps) => {
+const InterestQuizPg1 = (props: InterestQuizProps) => {
     return (
         <IonPage>
             <IonContent fullscreen className="quiz-gradient" >
@@ -36,7 +38,7 @@ const InterestQuizPg1 = (props: RouteComponentProps) => {
             </IonContent>
             
             <IonFooter className="transparent">
-                <IonItem button detail={false} className="white-outline-button" onClick={() => props.history.push('interestQuizPg2')}>
+                <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
                     <IonLabel>next</IonLabel>
                 </IonItem>
             </IonFooter>

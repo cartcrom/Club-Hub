@@ -26,7 +26,8 @@ const SignUp: React.FC<LoginProps> = (props) =>{
     const registerUser = (data: SignUpInfo) => {
         data.college = getCollege(data.email);
         console.log(data); /* TODO: Send data to backend */
-        /*props.setLogin(true);*/
+        console.log("HERE");
+        props.setLogin(true);
     }
 
     return (
@@ -95,9 +96,9 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                             )}
                         />
                     </IonItem>
-                    <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('interestQuiz')}>
+                    <IonButton type="submit" className="chip-button-outline">
                         <IonLabel>Create New Account</IonLabel>
-                    </IonItem>
+                    </IonButton>
                     
                 </form>
             </IonFooter>

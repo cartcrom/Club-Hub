@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 
 import './global_styles.css';
@@ -38,11 +38,7 @@ import ClubRegistration from './pages/club-registration/ClubRegistration';
 import AddEvent from './pages/AddEvent';
 
 /* Interest Quiz */
-import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
-import InterestQuizPg1 from './pages/interest-quiz/InterestQuizPg1';
-import InterestQuizPg2 from './pages/interest-quiz/InterestQuizPg2';
-import InterestQuizPg3 from './pages/interest-quiz/InterestQuizPg3';
-import InterestQuizPg4 from './pages/interest-quiz/InterestQuizPg4';
+import InterestQuiz from './pages/interest-quiz/InterestQuiz';
 
 import Test from './Test';
 
@@ -64,6 +60,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { BooleanLiteral } from 'typescript';
 
 
 
@@ -79,18 +76,22 @@ function fakeAuth(username : string, password : string, callback : Function) {
 }
 
 type AppState = {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
+  hasTakenQuiz: boolean;
+  skipQuiz: boolean;
 }
 
 // Clock has no properties, but the current state is of type AppState
 // The generic parameters in the Component typing allow to pass props
 // and state. Since we don't have props, we pass an empty object.
-export default class App extends Component<{}, AppState> {
+export default class App extends React.Component<{}, AppState> {
 
   // Before the component mounts, we initialise our state
   componentWillMount() {
     this.setState({
-      isAuthenticated: false
+      isAuthenticated: false, // Can probably call the browser to find any recent auth rather than default to false
+      hasTakenQuiz: false,    // Should actually be set by data received from server
+      skipQuiz: false         // Default to false
     });
 
     axios.get(`http://localhost:5000`)
@@ -113,8 +114,25 @@ export default class App extends Component<{}, AppState> {
     fakeAuth("fake username", "fake password", () => {this.setState({isAuthenticated : login});})
   }
 
+  skipQuiz = () => {
+    this.setState({
+      skipQuiz: true
+    })
+  }
+
+  finishQuiz = () => {
+    this.setState({
+      hasTakenQuiz: true
+    })
+  }
+
   // render will know everything!
   render() {
+    
+    let default_route = (this.state.hasTakenQuiz || this.state.skipQuiz) ?
+      <Route render={() => <Redirect to="/feed" />} exact={true} />
+      : <Route render={() => <Redirect to="/interestQuiz" />} exact={true} />
+
     return (
       <IonApp>
       { (this.state.isAuthenticated) ?
@@ -134,8 +152,9 @@ export default class App extends Component<{}, AppState> {
             <Route path="/clubColleges" component={ClubColleges} />
             <Route path="/clubSocials" component={ClubSocials} />
             <Route path="/daysOfWeek" component={DaysOfWeek} />
+            <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
+            {default_route}
             
-            <Route render={() => <Redirect to="/feed" />} exact={true} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="feed" href="/feed">
@@ -163,11 +182,6 @@ export default class App extends Component<{}, AppState> {
           <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} />}/>
           <Route path="/signup" render={(props) => <SignUp {...props} setLogin={this.setLogin} />} />
           <Route path="/login"  render={(props) => <FrontPage {...props} setLogin={this.setLogin} />} />
-          <Route path="/interestQuiz" render={(props) => <InterestQuizIntro {...props} />}/>
-          <Route path="/interestQuizPg1" render={(props) => <InterestQuizPg1 {...props} />}/>
-          <Route path="/interestQuizPg2" render={(props) => <InterestQuizPg2 {...props} />}/>
-          <Route path="/interestQuizPg3" render={(props) => <InterestQuizPg3 {...props} />}/>
-          <Route path="/interestQuizPg4" render={(props) => <InterestQuizPg4 {...props} />}/>
           <Route render={() => <Redirect to="/login" />} exact={true} />
         </IonRouterOutlet>
       </IonReactRouter>

@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider } from '@ionic/react';
-import './InterestQuiz.css'
-import { RouteComponentProps } from 'react-router';
+import './InterestQuiz.css';
 
+interface InterestQuizProps {
+    nextPage: Function
+}
 
-const InterestQuizPg4 = (props: RouteComponentProps) => {
+const InterestQuizPg4 = (props: InterestQuizProps) => {
     const [selected, setSelected] = useState<string>('empty');
     return (
         <IonPage>
@@ -40,7 +42,7 @@ const InterestQuizPg4 = (props: RouteComponentProps) => {
                     </IonRadioGroup>
                     
                 </IonList>
-                <IonItem button detail={false} className="white-outline-button" onClick={() => props.history.push('feed')}>
+                <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
                     <IonLabel>next</IonLabel>
                 </IonItem>
             </IonContent>

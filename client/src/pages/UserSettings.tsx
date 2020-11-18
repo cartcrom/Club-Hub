@@ -70,7 +70,7 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
             <IonChip className="tag">Poppin'</IonChip>
           </IonItem>
           <IonItem lines="none" className="data" >
-            <IonButton>retake interest quiz</IonButton>
+            <IonButton onClick={() => props.history.push("/interestQuiz")}>retake interest quiz</IonButton>
           </IonItem>
         </IonCardContent>
 
