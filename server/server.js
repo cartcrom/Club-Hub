@@ -62,7 +62,8 @@ app.use(express.json());
 //Routes ##############################################################################
 app.post("/login", (req, res) => {
   console.log("*Login route called with this req:*", req.body)
-  auth.login(req.body.email, req.body.password).then((user) => {
+  auth.login(req.body.email, req.body.password)
+  .then((user) => {
     if (user) {
       req.session.user = user;
       helper.object_trimmer(user, ["password"]).then((usr) => {
@@ -70,6 +71,10 @@ app.post("/login", (req, res) => {
         res.send(usr)
       })
     }
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(401).send(err)
   })
 });
 
@@ -80,8 +85,14 @@ app.post("/verify/user", (req, res) => {
 });
 
 app.post("/SignUp", (req, res) => {
-  auth.sign_up(req.body).then((user) => {
+  auth.sign_up(req.body)
+  .then((user) => {
     req.session.user = user;
+    res.send(user)
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(401).send(err)
   })
 })
 
@@ -90,3 +101,8 @@ app.get("/", (req, res) => {
 });
 
 server.listen(5000, () => console.log("backend online at 5000"));
+app.get("/test", (req, res) => {
+  res.send('Success');
+});
+
+server.listen(5000, () => console.log("backend online at 8100"));

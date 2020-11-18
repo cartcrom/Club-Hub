@@ -94,7 +94,7 @@ export default class App extends React.Component<{}, AppState> {
       skipQuiz: false         // Default to false
     });
 
-    axios.get(`http://localhost:5000`)
+    axios.get(`http://localhost:5000/test`)
       .catch(error => {
         console.log(
           "Error: ",

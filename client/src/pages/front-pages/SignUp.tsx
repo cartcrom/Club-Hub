@@ -20,7 +20,10 @@ type SignUpInfo = {
 
 
 const SignUp: React.FC<LoginProps> = (props) =>{
+    const {control, handleSubmit, setError, errors} = useForm<SignUpInfo>();
+    const axios = require('axios').default;
 
+<<<<<<< HEAD
     const {control, handleSubmit, errors} = useForm<SignUpInfo>();
 
     const registerUser = (data: SignUpInfo) => {
@@ -28,6 +31,20 @@ const SignUp: React.FC<LoginProps> = (props) =>{
         console.log(data); /* TODO: Send data to backend */
         console.log("HERE");
         props.setLogin(true);
+=======
+    const registerUser = async (info: SignUpInfo) => {
+        console.log('submitting')
+        try {
+            const res = await axios.post('http://localhost:5000/SignUp', info);
+            console.log(res.data);
+            props.history.push('interestQuiz');
+            // props.setLogin(true);
+        }
+        catch (err) {
+            console.log(err.response.data);
+            setError("password", {message: err.response.data});
+        }
+>>>>>>> dfd55a42d60162bca51125c5785cef49f0feb23e
     }
 
     return (
@@ -63,28 +80,12 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                         <Controller
                             name="email"
                             control={control}
-                            rules={{
-                                pattern: {
-                                    value: /.*edu/,
-                                    message: 'Email must end with .edu'
-                                }
-                            }}
                             render= {({onChange, onBlur}) => (
                                 <IonInput placeholder="school email" type="email" required
                                     onIonChange={onChange} onIonBlur={onBlur}/>
                             )}
                         />
                     </IonItem>
-                    <ErrorMessage
-                        errors={errors}
-                        name="email"
-                        render = { ({message}) =>
-                            <div className="form-error">
-                                <IonIcon src={alertCircleOutline} color="danger"/>
-                                <IonLabel color="danger">{message}</IonLabel>
-                            </div>
-                        }
-                    />
                     <IonItem className="chip-input">
                         <IonIcon src={lockClosedOutline} slot="start" />
                         <Controller
@@ -96,10 +97,21 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                             )}
                         />
                     </IonItem>
-
-                    <IonButton expand="block" type="submit" className="chip-button" id="form-button">
-                        Create New Account
-                    </IonButton>
+                    <ErrorMessage
+                        errors={errors}
+                        name="password"
+                        render = { ({message}) =>
+                            <div className="form-error">
+                                <IonIcon src={alertCircleOutline} color="danger"/>
+                                <IonLabel color="danger">{message}</IonLabel>
+                            </div>
+                        }
+                    />
+                    <div className="center">
+                        <IonButton type="submit" className="chip-button" id="form-button">
+                            Log In
+                        </IonButton>
+                    </div>
                     
                 </form>
             </IonFooter>
@@ -107,14 +119,3 @@ const SignUp: React.FC<LoginProps> = (props) =>{
     );
 };
 export default SignUp
-
-let getCollege = (email : string): string | undefined => {
-    let collegeEmails = new Map([
-        ['calpoly', "California Polytechnic State University, San Luis Obispo"]
-    ])
-    let start = email.indexOf('@') + 1;
-    let end = email.indexOf('.edu');
-    let collegeFromEmail = email.slice(start, end);
-    let college = collegeEmails.get(collegeFromEmail) ? collegeEmails.get(collegeFromEmail) : collegeFromEmail
-    return college
-}
