@@ -93,7 +93,7 @@ export default class App extends Component<{}, AppState> {
       isAuthenticated: false
     });
 
-    axios.get(`http://localhost:5000`)
+    axios.get(`http://localhost:5000/test`)
       .catch(error => {
         console.log(
           "Error: ",
