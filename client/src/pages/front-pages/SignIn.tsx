@@ -7,7 +7,6 @@ import { RouteComponentProps } from 'react-router';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
-
 interface LoginProps extends RouteComponentProps {
     setLogin: Function
 }
@@ -19,16 +18,16 @@ type LoginInfo = {
 
 const SignIn: React.FC<LoginProps> = (props) => {
     const {control, handleSubmit, setError, errors} = useForm<LoginInfo>();
+    const axios = require('axios').default;
 
-    const logIn = (data: LoginInfo) => {
-        console.log(data)
-        let userId = 5 /* TODO: Connect to database */
-
-        if (userId) {
+    const logIn = async (info: LoginInfo) => {
+        try {
+            const res = await axios.post('http://localhost:5000/login', info);
+            console.log(res.data); // TODO: Store res.data in a global variable
             props.setLogin(true);
-        }
-        else {
-            setError("password", {message: "Invalid Email or Password"});
+        } catch (err) {
+            console.log(err.response.data);
+            setError("password", {message: err.response.data});
         }
     }
 
@@ -85,10 +84,11 @@ const SignIn: React.FC<LoginProps> = (props) => {
                     <IonItem detail={false} class="center-elements transparent" id="forgot-password" href="https://support.google.com/accounts/answer/41078?co=GENIE.Platform%3DDesktop&hl=en">
                         <IonLabel>Forgot password?</IonLabel>
                     </IonItem>
-
-                    <IonButton expand="block" type="submit" className="chip-button" id="form-button">
-                        Log In
-                    </IonButton>
+                    <div className="center">
+                        <IonButton type="submit" className="chip-button" id="form-button">
+                            Log In
+                        </IonButton>
+                    </div>
                 </form>
 
             </IonFooter>

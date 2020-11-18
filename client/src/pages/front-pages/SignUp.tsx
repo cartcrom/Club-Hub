@@ -20,13 +20,21 @@ type SignUpInfo = {
 
 
 const SignUp: React.FC<LoginProps> = (props) =>{
+    const {control, handleSubmit, setError, errors} = useForm<SignUpInfo>();
+    const axios = require('axios').default;
 
-    const {control, handleSubmit, errors} = useForm<SignUpInfo>();
-
-    const registerUser = (data: SignUpInfo) => {
-        data.college = getCollege(data.email);
-        console.log(data); /* TODO: Send data to backend */
-        /*props.setLogin(true);*/
+    const registerUser = async (info: SignUpInfo) => {
+        console.log('submitting')
+        try {
+            const res = await axios.post('http://localhost:5000/SignUp', info);
+            console.log(res.data);
+            props.history.push('interestQuiz');
+            // props.setLogin(true);
+        }
+        catch (err) {
+            console.log(err.response.data);
+            setError("password", {message: err.response.data});
+        }
     }
 
     return (
@@ -62,28 +70,12 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                         <Controller
                             name="email"
                             control={control}
-                            rules={{
-                                pattern: {
-                                    value: /.*edu/,
-                                    message: 'Email must end with .edu'
-                                }
-                            }}
                             render= {({onChange, onBlur}) => (
                                 <IonInput placeholder="school email" type="email" required
                                     onIonChange={onChange} onIonBlur={onBlur}/>
                             )}
                         />
                     </IonItem>
-                    <ErrorMessage
-                        errors={errors}
-                        name="email"
-                        render = { ({message}) =>
-                            <div className="form-error">
-                                <IonIcon src={alertCircleOutline} color="danger"/>
-                                <IonLabel color="danger">{message}</IonLabel>
-                            </div>
-                        }
-                    />
                     <IonItem className="chip-input">
                         <IonIcon src={lockClosedOutline} slot="start" />
                         <Controller
@@ -95,9 +87,21 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                             )}
                         />
                     </IonItem>
-                    <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('interestQuiz')}>
-                        <IonLabel>Create New Account</IonLabel>
-                    </IonItem>
+                    <ErrorMessage
+                        errors={errors}
+                        name="password"
+                        render = { ({message}) =>
+                            <div className="form-error">
+                                <IonIcon src={alertCircleOutline} color="danger"/>
+                                <IonLabel color="danger">{message}</IonLabel>
+                            </div>
+                        }
+                    />
+                    <div className="center">
+                        <IonButton type="submit" className="chip-button" id="form-button">
+                            Log In
+                        </IonButton>
+                    </div>
                     
                 </form>
             </IonFooter>
@@ -105,14 +109,3 @@ const SignUp: React.FC<LoginProps> = (props) =>{
     );
 };
 export default SignUp
-
-let getCollege = (email : string): string | undefined => {
-    let collegeEmails = new Map([
-        ['calpoly', "California Polytechnic State University, San Luis Obispo"]
-    ])
-    let start = email.indexOf('@') + 1;
-    let end = email.indexOf('.edu');
-    let collegeFromEmail = email.slice(start, end);
-    let college = collegeEmails.get(collegeFromEmail) ? collegeEmails.get(collegeFromEmail) : collegeFromEmail
-    return college
-}
