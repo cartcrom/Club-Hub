@@ -84,6 +84,16 @@ app.post("/verify/user", (req, res) => {
   });
 });
 
+
+app.get("/logout", async(req,res)=>{
+  if (req.session.user) {
+    req.session.destroy();
+    console.log("session delete");
+  } else {
+    console.log("trying to log out without user.");
+  }
+})
+
 app.post("/SignUp", (req, res) => {
   auth.sign_up(req.body)
   .then((user) => {

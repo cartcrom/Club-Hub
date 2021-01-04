@@ -30,7 +30,10 @@ function sign_up(details) {
             user.name = details.name
             user.email = details.email
             user.password = details.password
-            user.save().then((obj) => { resolve(obj) })
+            email_activation(details.email, user._id).then()
+            user.save().then((obj) => { 
+                resolve(obj) 
+            })
         }
         else {
             reject('Email must end with .edu')
