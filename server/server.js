@@ -78,8 +78,8 @@ app.post("/login", (req, res) => {
   })
 });
 
-app.post("/verify/user", (req, res) => {
-  auth.verify_user(req.body.id).then((result) => {
+app.get("/verify/user", (req, res) => {
+  auth.verify_user(req.query.id).then((result) => {
     res.send(result);
   });
 });
@@ -94,7 +94,7 @@ app.get("/logout", async(req,res)=>{
   }
 })
 
-app.post("/SignUp", (req, res) => {
+app.post("/sign-up", (req, res) => {
   auth.sign_up(req.body)
   .then((user) => {
     req.session.user = user;

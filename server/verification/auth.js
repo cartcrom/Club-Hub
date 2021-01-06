@@ -25,19 +25,14 @@ function login(email, pass) {
 
 function sign_up(details) {
     return new Promise(function (resolve, reject) {
-        if(details.email.includes('edu', details.email.length - 3)) {
             let user = new User()
             user.name = details.name
             user.email = details.email
             user.password = details.password
-            email_activation(details.email, user._id).then()
+            email_verification(details.email, user._id).then()
             user.save().then((obj) => { 
                 resolve(obj) 
             })
-        }
-        else {
-            reject('Email must end with .edu')
-        }
     })
 }
 
@@ -56,26 +51,24 @@ function verify_user(id) {
         });
     });
 }
-function email_activation(email, id) {
+function email_verification(email, id) {
     return new Promise(function (resolve, reject) {
-        // console.log(email);
-        var code = Math.floor(Math.random() * 888888) + 111111;
         var transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "collabx2020@gmail.com",
-                pass: "kosaljay@2020",
+                user: "clubhub2020@gmail.com",
+                pass: "@IluvCSC309",
             },
         });
         var mailOptions = {
             from: "@gmail.com",
             to: email,
-            subject: "Activate your CollabX account",
+            subject: "Club-Hub Email-Verification Request",
             text: `Click on this link to activate your account:
-        http://localhost:3000/verification?id=${id}
+        http://localhost:5000/verification?id=${id}
         We hope you enjoy our site
         Sincerely,
-        Team CollabX`,
+        Team Culb Hub`,
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
