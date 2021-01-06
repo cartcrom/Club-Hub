@@ -1,27 +1,27 @@
 const User = require("../schemas/user");
-
+const nodemailer = require("nodemailer");
 function login(email, pass) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, (err, docs) => {
+            console.log(email,docs)
             if (docs) {
                 if (docs.password === pass && docs.isVerified) {
                     resolve(docs)
                 } else if (docs.password === pass && !docs.isVerified) {
                     email_activation(docs.email, docs._id)
+                    resolve(false)
                 }
                 else {
                     console.log("Acoount Found:\n Password Matched: ", docs.password === pass, "\n email verified: ", docs.isVerified)
-                    reject('Incorrect email or password')
+                    resolve(false)
                 }
             } else {
                 console.log("account doesn't exists for: ", email)
-                reject('Incorrect email')
+                resolve(false)
             }
         })
     })
 }
-
-
 
 function sign_up(details) {
     return new Promise(function (resolve, reject) {
@@ -29,10 +29,11 @@ function sign_up(details) {
             user.name = details.name
             user.email = details.email
             user.password = details.password
-            email_verification(details.email, user._id).then()
-            user.save().then((obj) => { 
-                resolve(obj) 
-            })
+            email_verification(details.email, user._id).then((ok)=>{
+                user.save().then((obj) => { 
+                    resolve(obj) 
+                })
+            }) 
     })
 }
 
@@ -61,11 +62,11 @@ function email_verification(email, id) {
             },
         });
         var mailOptions = {
-            from: "@gmail.com",
+            from: "clubhub2020@gmail.com",
             to: email,
             subject: "Club-Hub Email-Verification Request",
             text: `Click on this link to activate your account:
-        http://localhost:5000/verification?id=${id}
+        http://localhost:3000/verification?id=${id}
         We hope you enjoy our site
         Sincerely,
         Team Culb Hub`,
@@ -77,9 +78,10 @@ function email_verification(email, id) {
                 reject(error);
             } else {
                 console.log("Email sent: " + info.response);
+                resolve(true);
             }
         });
-        resolve(code);
+        
     });
 }
 exports.login = login;

@@ -26,7 +26,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:8100"], //frontend server localhost:8100
+    origin: ["http://localhost:3000"], //frontend server localhost:8100
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // enable set cookie
   })
@@ -45,21 +45,30 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.header("Access-Control-Allow-Origin", "http://localhost:8100");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-   Type, Accept, Authorization"
-  );
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 ///////////////////////////////////////////////////////////////////////////////////////
 
 //Routes ##############################################################################
+
+app.post("/authentication", (req,res)=>{
+  auth.login(req.body.email, req.body.password)
+  .then((user) => {
+    if (user) {
+      res.send(true)
+    }else{
+      res.send(false)
+    }
+  })
+})
+
+
 app.post("/login", (req, res) => {
   console.log("*Login route called with this req:*", req.body)
   auth.login(req.body.email, req.body.password)
@@ -70,6 +79,8 @@ app.post("/login", (req, res) => {
         console.log("logged in as#", usr.name)
         res.send(usr)
       })
+    }else{
+      res.send(false)
     }
   })
   .catch((err) => {
@@ -94,10 +105,12 @@ app.get("/logout", async(req,res)=>{
   }
 })
 
-app.post("/sign-up", (req, res) => {
+app.post("/SignUp", (req, res) => {
+  console.log("route called sing-up")
   auth.sign_up(req.body)
   .then((user) => {
     req.session.user = user;
+    console.log("User = ",user)
     res.send(user)
   })
   .catch((err) => {
