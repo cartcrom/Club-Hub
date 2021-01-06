@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonGrid, IonRow, IonCol, IonChip, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import './UserSettings.css';
+import { UserContext } from '../user-context';
 
 let test_student = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"]);
 
 
 const UserSettings: React.FC<RouteComponentProps> = (props) => {
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    user = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"]);
+  } 
+
   return (
   <IonPage>
     <IonHeader>
@@ -30,19 +36,19 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
           <IonList>
             <IonItem lines="none" className="data" >
               <IonLabel>First Name</IonLabel>
-              <IonNote slot="end" color="black">{test_student.fn}</IonNote>
+              <IonNote slot="end" color="black">{user.fn}</IonNote>
             </IonItem>
             <IonItem lines="none" className="data" >
               <IonLabel>Last Name</IonLabel>
-              <IonNote slot="end" color="black">{test_student.ln}</IonNote>
+              <IonNote slot="end" color="black">{user.ln}</IonNote>
             </IonItem>
             <IonItem lines="none" className="data" >
               <IonLabel>Email Address</IonLabel>
-              <IonNote slot="end" color="black">{test_student.email}</IonNote>
+              <IonNote slot="end" color="black">{user.email}</IonNote>
             </IonItem>
             <IonItem lines="none" className="data" >
               <IonLabel>School</IonLabel>
-              <IonNote slot="end" color="black">{test_student.school}</IonNote>
+              <IonNote slot="end" color="black">{user.school}</IonNote>
             </IonItem>
             <IonItem lines="none" className="data" >
               <IonButton>edit my info</IonButton>

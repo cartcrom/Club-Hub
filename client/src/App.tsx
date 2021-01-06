@@ -62,6 +62,9 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { BooleanLiteral } from 'typescript';
 
+/* User Context */
+import {UserContext} from './user-context'
+import Student from './components/Student';
 
 
 
@@ -79,12 +82,24 @@ type AppState = {
   isAuthenticated: boolean;
   hasTakenQuiz: boolean;
   skipQuiz: boolean;
+  user: Student | undefined
 }
 
 // Clock has no properties, but the current state is of type AppState
 // The generic parameters in the Component typing allow to pass props
 // and state. Since we don't have props, we pass an empty object.
 export default class App extends React.Component<{}, AppState> {
+
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      isAuthenticated: false, 
+      hasTakenQuiz: false,
+      skipQuiz: false,
+      user: undefined
+    }
+
+  }
 
   // Before the component mounts, we initialise our state
   componentWillMount() {
@@ -114,6 +129,17 @@ export default class App extends React.Component<{}, AppState> {
     fakeAuth("fake username", "fake password", () => {this.setState({isAuthenticated : login});})
   }
 
+  setUser = (u : any) => {
+    this.setState({user: new Student(
+      u.name,
+      u.name,
+      u._id,
+      u.school,
+      u.email,
+      ["social", "recreation", "outdoors", "athletic", "games"]
+    )})
+  }
+
   skipQuiz = () => {
     this.setState({
       skipQuiz: true
@@ -135,6 +161,7 @@ export default class App extends React.Component<{}, AppState> {
 
     return (
       <IonApp>
+      <UserContext.Provider value={this.state.user}>
       { (this.state.isAuthenticated) ?
       <IonReactRouter>
         
@@ -179,13 +206,14 @@ export default class App extends React.Component<{}, AppState> {
       :
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} />}/>
+          <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} setUser={this.setUser} />}/>
           <Route path="/signup" render={(props) => <SignUp {...props} setLogin={this.setLogin} />} />
           <Route path="/login"  render={(props) => <FrontPage {...props} setLogin={this.setLogin} />} />
           <Route render={() => <Redirect to="/login" />} exact={true} />
         </IonRouterOutlet>
       </IonReactRouter>
       }
+    </UserContext.Provider>
     </IonApp>
     )
   }

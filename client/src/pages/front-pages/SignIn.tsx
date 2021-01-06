@@ -8,7 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
 interface LoginProps extends RouteComponentProps {
-    setLogin: Function
+    setLogin: Function,
+    setUser: Function
 }
 
 type LoginInfo = {
@@ -23,7 +24,8 @@ const SignIn: React.FC<LoginProps> = (props) => {
     const logIn = async (info: LoginInfo) => {
         try {
             const res = await axios.post('http://localhost:5000/login', info);
-            console.log(res.data); // TODO: Store res.data in a global variable
+            console.log(res.data);
+            props.setUser(res.data);
             props.setLogin(true);
         } catch (err) {
             console.log(err.response.data);
