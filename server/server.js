@@ -58,6 +58,7 @@ app.use(express.json());
 //Routes ##############################################################################
 
 app.post("/authentication", (req,res)=>{
+  console.log(req.body.email, req.body.password)
   auth.login(req.body.email, req.body.password)
   .then((user) => {
     if (user) {
