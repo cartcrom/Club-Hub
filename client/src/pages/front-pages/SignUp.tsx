@@ -26,16 +26,26 @@ const SignUp: React.FC<LoginProps> = (props) =>{
 
     const registerUser = async (info: SignUpInfo) => {
         console.log('submitting')
-        try {
-            const res = await axios.post('http://localhost:5000/SignUp', info);
-            console.log(res.data);
+
+        axios.post('http://localhost:5000/SignUp', info)
+            .then((res : Object) => {
+            // handle success
+            console.log(res);
             props.history.push('interestQuiz');
             props.setLogin(true);
-        }
-        catch (err) {
-            console.log(err.response.data);
-            setError("password", {message: err.response.data});
-        }
+          })
+          .catch((err : any) => {
+            if (!err.response) {
+                // network error
+                alert("Network Connection Error");
+            } else {
+                console.log(err);
+                setError("password", {message: err.response.data});
+            }
+          })
+          .then(function () {
+            // always executed
+          });
     }
 
     return (
