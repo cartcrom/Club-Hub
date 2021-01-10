@@ -9,7 +9,8 @@ function login(email, pass) {
                 if (docs.password === pass && docs.isVerified) {
                     resolve(docs)
                 } else if (docs.password === pass && !docs.isVerified) {
-                    email_activation(docs.email, docs._id)
+                    console.log("User is not verified")
+                    email_verification(docs.email, docs._id)
                     resolve(false)
                 }
                 else {
