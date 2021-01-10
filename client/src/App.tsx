@@ -108,17 +108,6 @@ export default class App extends React.Component<{}, AppState> {
       hasTakenQuiz: false,    // Should actually be set by data received from server
       skipQuiz: false         // Default to false
     });
-
-    axios.get(`http://localhost:5000/test`)
-      .catch(error => {
-        console.log(
-          "Error: ",
-          error
-        );
-      })
-      .then(res => {
-        console.log(res);
-      })
   }
 
   // After the component did mount, we set the state
