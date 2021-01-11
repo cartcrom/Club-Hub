@@ -18,7 +18,7 @@ const FrontPage: React.FC<LoginProps> = (props) => {
 
             <IonFooter className="transparent">
 
-                <IonItem button detail={false} className="chip-button-outline" onClick={() => props.history.push('signup')}>
+                <IonItem button title="signUpButton" detail={false} className="chip-button-outline" onClick={() => props.history.push('signup')}>
                     <IonLabel>I'm a new user</IonLabel>
                 </IonItem>
 

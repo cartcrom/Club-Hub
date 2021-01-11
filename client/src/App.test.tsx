@@ -7,6 +7,7 @@ import UserSettings from './pages/UserSettings';
 import { Route, StaticRouter, MemoryRouter } from 'react-router';
 import FrontPage from './pages/front-pages/FrontPage';
 import SignIn from './pages/front-pages/SignIn';
+import SignUp from './pages/front-pages/SignUp';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import MyClubs from './pages/MyClubs';
 import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
@@ -50,6 +51,19 @@ test('I have an account button sends the user to the right page', () => {
   )
   expect( () => screen.getByText('Log In')).toThrow()
   const button = screen.getByTitle('signInButton')
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('Log In')).not.toThrow()
+})
+
+test('I\'m a new user button sends the user to the right page', () => {
+  render(
+    <MemoryRouter initialEntries={['/frontPage']}>
+        <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
+        <Route path="/signup" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+    </MemoryRouter>
+  )
+  expect( () => screen.getByText('Log In')).toThrow()
+  const button = screen.getByTitle('signUpButton')
   ionFireEvent.click(button)
   expect( () => screen.getByText('Log In')).not.toThrow()
 })
