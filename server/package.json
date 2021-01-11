@@ -30,6 +30,7 @@
     "harvard-student-organizations": "^1.0.3",
     "http": "0.0.0",
     "ionicons": "^5.0.0",
+    "jest": "^26.6.3",
     "method-override": "^2.3.6",
     "mongoose": "^5.10.7",
     "morgan": "^1.7.0",
@@ -68,7 +69,6 @@
   "devDependencies": {
     "@capacitor/cli": "2.4.1",
     "@shelf/jest-mongodb": "^1.2.3",
-    "jest": "^26.6.3",
     "nodemon": "^2.0.7"
   },
   "description": "An Ionic project"
