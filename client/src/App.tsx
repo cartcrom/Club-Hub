@@ -102,7 +102,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   // Before the component mounts, we initialise our state
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
       isAuthenticated: false, // Can probably call the browser to find any recent auth rather than default to false
       hasTakenQuiz: false,    // Should actually be set by data received from server
