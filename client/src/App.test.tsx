@@ -41,7 +41,7 @@ test('Checks My Clubs Page has correct title', () => {
 
 })
 
-test('I have an account page sends the user to the right page', () => {
+test('I have an account button sends the user to the right page', () => {
   render(
     <MemoryRouter initialEntries={['/frontPage']}>
         <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
@@ -65,3 +65,4 @@ test('Interest Quiz goes to feed', () => {
   ionFireEvent.click(button)
   expect( () => screen.getByText('ClubHub')).not.toThrow()
 })
+
