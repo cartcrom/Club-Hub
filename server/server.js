@@ -58,6 +58,7 @@ app.use(express.json());
 //Routes ##############################################################################
 
 app.post("/authentication", (req,res)=>{
+  console.log(req.body.email, req.body.password)
   auth.login(req.body.email, req.body.password)
   .then((user) => {
     if (user) {
@@ -127,4 +128,4 @@ app.get("/test", (req, res) => {
   res.send('Success');
 });
 
-server.listen(5000, () => console.log("backend online at 8100"));
+server.listen(5000, () => console.log("backend online at 5000"));

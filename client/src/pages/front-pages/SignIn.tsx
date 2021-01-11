@@ -17,20 +17,41 @@ type LoginInfo = {
     password: string;
 }
 
+type LoginResponse = {
+    data : Object
+}
+
 const SignIn: React.FC<LoginProps> = (props) => {
     const {control, handleSubmit, setError, errors} = useForm<LoginInfo>();
     const axios = require('axios').default;
 
     const logIn = async (info: LoginInfo) => {
-        try {
-            const res = await axios.post('http://localhost:5000/login', info);
-            console.log(res.data);
-            props.setUser(res.data);
-            props.setLogin(true);
-        } catch (err) {
-            console.log(err.response.data);
-            setError("password", {message: err.response.data});
-        }
+
+        axios.post('http://localhost:5000/login', info)
+            .then((res : LoginResponse) => {
+            // handle success
+            console.log(res);
+            if (res.data) {
+                console.log(res.data);
+                props.setUser(res.data);
+                props.setLogin(true);
+            }
+            else
+                setError("password", {message: "Invalid Login"});
+            })
+            .catch((err : any) => {
+            // handle error
+            if (!err.response) {
+                // network error
+                alert("Network Connection Error");
+            } else {
+                console.log(err);
+                setError("password", {message: err.message});
+            }
+          })
+          .then(function () {
+            // always executed
+        });
     }
 
     return (

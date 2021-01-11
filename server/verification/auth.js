@@ -1,5 +1,6 @@
 const User = require("../schemas/user");
 const nodemailer = require("nodemailer");
+
 function login(email, pass) {
     return new Promise(function (resolve, reject) {
         User.findOne({ email: email }, (err, docs) => {
@@ -8,7 +9,8 @@ function login(email, pass) {
                 if (docs.password === pass && docs.isVerified) {
                     resolve(docs)
                 } else if (docs.password === pass && !docs.isVerified) {
-                    email_activation(docs.email, docs._id)
+                    console.log("User is not verified")
+                    email_verification(docs.email, docs._id)
                     resolve(false)
                 }
                 else {
@@ -36,6 +38,7 @@ function sign_up(details) {
             }) 
     })
 }
+
 
 function verify_user(id) {
     return new Promise(function (resolve, reject) {
@@ -84,6 +87,9 @@ function email_verification(email, id) {
         
     });
 }
+
+
+
 exports.login = login;
 exports.sign_up = sign_up;
 exports.verify_user = verify_user;
