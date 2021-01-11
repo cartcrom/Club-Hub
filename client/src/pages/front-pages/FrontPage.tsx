@@ -22,7 +22,7 @@ const FrontPage: React.FC<LoginProps> = (props) => {
                     <IonLabel>I'm a new user</IonLabel>
                 </IonItem>
 
-                <IonItem button detail={false} className="chip-button" onClick={() => props.history.push('signin')}>
+                <IonItem button title="signInButton" detail={false} className="chip-button" onClick={() => props.history.push('signin')}>
                     <IonLabel>I have an account</IonLabel>
                 </IonItem>
 
