@@ -16,7 +16,7 @@ import add from '../images/add.png'
 
 const AddButton = (props: RouteComponentProps) => {
     return(
-      <IonItem lines="none" button onClick={() => props.history.push('addEvent')}>
+      <IonItem title="addButton" lines="none" button onClick={() => props.history.push('addEvent')}>
         <IonAvatar slot="start">
           <img className="club-image" src={add} />
         </IonAvatar>

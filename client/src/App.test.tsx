@@ -13,6 +13,8 @@ import MyClubs from './pages/MyClubs';
 import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
 import InterestQuiz from './pages/interest-quiz/InterestQuiz';
 import Feed from './pages/Feed';
+import Explore from './pages/Explore';
+import AddEvent from './pages/AddEvent';
 
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
@@ -78,5 +80,17 @@ test('Interest Quiz goes to feed', () => {
   const button = screen.getByTitle('skipButton')
   ionFireEvent.click(button)
   expect( () => screen.getByText('ClubHub')).not.toThrow()
+})
+
+test('The AddEvent Button functions', () => {
+  render(
+    <MemoryRouter initialEntries={['/Explore']}>
+         <Route path="/explore" component={Explore} exact={true} />
+        <Route path="/addEvent" component={AddEvent} />
+    </MemoryRouter>
+  )
+  const button = screen.getByTitle('addButton')
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('Event Adder')).not.toThrow()
 })
 
