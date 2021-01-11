@@ -26,7 +26,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:8100"], //frontend server localhost:8100
+    origin: ["http://localhost:3000"], //frontend server localhost:8100
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, // enable set cookie
   })
@@ -116,7 +116,7 @@ app.post("/SignUp", (req, res) => {
   })
   .catch((err) => {
     console.log(err)
-    res.status(401).send(err)
+    res.send(false)
   })
 })
 

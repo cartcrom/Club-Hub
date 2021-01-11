@@ -14,7 +14,7 @@ function login(email, pass) {
                     resolve(false)
                 }
                 else {
-                    console.log("Acoount Found:\n Password Matched: ", docs.password === pass, "\n email verified: ", docs.isVerified)
+                    console.log("Acoount Found:",docs.name,"\n Password Matched: ", docs.password === pass, "\n email verified: ", docs.isVerified)
                     resolve(false)
                 }
             } else {
