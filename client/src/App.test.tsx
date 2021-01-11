@@ -38,7 +38,7 @@ test('Checks My Clubs Page has correct title', () => {
 
 })
 
-test('I have an account page sends the user to the right page', () => {
+test('I have an account button sends the user to the right page', () => {
   render(
     <MemoryRouter initialEntries={['/frontPage']}>
         <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
@@ -50,23 +50,3 @@ test('I have an account page sends the user to the right page', () => {
   ionFireEvent.click(button)
   expect( () => screen.getByText('Log In')).not.toThrow()
 })
-
-// test('I have an account page sends the user to the right page', async () => {
-
-//   render(
-//     <StaticRouter location="/frontPage">
-//       <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
-//       <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
-//     </StaticRouter>
-//   )
-//   // console.log(prettyDOM())
-//   const button = screen.getByTitle('signInButton')
-//   screen.debug(button)
-//   ionFireEvent.click(button)
-//   // console.log(prettyDOM())
-//   // screen.debug(screen.getByTitle('signInButton'));
-//   // const button = await screen.findByTitle("signInButton")
-//   // ionFireEvent
-  
-
-// })
