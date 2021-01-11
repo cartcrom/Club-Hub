@@ -29,6 +29,7 @@
     "ionicons": "^5.0.0",
     "method-override": "^2.3.6",
     "morgan": "^1.7.0",
+    "mutationobserver-shim": "^0.3.7",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^6.11.0",
