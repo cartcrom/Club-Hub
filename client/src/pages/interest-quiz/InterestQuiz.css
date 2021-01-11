@@ -49,12 +49,11 @@
     margin: 8% auto;
     border-radius: 8px;
 }
-.radio-button{
-    --border-radius: gray;
-    --color: transparent;
-    --color-checked: #5337FF;
-    color: white;
+.checkbox{
+    --background-checked: #5337FF;
+    --border-color-checked: #5337FF;
 }
+
 .radio-box{
     --background: white;
     border-radius: 8px;
