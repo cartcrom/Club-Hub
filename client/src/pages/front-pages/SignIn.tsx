@@ -76,6 +76,7 @@ const SignIn: React.FC<LoginProps> = (props) => {
                         <Controller 
                             name="email"
                             control={control}
+                            defaultValue=""
                             render={({onChange, onBlur}) => (
                                 <IonInput placeholder="email address" type="email"
                                     onIonChange={onChange} onIonBlur={onBlur}/>
@@ -87,6 +88,7 @@ const SignIn: React.FC<LoginProps> = (props) => {
                         <Controller 
                             name="password"
                             control={control}
+                            defaultValue=""
                             render= {({onChange, onBlur}) => (
                                 <IonInput placeholder="password" type="password" 
                                     onIonChange={onChange} onIonBlur={onBlur}/>

@@ -4,13 +4,11 @@ import App from './App';
 import { UserContext } from './user-context';
 import Student from './components/Student';
 import UserSettings from './pages/UserSettings';
-import { Route, StaticRouter } from 'react-router';
+import { Route, StaticRouter, MemoryRouter } from 'react-router';
 import FrontPage from './pages/front-pages/FrontPage';
 import SignIn from './pages/front-pages/SignIn';
 import { ionFireEvent } from '@ionic/react-test-utils';
-import { mockIonicReact } from '@ionic/react-test-utils';
-
-mockIonicReact();
+import MyClubs from './pages/MyClubs';
 
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
@@ -30,22 +28,45 @@ test('Settings correctly access UserContext', () => {
   expect(() => screen.getByText('ecnaV')).toThrow()
 })
 
-test('I have an account page sends the user to the right page', async () => {
-
+test('Checks My Clubs Page has correct title', () => {
   render(
-    <StaticRouter location="/frontPage">
-      <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
-      <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+    <StaticRouter location='/'>
+      <Route path='/' component={MyClubs}/>
     </StaticRouter>
   )
-  // console.log(prettyDOM())
-  const button = screen.getByTitle('signInButton')
-  screen.debug(button)
-  ionFireEvent.click(button)
-  // console.log(prettyDOM())
-  // screen.debug(screen.getByTitle('signInButton'));
-  // const button = await screen.findByTitle("signInButton")
-  // ionFireEvent
-  
+  expect( () => screen.getByText('My Clubs')).not.toThrow()
 
 })
+
+test('I have an account page sends the user to the right page', () => {
+  render(
+    <MemoryRouter initialEntries={['/frontPage']}>
+        <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
+        <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+    </MemoryRouter>
+  )
+  expect( () => screen.getByText('Log In')).toThrow()
+  const button = screen.getByTitle('signInButton')
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('Log In')).not.toThrow()
+})
+
+// test('I have an account page sends the user to the right page', async () => {
+
+//   render(
+//     <StaticRouter location="/frontPage">
+//       <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
+//       <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+//     </StaticRouter>
+//   )
+//   // console.log(prettyDOM())
+//   const button = screen.getByTitle('signInButton')
+//   screen.debug(button)
+//   ionFireEvent.click(button)
+//   // console.log(prettyDOM())
+//   // screen.debug(screen.getByTitle('signInButton'));
+//   // const button = await screen.findByTitle("signInButton")
+//   // ionFireEvent
+  
+
+// })
