@@ -19,7 +19,7 @@ const InterestQuizIntro = (props: InterestQuizProps) => {
                 <IonItem button detail={false} className="gradient-button" onClick={() => props.nextPage()}>
                     <IonLabel>let's go!</IonLabel>
                 </IonItem>
-                <IonItem button detail={false} className="outline-button" onClick={() => props.skipQuiz()}>
+                <IonItem button title="skipButton" detail={false} className="outline-button" onClick={() => props.skipQuiz()}>
                     <IonLabel>skip</IonLabel>
                 </IonItem>
                

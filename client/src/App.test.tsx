@@ -9,6 +9,9 @@ import FrontPage from './pages/front-pages/FrontPage';
 import SignIn from './pages/front-pages/SignIn';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import MyClubs from './pages/MyClubs';
+import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
+import InterestQuiz from './pages/interest-quiz/InterestQuiz';
+import Feed from './pages/Feed';
 
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
@@ -51,22 +54,14 @@ test('I have an account page sends the user to the right page', () => {
   expect( () => screen.getByText('Log In')).not.toThrow()
 })
 
-// test('I have an account page sends the user to the right page', async () => {
-
-//   render(
-//     <StaticRouter location="/frontPage">
-//       <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
-//       <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
-//     </StaticRouter>
-//   )
-//   // console.log(prettyDOM())
-//   const button = screen.getByTitle('signInButton')
-//   screen.debug(button)
-//   ionFireEvent.click(button)
-//   // console.log(prettyDOM())
-//   // screen.debug(screen.getByTitle('signInButton'));
-//   // const button = await screen.findByTitle("signInButton")
-//   // ionFireEvent
-  
-
-// })
+test('Interest Quiz goes to feed', () => {
+  render(
+    <MemoryRouter initialEntries={['/interestQuiz']}>
+        <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => {}} finishQuiz={() => {}} />}/>
+        <Route path="/feed" component={Feed} exact={true} />
+    </MemoryRouter>
+  )
+  const button = screen.getByTitle('skipButton')
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('ClubHub')).not.toThrow()
+})
