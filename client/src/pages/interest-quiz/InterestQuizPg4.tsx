@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider } from '@ionic/react';
+import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider, IonCheckbox } from '@ionic/react';
 import './InterestQuiz.css';
 
 interface InterestQuizProps {
@@ -14,33 +14,30 @@ const InterestQuizPg4 = (props: InterestQuizProps) => {
                 <IonProgressBar className="progress-bar" color="secondary" value={0.8}></IonProgressBar>
                 <h2 id="quiz-header">I am Looking For:</h2>
                 <IonList className="transparent">
-                    <IonRadioGroup value={selected} onIonChange={e => setSelected(e.detail.value)}>
                         
                         <IonItem className="radio-box" >
                             <IonLabel>Social</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="social" />
+                            <IonCheckbox className="checkbox" slot="start" value="social" />
                         </IonItem>
 
                         <IonItem className="radio-box">
                             <IonLabel>Professional</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="professional" />
+                            <IonCheckbox className="checkbox" slot="start" value="professional" />
                         </IonItem>
 
                         <IonItem className="radio-box">
                             <IonLabel>Project Based</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="projectBased" />
+                            <IonCheckbox className="checkbox" slot="start" value="projectBased" />
                         </IonItem>
                         <IonItem className="radio-box">
                             <IonLabel>Competition Based</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="competitionBased" />
+                            <IonCheckbox className="checkbox" slot="start" value="competitionBased" />
                         </IonItem>
                         <IonItem className="radio-box">
                             <IonLabel>Religious</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="religious" />
+                            <IonCheckbox className="checkbox" slot="start" value="religious" />
                         </IonItem>
-                        
-                    </IonRadioGroup>
-                    
+                                            
                 </IonList>
                 <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
                     <IonLabel>next</IonLabel>

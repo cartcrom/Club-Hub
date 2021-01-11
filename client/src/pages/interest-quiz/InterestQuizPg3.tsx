@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider } from '@ionic/react';
+import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider, IonCheckbox } from '@ionic/react';
 import './InterestQuiz.css'
 
 interface InterestQuizProps {
@@ -14,35 +14,33 @@ const InterestQuizPg3 = (props: InterestQuizProps) => {
                 <IonProgressBar className="progress-bar" color="secondary" value={0.6}></IonProgressBar>
                 <h2 id="quiz-header">I am Interested In:</h2>
                 <IonList className="transparent">
-                    <IonRadioGroup value={selected} onIonChange={e => setSelected(e.detail.value)}>
                         
-                        <IonItem className="radio-box" >
-                            <IonLabel>Performance + Arts</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="performingArts" />
-                        </IonItem>
+                    <IonItem className="radio-box" >
+                        <IonLabel>Performance + Arts</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="performingArts" />
+                    </IonItem>
 
-                        <IonItem className="radio-box">
-                            <IonLabel>Publications + Media</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="publicationsMedia" />
-                        </IonItem>
+                    <IonItem className="radio-box">
+                        <IonLabel>Publications + Media</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="publicationsMedia" />
+                    </IonItem>
 
-                        <IonItem className="radio-box">
-                            <IonLabel>Service + Social Justice</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="serviceSocialJustice" />
-                        </IonItem>
-                        <IonItem className="radio-box">
-                            <IonLabel>Sports</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="sports" />
-                        </IonItem>
-                        <IonItem className="radio-box">
-                            <IonLabel>STEM</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="stem" />
-                        </IonItem>
-                        <IonItem className="radio-box">
-                            <IonLabel>Sustainability + Wellness</IonLabel>
-                            <IonRadio className="radio-button" slot="start" value="sustainabilityWellness" />
-                        </IonItem>
-                    </IonRadioGroup>
+                    <IonItem className="radio-box">
+                        <IonLabel>Service + Social Justice</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="serviceSocialJustice" />
+                    </IonItem>
+                    <IonItem className="radio-box">
+                        <IonLabel>Sports</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="sports" />
+                    </IonItem>
+                    <IonItem className="radio-box">
+                        <IonLabel>STEM</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="stem" />
+                    </IonItem>
+                    <IonItem className="radio-box">
+                        <IonLabel>Sustainability + Wellness</IonLabel>
+                        <IonCheckbox className="checkbox" slot="start" value="sustainabilityWellness" />
+                    </IonItem>
                     
                 </IonList>
                 <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
