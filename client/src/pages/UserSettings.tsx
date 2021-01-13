@@ -6,13 +6,11 @@ import Student from '../components/Student';
 import './UserSettings.css';
 import { UserContext } from '../user-context';
 
-let test_student = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"]);
-
 
 const UserSettings: React.FC<RouteComponentProps> = (props) => {
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
-    user = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"]);
+    user = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
   } 
 
   return (

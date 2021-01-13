@@ -1,5 +1,5 @@
 {
-  "name": "photo-gallery",
+  "name": "ClubHub",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "method-override": "^2.3.6",
     "morgan": "^1.7.0",
     "mutationobserver-shim": "^0.3.7",
+    "query-string": "^6.13.8",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^6.11.0",

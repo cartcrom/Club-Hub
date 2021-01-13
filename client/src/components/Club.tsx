@@ -11,21 +11,21 @@ export default class Club {
   clubLeaders: Array<Student>
   school: string;
   tags: Array<string>;
-  meeting?: Event
+  meetings?: Array<Event>;
   socialMedia: Array<string>
   events: Array<Event>
 
   constructor(name : string, id: number, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
-    school: string, tags: Array<string>, meeting: Event | undefined, socialMedia: Array<string>, events: Array<Event>) {
+    school: string, tags: Array<string>, meetings: Array<Event> | undefined, socialMedia: Array<string>, events: Array<Event>) {
     this.name = name;
     this.id = id;
     this.description = description;
     this.profileImage = profileImage;
-    this. bannerImage = bannerImage;
+    this.bannerImage = bannerImage;
     this.clubLeaders = clubLeaders;
     this.school = school;
     this.tags = tags;
-    this.meeting = meeting;
+    this.meetings = meetings;
     this.socialMedia = socialMedia;
     this.events = events;
   }
