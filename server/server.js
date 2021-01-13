@@ -12,6 +12,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const auth = require("./verification/auth")
 const helper = require("./helperFunc/helper")
+const Club = require('./schemas/club');
+const Event = require('./schemas/event');
 
 const session = require("express-session");
 var FileStore = require("session-file-store")(session);
@@ -107,7 +109,7 @@ app.get("/logout", async(req,res)=>{
 })
 
 app.post("/SignUp", (req, res) => {
-  console.log("route called sing-up")
+  console.log("route called sign-up")
   auth.sign_up(req.body)
   .then((user) => {
     req.session.user = user;
@@ -118,6 +120,40 @@ app.post("/SignUp", (req, res) => {
     console.log(err)
     res.send(false)
   })
+})
+
+app.post('/add/event', (req, res) => {
+  let eventData = req.body
+  try {
+    let event = new Event ({
+      club: eventData.club,
+      name: eventData.name,
+      desc: eventData.desc,
+      eventStart: eventData.eventStart,
+      eventEnd: eventData.eventEnd,
+      eventLoc: eventData.eventLoc,
+      postDate: eventData.postDate,
+      image: eventData.image
+    })
+    event.save()
+    res.send('Success')
+  }
+  catch {
+    res.status(400)
+    res.send('Invalid Event')
+  }
+})
+
+app.get('/get/event/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    const event = await Event.findById(id)
+    res.send(event)
+  }
+  catch {
+    res.status(400)
+    res.send('Invalid Id')
+  }
 })
 
 app.get("/", (req, res) => {

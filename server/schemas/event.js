@@ -7,18 +7,14 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const Schema = mongoose.Schema;
 
 const eSchema = new Schema({
-    club: { 
-        type: String,
-        required: true,
-    },
-    des: {
-        type: String,
-        required: true,
-    },
-    image: { // stars out of 5 
-        type: String,
-        required: true,
-    },
+    club: String,
+    name: String,
+    desc: String,
+    eventStart: Date,
+    eventEnd: Date,
+    eventLoc: String,
+    postDate: Date,
+    img: String
 });
 
 const Review = mongoose.model("Event", eSchema, "events");
