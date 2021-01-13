@@ -15,25 +15,25 @@ const InterestQuizPg4 = (props: InterestQuizProps) => {
                 <h2 id="quiz-header">I am Looking For:</h2>
                 <IonList className="transparent">
                         
-                        <IonItem className="radio-box" >
+                        <IonItem className="checkbox-box" >
                             <IonLabel>Social</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="social" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Professional</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="professional" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Project Based</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="projectBased" />
                         </IonItem>
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Competition Based</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="competitionBased" />
                         </IonItem>
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Religious</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="religious" />
                         </IonItem>

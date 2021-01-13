@@ -52,10 +52,12 @@
 .checkbox{
     --background-checked: #5337FF;
     --border-color-checked: #5337FF;
+    --background: white;
 }
 
-.radio-box{
+.checkbox-box{
     --background: white;
+    color: black;
     border-radius: 8px;
     height: 42px;
     width: 274px;
