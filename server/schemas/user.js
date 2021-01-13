@@ -9,13 +9,13 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const Schema = mongoose.Schema;
 
 const uSchema = new Schema({
-    name: {
+    firstName: {
         type: String,
-        required: true,
+        required: true
     },
-    gender: {
+    lastName: {
         type: String,
-        required: false
+        required: true
     },
     dp: {
         type: String,
@@ -29,13 +29,17 @@ const uSchema = new Schema({
         type: String,
         required: true,
     },
-    joined_club: {
-        type: Array,
+    joined_clubs: {
+        type: [{type: Schema.Types.ObjectId, ref: 'Club'}],
+        default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
+    },
+    lead_clubs: {
+        type: [{type: Schema.Types.ObjectId, ref: 'Club'}],
         default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
     },
     interests: {
-        type: mongoose.Schema.Types.Mixed,
-        default: {} /// [{"sport": ["water sport", "football", "baseball"]}, {...}]
+        type: [String],
+        default: []
     },
     school: {
         type: String,
@@ -57,6 +61,7 @@ const uSchema = new Schema({
         type: Boolean,
         default: false
     },
+    FavoriteClubType: String,
 });
 
 const User = mongoose.model("User", uSchema, "users");

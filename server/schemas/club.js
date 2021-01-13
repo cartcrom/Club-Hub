@@ -15,12 +15,13 @@ const cSchema = new Schema({
         type: String,
         required: true,
     },
-    dp: { //display picture
+    profileImage: { //display picture
         type: String,
         required: true,
     },
+    bannerImage: String,
     leaders: { //list of all the leaders (id)
-        type: Array,
+        type: [{type: Schema.Types.ObjectId, ref: 'User'}],
         required: true,
     },
     school: {
@@ -36,7 +37,7 @@ const cSchema = new Schema({
         default: [],
     },
     events: { //list of event object (id)
-        type: Array,
+        type: [{type: Schema.Types.ObjectId, ref: 'Event'}],
         default: [],
     },
     reviews: { //review object (id)
