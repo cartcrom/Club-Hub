@@ -15,32 +15,32 @@ const InterestQuizPg2 = (props: InterestQuizProps) => {
                 <h2 id="quiz-header">I am Interested In:</h2>
                 <IonList className="transparent">
 
-                        <IonItem className="radio-box" >
+                        <IonItem className="checkbox-box" >
                             <IonLabel>Business</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="business" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Community Service</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="communityService" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Greek Life</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="greekLife" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>History, Law, and Politics</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="historyLawPolitics" />
                         </IonItem>
                     
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Language and Culture</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="languageCulture" />
                         </IonItem>
 
-                        <IonItem className="radio-box">
+                        <IonItem className="checkbox-box">
                             <IonLabel>Nature and Agriculture</IonLabel>
                             <IonCheckbox className="checkbox" slot="start" value="natureAgriculture" />
                         </IonItem>
