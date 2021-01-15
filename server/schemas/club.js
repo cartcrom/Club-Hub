@@ -19,10 +19,9 @@ const cSchema = new Schema({
         type: String,
         required: true,
     },
-    bannerImage: String,
     leaders: { //list of all the leaders (id)
-        type: [{type: Schema.Types.ObjectId, ref: 'User'}],
-        required: true,
+        type: Schema.Types.Mixed,
+        default: {},
     },
     school: {
         type: String,
@@ -37,7 +36,7 @@ const cSchema = new Schema({
         default: [],
     },
     events: { //list of event object (id)
-        type: [{type: Schema.Types.ObjectId, ref: 'Event'}],
+        type: Array,
         default: [],
     },
     reviews: { //review object (id)
@@ -49,8 +48,8 @@ const cSchema = new Schema({
         required: false,
     },
     mediaPlugs: {
-        type: Array,
-        required: false,
+        type: Schema.Types.Mixed,
+        default: {},
     },
 
 });

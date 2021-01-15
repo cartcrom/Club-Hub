@@ -17,7 +17,7 @@ const uSchema = new Schema({
         type: String,
         required: true
     },
-    dp: {
+    profilePic: {
         type: String,
         required: false,
     },
@@ -30,16 +30,12 @@ const uSchema = new Schema({
         required: true,
     },
     joined_clubs: {
-        type: [{type: Schema.Types.ObjectId, ref: 'Club'}],
-        default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
-    },
-    lead_clubs: {
-        type: [{type: Schema.Types.ObjectId, ref: 'Club'}],
-        default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
+        type: Schema.Types.Mixed,
+        default: {}, /// we can also just creat an object for each club : { <"clubid">: <"position"> }
     },
     interests: {
-        type: [String],
-        default: []
+        type: Schema.Types.Mixed,
+        default: {}, 
     },
     school: {
         type: String,
@@ -61,7 +57,6 @@ const uSchema = new Schema({
         type: Boolean,
         default: false
     },
-    FavoriteClubType: String,
 });
 
 const User = mongoose.model("User", uSchema, "users");
