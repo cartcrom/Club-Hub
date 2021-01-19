@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { UserContext } from '../UserContext';
+import { ClubContext } from '../ClubContext';
+
 import { IonContent, IonBackButton, IonButtons, IonChip, IonItem, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
@@ -14,70 +17,69 @@ let test_club = new Club("Ice Cream Club", 1, "A club for people who like Ice Cr
 
 let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
 
-export default class ClubProfile extends React.Component<RouteComponentProps<{name : string}>, {name: string}> {
+const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
 
-  constructor(props: any) {
-    super(props)
-    this.state = {name: ""};
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
+  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  if (clubs === undefined) {
+    throw new Error("Undefined clubs error");
   }
 
-  // After the component did mount, we set the state
-  componentDidMount() {
-    let name = this.props.match.params.name;
-    console.log(this.props)
-
-    this.setState({name: name})
-    console.log(name)
+  let id = props.match.params.id;
+  let club = clubs.get(id);
+  if (!club) {
+    throw new Error("Undefined club error with ID " + id);
   }
 
-  render() {
-    let name = this.state.name;
-    return(
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton text="" color="dark"/>
-            </IonButtons>
-            <IonTitle>{name}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent fullscreen>
-        
-          <div className="border">
-            <img className="banner" src={john}></img>
+  return(
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton text="" color="dark"/>
+          </IonButtons>
+          <IonTitle>{club.name}</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+      
+        <div className="border">
+          <img className="banner" src={club.bannerImage}></img>
+        </div>
+
+        <div className="club-info">
+          <img className="profile" src={club.profileImage}/>
+
+          <p className="description">
+            {club.description}
+          </p>
+
+          <button className="following">following</button>
+
+          <div className="club-tags" >
+            <IonChip className="club-tag">recreational</IonChip>
+            <IonChip  className="club-tag">food</IonChip>
+            <IonChip className="club-tag">diverse</IonChip>
+            <IonChip className="club-tag club-tag-grey">fun</IonChip>
+            <IonChip  className="club-tag club-tag-grey">medium size</IonChip>
+            <IonChip className="club-tag club-tag-grey">on campus</IonChip>
           </div>
+        </div>
 
-          <div className="club-info">
-            <img className="profile" src={ice}/>
+        <div className="divider"/>
 
-            <p className="description">
-              This club is all about john. it is about understanding john as a human being and as an idol
-            </p>
+        <div className="club-content">
+          <IonLabel className="club-label">
+            {"Events and Meetings"}
+          </IonLabel>
 
-            <button className="following">following</button>
-
-            <div className="club-tags" >
-              <IonChip className="club-tag">recreational</IonChip>
-              <IonChip  className="club-tag">food</IonChip>
-              <IonChip className="club-tag">diverse</IonChip>
-              <IonChip className="club-tag club-tag-grey">fun</IonChip>
-              <IonChip  className="club-tag club-tag-grey">medium size</IonChip>
-              <IonChip className="club-tag club-tag-grey">on campus</IonChip>
-            </div>
-          </div>
-
-          <div className="divider"/>
-
-          <div className="club-content">
-            <IonLabel className="club-label">
-              {"Events and Meetings"}
-            </IonLabel>
-
-          </div>
-        </IonContent>
-      </IonPage>
-    )
-  }
-
+        </div>
+      </IonContent>
+    </IonPage>
+  )
 }
+
+export default ClubProfile;

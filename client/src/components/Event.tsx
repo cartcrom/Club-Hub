@@ -1,15 +1,62 @@
 import React from 'react';
-import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonGrid, IonLabel, IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Post.css';
 import Post from './Post'
 import Club from './Club'
-import heart from '../images/rsz_heart.png'
+import { heart, heartOutline, calendarOutline } from 'ionicons/icons';
+
+class EventView extends React.Component<{e : Event}, {loved : boolean}> {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      loved : false
+    }
+  }
+
+  render() {
+    let e = this.props.e;
+
+    return (
+      <IonGrid className='post' key={e.id}>
+        <IonRow className='post-header'>
+            <IonImg src={e.club.profileImage} className="post-profile-image"></IonImg>
+          <IonCol size="auto">
+            <IonLabel className='post-club-name'>{e.club.name}</IonLabel>
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonImg src={e.image}></IonImg>
+        </IonRow>
+        <IonRow className="event-info">
+          <IonItem lines="none" className="calendar">
+            <IonIcon src={calendarOutline}></IonIcon>
+          </IonItem>
+          <IonCol size="auto">
+            <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
+          </IonCol>
+          <IonCol >
+            <IonLabel className='event-date'>{e.date}</IonLabel>
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonItem lines="none">
+            <IonIcon className={(this.state.loved) ? "heart" : ""} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({loved: !this.state.loved})}></IonIcon>
+          </IonItem>
+          
+          <IonCol className="event-description">{e.description}</IonCol>
+        </IonRow>
+
+      </IonGrid>
+    )
+  }
+}
 
 export default class Event extends Post {
   title: string;
   eventDate: string;
   eventTime: string;
   location: string;
+  loved: boolean = false;
 
   constructor(club : Club, id: number, description: string, date: string, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
@@ -22,28 +69,27 @@ export default class Event extends Post {
 
   getFeedItem() {
     return (
-      <IonItem key={this.id}>
-        <IonCol>
-          <IonItemDivider className="club-banner" > 
-            <IonRow>
-              <IonImg src={this.club.profileImage} className="image"></IonImg>
-              <IonCol>
-                <IonText>{this.club.name}</IonText>
-              </IonCol>
-            </IonRow>
-          </IonItemDivider>
-          <IonRow><IonImg src={this.image}></IonImg></IonRow>
-          <IonItemDivider className="details">
-            <IonCol>{this.title}</IonCol>
-            <IonCol>{this.eventDate}</IonCol>
-            <IonCol>{this.eventTime}</IonCol>
-          </IonItemDivider>
-          <IonRow>
-            <IonImg src={heart}></IonImg>
-            <IonCol>{this.description}</IonCol>
-          </IonRow>
-        </IonCol>
-      </IonItem>
+      <EventView e={this}/>
+      // <IonItem key={this.id}>
+      //   <IonCol >
+      //       <IonRow className="club-banner">
+      //         <IonImg src={this.club.profileImage} className="post-profile-image"></IonImg>
+      //         <IonCol>
+      //           <IonText>{this.club.name}</IonText>
+      //         </IonCol>
+      //       </IonRow>
+      //     <IonRow><IonImg src={this.image}></IonImg></IonRow>
+      //     <IonItemDivider className="details">
+      //       <IonCol>{this.title}</IonCol>
+      //       <IonCol>{this.eventDate}</IonCol>
+      //       <IonCol>{this.eventTime}</IonCol>
+      //     </IonItemDivider>
+      //     <IonRow>
+      //       <IonImg src={heart}></IonImg>
+      //       <IonCol>{this.description}</IonCol>
+      //     </IonRow>
+      //   </IonCol>
+      // </IonItem>
     )
   }
 }

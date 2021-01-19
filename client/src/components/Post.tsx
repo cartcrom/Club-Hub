@@ -1,15 +1,15 @@
 import React from 'react';
 import Club from './Club'
 import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { heart } from 'ionicons/icons';
 import './Post.css';
-import heart from '../images/rsz_heart.png'
 
 export default class Post {
-  protected club : Club;
-  protected id: number;
-  protected description: string;
-  protected date: string;
-  protected image: string;
+  club : Club;
+  id: number;
+  description: string;
+  date: string;
+  image: string;
 
 
   constructor(club : Club, id: number, description: string, date: string, image: string) {

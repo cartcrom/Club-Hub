@@ -8,8 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
 interface LoginProps extends RouteComponentProps {
-    setLogin: Function,
-    setUser: Function
+    authenticate : Function;
 }
 
 type LoginInfo = {
@@ -33,8 +32,7 @@ const SignIn: React.FC<LoginProps> = (props) => {
             console.log(res);
             if (res.data) {
                 console.log(res.data);
-                props.setUser(res.data);
-                props.setLogin(true);
+                props.authenticate(res.data);
             }
             else
                 setError("password", {message: "Invalid Login"});

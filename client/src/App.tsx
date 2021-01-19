@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 
 /* Ionic */
@@ -16,6 +16,8 @@ import {
 /* Router */
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
+import history from './history';
 
 /* UI */
 import { homeOutline, searchOutline, listCircleOutline, personOutline} from 'ionicons/icons';
@@ -31,6 +33,10 @@ import Explore from './pages/Explore';
 import MyClubs from './pages/MyClubs';
 import ClubProfile from './pages/ClubProfile';
 import UserSettings from './pages/UserSettings';
+
+/* Components */
+import Club from './components/Club';
+import Loader from './components/Loader/loader.js';
 
 /* Club Registration */
 import ClubTypes from './pages/club-registration/ClubTypes';
@@ -66,8 +72,14 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 /* User Context */
-import {UserContext} from './user-context';
+import {UserContext} from './UserContext';
+import {ClubContext} from './ClubContext'
 import Student from './components/Student';
+import { stringify } from 'query-string';
+
+/* Sample Pics - Remove later */
+import john from './images/john.jpg';
+import ice from './images/rsz_ice_cream.jpg';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -78,8 +90,11 @@ type AppState = {
   isAuthenticated: boolean;
   hasTakenQuiz: boolean;
   skipQuiz: boolean;
-  user: Student | undefined
+  user: Student | undefined;
+  club_data: Map<string,Club> | undefined;
 }
+
+
 
 export default class App extends React.Component<{}, AppState> {
 
@@ -89,7 +104,8 @@ export default class App extends React.Component<{}, AppState> {
       isAuthenticated: false, 
       hasTakenQuiz: false,
       skipQuiz: false,
-      user: undefined
+      user: undefined,
+      club_data: undefined
     }
 
   }
@@ -107,8 +123,29 @@ export default class App extends React.Component<{}, AppState> {
   componentDidMount() {
   }
 
-  setLogin = (login : boolean) => {
-    this.setState({isAuthenticated : login});
+  fetch_club_data() {
+    let fake = new Map<string, Club>();
+
+    let test_club = new Club("Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+    let test_club2 = new Club("John Club", 2, "A club for people who like John", john, john, [], "Cal Poly SLO", [], undefined, [], [])
+    let test_club3 = new Club("John Club 2", 3, "A club for people who like John even more", john, john, [], "Cal Poly SLO", [], undefined, [], [])
+    fake.set("Ice Cream Club", test_club)
+    fake.set("John Club", test_club2)
+    fake.set("John Club 2", test_club3)
+
+    setTimeout(() => {  this.setState({club_data: fake}); }, 1500);
+  }
+
+  authenticate = (user : any) => {
+    if (user)
+      this.setUser(user);
+    else // Change - remove clubs before release build
+      this.setState({user: new Student("Guest", "", -1, "Cal Poly SLO", "unregistered", ["social", "recreation", "outdoors", "athletic", "games"], ["John Club","John Club 2"], ["Ice Cream Club"])});
+    
+    history.push("/")
+
+    this.setState({isAuthenticated : true});
+    this.fetch_club_data();
   }
 
   setUser = (u : any) => {
@@ -119,8 +156,8 @@ export default class App extends React.Component<{}, AppState> {
       u.school,
       u.email,
       ["social", "recreation", "outdoors", "athletic", "games"],
-      ["1","2","3","4"],
-      ["3"]
+      ["John Club","John Club 2"],
+      ["Ice Cream Club"]
     )})
   }
 
@@ -138,93 +175,80 @@ export default class App extends React.Component<{}, AppState> {
 
   // render will know everything!
   render() {
+    console.log("rendering " + history.location.pathname)
     
-    let default_route = (this.state.hasTakenQuiz || this.state.skipQuiz) ?
-      <Route render={() => <Redirect to="/feed" />} exact={true} />
-      : <Route render={() => <Redirect to="/interestQuiz" />} exact={true} />
+    let isauth = this.state.isAuthenticated;
+    let default_route = <Route render={() => <Redirect to="/login" />} exact={true} />
 
     if (this.state.isAuthenticated) {
-      return (
-        <IonApp>
+      if (this.state.hasTakenQuiz) {
+        default_route = <Route render={() => <Redirect to="/feed" />} exact={true} />
+      }
+      else {
+        default_route = <Route render={() => <Redirect to="/interestQuiz" />} exact={true} />
+      }
+    }
+      
+
+    let ProtectedRouteProps = {isAuthenticated: this.state.isAuthenticated, authenticationPath: '/login'}
+
+    return (
+      <IonApp>
           <UserContext.Provider value={this.state.user}>
-            <IonReactRouter>
-              <IonTabs> 
+          <ClubContext.Provider value={this.state.club_data}>
+            {(isauth && !this.state.club_data) && 
+              <Loader></Loader>
+            }
+            <IonReactRouter history={history}>
+              <IonTabs>
                 <IonRouterOutlet>
-                  <Route path="/feed" component={Feed} exact={true} />
-                  <Route path="/explore" component={Explore} exact={true} />
-                  <Route path="/myclubs" component={MyClubs} />
-                  <Route path="/club/:name" component={ClubProfile} />            
-                  <Route path="/profile" component={UserSettings} />            
-                  <Route path="/clubRegistration" component={ClubRegistration} />
-                  <Route path="/addEvent" component={AddEvent} />
-                  <Route path="/clubTypes" component={ClubTypes} />
-                  <Route path="/clubColleges" component={ClubColleges} />
-                  <Route path="/clubSocials" component={ClubSocials} />
-                  <Route path="/daysOfWeek" component={DaysOfWeek} />
-                  <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
-                  {default_route}
-                  
+                  <Switch>
+                    <Route path="/signin" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignIn {...props} authenticate={this.authenticate}/>}/>
+                    <Route path="/signup" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignUp {...props} authenticate={this.authenticate} />} />
+                    <Route path="/login"  render={(props) => (isauth) ? <Redirect to={'/'} /> : <FrontPage {...props} authenticate={this.authenticate} />} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/feed' component={Feed} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
+                    <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubRegistration' component={ClubRegistration} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent' component={AddEvent} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubTypes' component={ClubTypes} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubSocials' component={ClubSocials} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/daysOfWeek' component={DaysOfWeek} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
+                    {default_route}
+                  </Switch>
                 </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                  <IonTabButton tab="feed" href="/feed">
-                    <IonIcon icon={homeOutline} />
-                    <IonLabel>FEED</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="explore" href="/explore">
-                    <IonIcon icon={searchOutline} />
-                    <IonLabel>EXPLORE</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="clubs" href="/myclubs">
-                    <IonIcon icon={listCircleOutline} />
-                    <IonLabel>MY CLUBS</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton tab="profile" href="/profile">
-                    <IonIcon icon={personOutline} />
-                    <IonLabel>ME</IonLabel>
-                  </IonTabButton>
-                </IonTabBar>
-              </IonTabs>
-            </IonReactRouter>
-          </UserContext.Provider>
-        </IonApp>
-      )
-    }
-    else {
-      return (
-        <IonApp>
-          <UserContext.Provider value={this.state.user}>
-            <IonReactRouter>
-              <IonRouterOutlet>
-                <Route path="/signin" render={(props) => <SignIn {...props} setLogin={this.setLogin} setUser={this.setUser} />}/>
-                <Route path="/signup" render={(props) => <SignUp {...props} setLogin={this.setLogin} />} />
-                <Route path="/login"  render={(props) => <FrontPage {...props} setLogin={this.setLogin} />} />
-                <Route render={() => <Redirect to="/login" />} exact={true} />
-              </IonRouterOutlet>
-            </IonReactRouter>
-          </UserContext.Provider>
-        </IonApp>
-      )
-    }
+                {(this.state.isAuthenticated) ?
+                  <IonTabBar slot="bottom">
+                    <IonTabButton tab="feed" href="/feed">
+                      <IonIcon icon={homeOutline} />
+                      <IonLabel>FEED</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="explore" href="/explore">
+                      <IonIcon icon={searchOutline} />
+                      <IonLabel>EXPLORE</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="clubs" href="/myclubs">
+                      <IonIcon icon={listCircleOutline} />
+                      <IonLabel>MY CLUBS</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="profile" href="/profile">
+                      <IonIcon icon={personOutline} />
+                      <IonLabel>ME</IonLabel>
+                    </IonTabButton>
+                  </IonTabBar>
+                  :
+                  <IonTabBar/>
+                }
+              
+            </IonTabs>
+          </IonReactRouter>
+        </ClubContext.Provider>
+        </UserContext.Provider>
+      </IonApp>
+    )
   }
 }
-
-// function PrivateRoute({ children, ...rest }) {
-//   let auth = useAuth();
-//   return (
-//     <Route
-//       {...rest}
-//       render={({ location }) =>
-//         auth.user ? (
-//           children
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/login",
-//               state: { from: location }
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// }

@@ -16,8 +16,8 @@ function fetch_posts() {
 
   let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
 
-  let test_event = new Event(test_club, 1, "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
-  let posts : Array<Post> = [test_event]
+  let test_event = new Event(test_club, 1, "Come eat ice cream in an agressive fashion - points for speed and agression", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
+  let posts : Array<Post> = [test_event, test_event, test_event]
 
   let feed : Array<JSX.Element> = [];
   posts.forEach((post : Post) => 

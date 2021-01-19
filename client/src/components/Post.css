@@ -1,0 +1,73 @@
+.post {
+    width: 100%;
+    padding: 0;
+}
+.header {
+    background: white;
+}
+.post-header {
+    width: 100%;
+    background: rgb(239, 241, 243);
+    color: #2e2e2e;
+    font: bold 15px "Proxima Nova", Helvetica, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.post-profile-image {
+    width: 40pt;
+    height: 40pt;
+    border-radius: 10pt !important;
+    overflow: hidden;
+    margin: 2pt 5pt;
+}
+
+.post-club-name {
+    line-height: 35pt;
+    height: 35pt;
+    text-align: center;
+}
+
+.event-info {
+    position: absolute;
+    width: 100%;
+    margin: -43pt 0;
+    background: rgba(239, 241, 243, .8);
+    color: #2e2e2e;
+    font: bold 10pt "Proxima Nova", Helvetica, sans-serif;
+}
+
+.calendar {
+    padding: 5pt 0;
+    background: transparent;
+    --ion-background-color: transparent !important
+}
+
+.event-title {
+    font:  10pt "Proxima Nova Bold", Helvetica, sans-serif;
+    line-height: 35pt;
+    height: 35pt;
+    text-align: center;
+}
+
+.event-date {
+    font: 10pt "Proxima Nova Bold";
+    line-height: 35pt;
+    height: 35pt;
+    text-align: center;
+    padding: 0 0 0 10pt;
+}
+
+.heart {
+    color: rgb(245, 12, 109);
+}
+
+.event-description {
+    font: bold 10pt "Proxima Nova";
+    padding: 5pt;
+}
+
+.details{
+    --background: rgba(232, 236, 241, 1);
+    --color: #000000;
+}

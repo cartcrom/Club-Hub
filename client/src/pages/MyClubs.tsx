@@ -1,19 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { UserContext } from '../UserContext';
+import { ClubContext } from '../ClubContext';
+import Student from '../components/Student';
+import Club from '../components/Club';
+
+import add from '../images/add.png';
+
 import { IonContent, IonItem, IonItemDivider, IonAvatar, IonLabel, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
 import './MyClubs.css';
-import Club from '../components/Club';
+
 import { RouteComponentProps } from 'react-router';
-
-import john from '../images/john.jpg';
-import ice from '../images/rsz_ice_cream.jpg';
-import add from '../images/add.png'
-
-let test_club = new Club("Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
-let test_club2 = new Club("John Club", 1, "A club for people who like John", john, john, [], "Cal Poly SLO", [], undefined, [], [])
-let test_club3 = new Club("John Club 2", 1, "A club for people who like John even more", john, john, [], "Cal Poly SLO", [], undefined, [], [])
-
-let my_lead_clubs = [test_club, test_club2];
-let my_clubs = [test_club3];
 
 const AddButton = (props: RouteComponentProps) => {
   return(
@@ -29,6 +25,15 @@ const AddButton = (props: RouteComponentProps) => {
 }
 
 const MyClubs: React.FC<RouteComponentProps> = (props) => {
+
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
+  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  if (clubs === undefined) {
+    throw new Error("Undefined clubs error");
+  }
 
   const selectClub = (name : string) => {
     props.history.push('clubRegistration')
@@ -48,10 +53,31 @@ const MyClubs: React.FC<RouteComponentProps> = (props) => {
   }
 
   let lead_clubs_view : Array<JSX.Element> = [];
-  my_lead_clubs.forEach(club => lead_clubs_view.push(<ClubView key={club.name} club={club}/>))
-  
   let clubs_view : Array<JSX.Element> = [];
-  my_clubs.forEach(club => clubs_view.push(<ClubView key={club.name} club={club}/>))
+
+  // Create frames for each club
+  for (let id of user.joined_clubs) {
+    let club = clubs.get(id);
+    if (!club) {
+      throw new Error("Undefined club error with club ID: " + id);
+    }
+    else {
+      clubs_view.push(<ClubView key={club.name} club={club}/>)
+    }
+  }
+
+  // Create frames for each lead club
+  for (let id of user.lead_clubs) {
+    let club = clubs.get(id);
+    if (!club) {
+      throw new Error("Undefined lead club error with club ID: " + id);
+    }
+    else {
+      lead_clubs_view.push(<ClubView key={club.name} club={club}/>)
+    }
+  }
+  
+  
 
 
   return (

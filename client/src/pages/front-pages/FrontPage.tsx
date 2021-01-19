@@ -5,7 +5,7 @@ import logo from '../../images/CHLogo.png'
 import { RouteComponentProps } from 'react-router';
 
 interface LoginProps extends RouteComponentProps {
-    setLogin: Function
+    authenticate: Function
 }
 
 const FrontPage: React.FC<LoginProps> = (props) => {
@@ -28,7 +28,7 @@ const FrontPage: React.FC<LoginProps> = (props) => {
 
                 <hr/>
 
-                <IonItem button detail={false} className="chip-button-outline" onClick={() => {props.setLogin(true);}}>
+                <IonItem button detail={false} className="chip-button-outline" onClick={() => {props.authenticate(undefined);}}>
                     <IonLabel>Continue as guest</IonLabel>
                 </IonItem>
             </IonFooter>

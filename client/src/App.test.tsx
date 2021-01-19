@@ -1,7 +1,7 @@
 import React from 'react';
 import { findByTitle, fireEvent, prettyDOM, render, screen } from '@testing-library/react';
 import App from './App';
-import { UserContext } from './user-context';
+import { UserContext } from './UserContext';
 import Student from './components/Student';
 import UserSettings from './pages/UserSettings';
 import { Route, StaticRouter, MemoryRouter } from 'react-router';

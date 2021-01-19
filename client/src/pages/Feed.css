@@ -1,22 +1,12 @@
-.club-banner {
-    --background: rgba(232, 236, 241, 1);
-    --color: #000000;
-    font: bold 15px "Proxima Nova Rg", Helvetica, sans-serif;
-    text-align: center;
-}
+
 
 .header{
-    
     --color: #000000;
     text-align: center;
 }
 
-.details{
-    --background: rgba(232, 236, 241, 1);
-    --color: #000000;
-}
+
 
 .image{
     height: 40px;
 }
-

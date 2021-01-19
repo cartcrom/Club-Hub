@@ -4,13 +4,13 @@ import ExploreContainer from '../components/ExploreContainer';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import './UserSettings.css';
-import { UserContext } from '../user-context';
+import { UserContext } from '../UserContext';
 
 
 const UserSettings: React.FC<RouteComponentProps> = (props) => {
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
-    user = new Student("Carter", "Cromer", 1, "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
+    throw new Error("Undefined user error");
   } 
 
   return (

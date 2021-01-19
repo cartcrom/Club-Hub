@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
 interface LoginProps extends RouteComponentProps {
-    setLogin: Function
+    authenticate: Function
 }
 
 type SignUpInfo = {
@@ -31,8 +31,7 @@ const SignUp: React.FC<LoginProps> = (props) =>{
             .then((res : Object) => {
             // handle success
             console.log(res);
-            props.history.push('interestQuiz');
-            props.setLogin(true);
+            props.authenticate(undefined);   // Add user response from server here later
           })
           .catch((err : any) => {
             if (!err.response) {
