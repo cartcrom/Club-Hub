@@ -1,20 +1,28 @@
 import React, { useContext } from 'react';
+import { UserContext } from '../UserContext';
+import { ClubContext } from '../ClubContext';
 import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Feed.css';
 import '../global_styles.css';
 import Post from '../components/Post';
 import Event from '../components/Event';
 import Club from '../components/Club';
-import { ClubContext } from '../ClubContext';
+import Student from '../components/Student';
 
 import john from '../images/john.jpg'
 import ice from '../images/rsz_ice_cream.jpg'
+import { returnUpForwardSharp } from 'ionicons/icons';
 
 
 
 
 
 const Feed: React.FC = () => {
+
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
   let clubs : Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
@@ -24,16 +32,34 @@ const Feed: React.FC = () => {
     // Call backend here to get posts, for now use this sample data
   
     //let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
-    const selectClub = (name : string) => {
-      let club = clubs?.get(name)
-      if (club === undefined){
-         club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+
+    
+
+    let posts : Array<Event> = [];
+
+    if (!user || !clubs)
+      return;
+
+    // Create frames for each club
+    for (let id of user.joined_clubs) {
+      let club = clubs.get(id);
+      if (!club) {
+        throw new Error("Undefined club error with club ID: " + id);
       }
-      return club
+      else {
+        club.events.forEach((e : Event) => posts.push(e))
+      }
     }
-  
-    let test_event = new Event(selectClub("Cal Poly Ice Cream Club"), 1, "Come eat ice cream in an agressive fashion - points for speed and agression", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
-    let posts : Array<Post> = [test_event, test_event, test_event]
+
+    for (let id of user.lead_clubs) {
+      let club = clubs.get(id);
+      if (!club) {
+        throw new Error("Undefined club error with club ID: " + id);
+      }
+      else {
+        club.events.forEach((e : Event) => posts.push(e))
+      }
+    }
   
     let feed : Array<JSX.Element> = [];
     posts.forEach((post : Post) => 

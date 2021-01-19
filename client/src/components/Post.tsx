@@ -6,13 +6,13 @@ import './Post.css';
 
 export default class Post {
   club : Club;
-  id: number;
+  id: string;
   description: string;
   date: string;
   image: string;
 
 
-  constructor(club : Club, id: number, description: string, date: string, image: string) {
+  constructor(club : Club, id: string, description: string, date: string, image: string) {
     this.club = club;
     this.id = id;
     this.description = description;

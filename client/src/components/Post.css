@@ -28,6 +28,10 @@
     text-align: center;
 }
 
+.post-image {
+    width:100%;
+}
+
 .event-info {
     position: absolute;
     width: 100%;

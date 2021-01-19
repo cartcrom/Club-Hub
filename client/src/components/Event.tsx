@@ -25,7 +25,7 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonImg src={e.image}></IonImg>
+          <IonImg className='post-image' src={e.image}></IonImg>
         </IonRow>
         <IonRow className="event-info">
           <IonItem lines="none" className="calendar">
@@ -35,7 +35,7 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
             <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
           </IonCol>
           <IonCol >
-            <IonLabel className='event-date'>{e.date}</IonLabel>
+            <IonLabel className='event-date'>{e.eventDate}</IonLabel>
           </IonCol>
         </IonRow>
         <IonRow>
@@ -58,7 +58,7 @@ export default class Event extends Post {
   location: string;
   loved: boolean = false;
 
-  constructor(club : Club, id: number, description: string, date: string, image: string,
+  constructor(club : Club, id: string, description: string, date: string, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
     super(club, id, description, date, image);
     this.title = title;

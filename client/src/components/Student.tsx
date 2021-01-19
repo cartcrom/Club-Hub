@@ -1,7 +1,7 @@
 export default class Student {
   fn : string;
   ln: string;
-  id: Number;
+  id: string;
   school: string;
   email: string;
   interests: Array<string>;
@@ -11,7 +11,7 @@ export default class Student {
   joined_clubs: Array<string>;      // Stores ID's of clubs this student joined
   lead_clubs: Array<string>; // Stores ID's of clubs this student leads
 
-  constructor(fn : string, ln: string, id: number, school: string, email: string, interests: Array<string>, clubs: Array<string>, 
+  constructor(fn : string, ln: string, id: string, school: string, email: string, interests: Array<string>, clubs: Array<string>, 
     lead_clubs: Array<string>, major?: string, collegeOf?: string, favoriteClubType?: string) {
     this.fn = fn;
     this.ln = ln;

@@ -1,10 +1,11 @@
 import React from 'react';
 import Student from './Student';
+import Event from './Event';
 //import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 export default class Club {
   name : string;
-  id: Number;
+  id: string;
   description: string;
   profileImage: string;
   bannerImage: string;
@@ -15,7 +16,7 @@ export default class Club {
   socialMedia: Array<string>
   events: Array<Event>
 
-  constructor(name : string, id: number, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
+  constructor(name : string, id: string, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
     school: string, tags: Array<string>, meetings: Array<Event> | undefined, socialMedia: Array<string>, events: Array<Event>) {
     this.name = name;
     this.id = id;
@@ -33,5 +34,11 @@ export default class Club {
   // Method
   getId() {
     return this.id;
+  }
+
+  addEvent(id: string, description: string, date: string, image: string,
+    title: string, eventDate: string, eventTime: string, location: string) {
+    let e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
+    this.events.push(e);
   }
 }

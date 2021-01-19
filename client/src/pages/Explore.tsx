@@ -47,7 +47,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     const selectClub = (name : string) => {
       let club = clubs?.get(name)
       if (club === undefined){
-         club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+         club = new Club("Cal Poly Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
       }
       return club
     }
