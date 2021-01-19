@@ -1,0 +1,58 @@
+Event Schema: 
+    club : club
+    id : id
+    description : description
+    postDate : postDate
+    img : img 
+    name : name
+    eventDate : eventDate
+    eventTime : eventTime
+    Location : Location
+
+Club Schema: 
+    name : name
+    id : id
+    description : description
+    profileImg : profileImg
+    bannerImg : bannerImg
+    clubLeaders : clubLeaders
+    school : school
+    tages : tages 
+    meeting : meeting
+    socialMedia : socialMedia
+    events: events
+
+Ice Cream Event: 
+    club : johnClub
+    id : 12
+    description : "Eat ice cream angrily"
+    postDate : 01/12/2021
+    img : img 
+    name : "Agressive ice cream eating"
+    eventDate : 01/13/2021
+    eventTime : "3PM-5PM"
+    Location : "Kennedy Lawn"
+
+Cathartic Wail: 
+    club : studentClub
+    id : 420
+    description : "Scream into the void."
+    postDate : 01/25/2022
+    img : wail
+    name : "catharticWail"
+    eventDate : 05/25/2022
+    eventTime : "12AM-5AM"
+    Location : "Cal Poly"
+
+The Schmoovin Club: 
+    name : "Schmoovin Club"
+    id : 34
+    description : "Always schmoovin"
+    profileImg : groovy
+    bannerImg : sogroovy
+    clubLeaders : []
+    school : "Cal Poly"
+    tags : []
+    meeting : ???
+    socialMedia : []
+    events: []
