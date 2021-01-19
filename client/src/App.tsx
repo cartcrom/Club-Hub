@@ -150,8 +150,8 @@ export default class App extends React.Component<{}, AppState> {
 
   setUser = (u : any) => {
     this.setState({user: new Student(
-      u.name,
-      u.name,
+      u.firstName,
+      u.lastName,
       u._id,
       u.school,
       u.email,
