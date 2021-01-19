@@ -17,7 +17,7 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
     let e = this.props.e;
 
     return (
-      <IonGrid className='post' key={e.id}>
+      <IonGrid className='post'>
         <IonRow className='post-header'>
             <IonImg src={e.club.profileImage} className="post-profile-image"></IonImg>
           <IonCol size="auto">
@@ -69,7 +69,7 @@ export default class Event extends Post {
 
   getFeedItem() {
     return (
-      <EventView e={this}/>
+      <EventView e={this} key={this.id}/>
       // <IonItem key={this.id}>
       //   <IonCol >
       //       <IonRow className="club-banner">

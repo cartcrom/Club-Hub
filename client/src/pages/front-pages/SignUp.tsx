@@ -49,13 +49,6 @@ const SignUp: React.FC<LoginProps> = (props) =>{
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar className="transparent">
-                    <IonButtons slot="start">
-                        <IonBackButton text="" className="white-color"/>
-                    </IonButtons>
-                </IonToolbar>
-            </IonHeader>
 
             <IonContent fullscreen className="gradient-content" scrollY={false}>
                 <img src={logo} alt="ClubHub Logo" id="logo"/>
