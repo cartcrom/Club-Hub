@@ -1,6 +1,6 @@
 import React from 'react';
 import Club from './Club'
-import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonCol, IonImg, IonItem, IonItemDivider, IonRow, IonText} from '@ionic/react';
 import { heart } from 'ionicons/icons';
 import './Post.css';
 

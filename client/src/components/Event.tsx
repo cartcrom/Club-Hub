@@ -1,5 +1,5 @@
 import React from 'react';
-import {  IonGrid, IonLabel, IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow} from '@ionic/react';
 import './Post.css';
 import Post from './Post'
 import Club from './Club'

@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
 
-import { IonContent, IonBackButton, IonButtons, IonChip, IonItem, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonBackButton, IonButtons, IonChip, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import Club from '../components/Club';
