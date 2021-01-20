@@ -1,7 +1,5 @@
-import React from 'react';
 import Student from './Student';
 import Event from './Event';
-//import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 export default class Club {
   name : string;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  IonGrid, IonLabel, IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow} from '@ionic/react';
 import './Post.css';
 import Post from './Post'
 import Club from './Club'
@@ -25,18 +25,19 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonImg className='post-image' src={e.image}></IonImg>
+          <div className="container">
+            <IonImg className='post-image' src={e.image}></IonImg>
+            <div className="bottom-right">
+              <IonItem lines="none" className="calendar">
+                <IonIcon src={calendarOutline}></IonIcon>
+              </IonItem>
+              <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
+              <IonLabel className='event-date'>{e.eventDate}</IonLabel>
+            </div>
+          </div>
         </IonRow>
         <IonRow className="event-info">
-          <IonItem lines="none" className="calendar">
-            <IonIcon src={calendarOutline}></IonIcon>
-          </IonItem>
-          <IonCol size="auto">
-            <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
-          </IonCol>
-          <IonCol >
-            <IonLabel className='event-date'>{e.eventDate}</IonLabel>
-          </IonCol>
+          
         </IonRow>
         <IonRow>
           <IonItem lines="none">
