@@ -1,4 +1,5 @@
 import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
 import React, { useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
@@ -9,12 +10,17 @@ const AddEvent: React.FC<RouteComponentProps> = (props) => {
     const nameInputRef = useRef<HTMLIonInputElement>(null);
   var eventList = useRef<HTMLIonListElement>(null);
   const doTheThing = () => {
-    const name = nameInputRef.current?.value;
-    eventList.current?.append("hi");
-    eventList.current?.append("\n");
-    console.log(name);
+    let name = (document.getElementById("nameID") as HTMLIonInputElement).value;
+    let desc = (document.getElementById("descID") as HTMLIonInputElement).value;
+    let loc = (document.getElementById("locID") as HTMLIonInputElement).value;
+    let date = (document.getElementById("dateID") as HTMLIonInputElement).value;
+    let start = (document.getElementById("startID") as HTMLIonInputElement).value;
+    let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+    console.log(name, desc, loc, date, start, end);
   }
 
+
+    
     return (
         <IonPage>
           <IonHeader>
@@ -25,29 +31,29 @@ const AddEvent: React.FC<RouteComponentProps> = (props) => {
           <IonContent fullscreen>
             <IonItem>
                 <IonLabel position="floating">Title</IonLabel>
-                <IonInput ref={nameInputRef}></IonInput>
+                <IonInput id={"nameID"}></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Description</IonLabel>
-                <IonInput></IonInput>
+                <IonInput id={"descID"}></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Location</IonLabel>
-                <IonInput ></IonInput>
+                <IonInput id={"locID"}></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Date</IonLabel>
-                <IonDatetime></IonDatetime>
+                <IonDatetime id={"dateID"}></IonDatetime>
             </IonItem>
             <IonItem>
                 <IonLabel>Start</IonLabel>
-                <IonDatetime display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
+                <IonDatetime id={"startID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
             <IonItem>
                 <IonLabel>End</IonLabel>
-                <IonDatetime display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
+                <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
-                <IonButton id="add-button" expand="full">Add Event</IonButton>
+                <IonButton onClick={() => doTheThing()}id="add-button" expand="full">Add Event</IonButton>
                 <IonButton expand="full">Cancel</IonButton>
           </IonContent>
         </IonPage>
