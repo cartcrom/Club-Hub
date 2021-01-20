@@ -41,7 +41,7 @@ const MyClubs: React.FC<RouteComponentProps> = (props) => {
 
   const ClubView = (data : {club: Club}) => {
     return(
-      <IonItem lines="none" button onClick={() => {props.history.push('club/' + data.club.name) }}>
+      <IonItem lines="none" button onClick={() => {props.history.push('club/' + data.club.id) }}>
         <IonAvatar slot="start">
           <img src={data.club.profileImage} />
         </IonAvatar>

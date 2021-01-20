@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
 
-import { IonContent, IonBackButton, IonButtons, IonChip, IonItem, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonList, IonBackButton, IonButtons, IonChip, IonItem, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import Club from '../components/Club';
@@ -14,8 +14,6 @@ import ice from '../images/rsz_ice_cream.jpg'
 
 let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
 let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
-
-let test_event = new Event(test_club, "id1", "Eat ice cream angrily", "August 22", john, "Agressive Ice Cream Eating", "October 29", "12PM - 5PM", "Kennedy Lawn");
 
 const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
 
@@ -34,6 +32,9 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
     throw new Error("Undefined club error with ID " + id);
   }
 
+  let feed : Array<JSX.Element> = [];
+  club.events.forEach((e : Event) => feed.push(e.getFeedItem()))
+
   return(
     <IonPage>
       <IonHeader>
@@ -45,6 +46,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonInfiniteScroll>
       
         <div className="border">
           <img className="banner" src={club.bannerImage}></img>
@@ -72,11 +74,21 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
         <div className="divider"/>
 
         <div className="club-content">
-          <IonLabel className="club-label">
+          {/* <IonLabel className="club-label">
             {"Events and Meetings"}
+          </IonLabel> */}
+
+          <IonLabel className="club-label">
+            {"Posts"}
           </IonLabel>
+          
+          <IonList>
+            {feed}
+          </IonList>
 
         </div>
+        
+        </IonInfiniteScroll>
       </IonContent>
     </IonPage>
   )
