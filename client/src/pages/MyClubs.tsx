@@ -6,7 +6,7 @@ import Club from '../components/Club';
 
 import add from '../images/add.png';
 
-import { IonContent, IonItem, IonItemDivider, IonAvatar, IonLabel, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
+import { IonContent, IonItem, IonAvatar, IonLabel,  IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
 import './MyClubs.css';
 
 import { RouteComponentProps } from 'react-router';

@@ -1,10 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonAvatar,  IonChip,  IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Explore.css';
 import { RouteComponentProps } from 'react-router';
-import Post from '../components/Post';
-import Event from '../components/Event';
 import ClubCard from '../components/ClubCard';
 import Club from '../components/Club';
 import { ClubContext } from '../ClubContext';

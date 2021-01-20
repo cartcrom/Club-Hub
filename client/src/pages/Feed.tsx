@@ -1,20 +1,13 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
-import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonContent, IonHeader,IonInfiniteScroll, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Feed.css';
 import '../global_styles.css';
 import Post from '../components/Post';
 import Event from '../components/Event';
 import Club from '../components/Club';
 import Student from '../components/Student';
-
-import john from '../images/john.jpg'
-import ice from '../images/rsz_ice_cream.jpg'
-import { returnUpForwardSharp } from 'ionicons/icons';
-
-
-
 
 
 const Feed: React.FC = () => {
@@ -29,11 +22,7 @@ const Feed: React.FC = () => {
   }
 
   function fetch_posts() {
-    // Call backend here to get posts, for now use this sample data
-  
-    //let test_club = new Club("Cal Poly Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
-
-    
+    //Need to call back end. Still using dummy data
 
     let posts : Array<Event> = [];
 

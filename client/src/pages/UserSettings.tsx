@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonGrid, IonRow, IonCol, IonChip, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonChip, IonCard, IonCardContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import './UserSettings.css';
