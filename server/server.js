@@ -26,13 +26,11 @@ app.use(express.static(__dirname + "/assets"));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: ["http://localhost:3000"], //frontend server localhost:8100
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // enable set cookie
-  })
-);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({
@@ -47,11 +45,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
@@ -122,7 +115,7 @@ app.post("/SignUp", (req, res) => {
   })
 })
 
-app.post('/add/event', (req, res) => {
+app.post('/add/event', async (req, res) => {
   let eventData = req.body
   try {
     let event = new Event ({
@@ -136,6 +129,12 @@ app.post('/add/event', (req, res) => {
       image: eventData.image
     })
     event.save()
+
+    const clubId = eventData.clubId
+    const eventId = event._id
+    await Club.findByIdAndUpdate(clubId, {
+      $push: {events: eventId}
+    })
     res.send('Success')
   }
   catch {
@@ -153,6 +152,47 @@ app.get('/get/event/:id', async (req, res) => {
   catch {
     res.status(400)
     res.send('Invalid Id')
+  }
+})
+
+app.get('/get/clubEvents/:clubId', async (req, res) => {
+  const clubId = req.params.clubId
+  try {
+    const club = await Club.findById(clubId)
+  }
+  catch {
+    res.status(400)
+    res.send('Invalid clubId')
+  }
+
+  let events = []
+  for (eventId in club.events) {
+    events.push(await Event.findById(eventId))
+  }
+
+  res.send(events)
+})
+
+app.get('/add/club', (req, res) => {
+  let clubData = req.body
+  try {
+    let club = new Club({
+      name: clubData.name,
+      description: clubData.description,
+      profileImage: clubData.profileImage,
+      school: clubData.school,
+      leaders: [clubData.leaderId]
+    })
+    if (clubData.bannerImage)
+      club.bannerImage = clubData.bannerImage
+    club.save()
+
+    
+    res.send('Success')
+  }
+  catch {
+    res.status(400)
+    res.send('Invalid club structure')
   }
 })
 

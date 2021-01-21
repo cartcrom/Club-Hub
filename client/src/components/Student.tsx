@@ -1,7 +1,7 @@
 export default class Student {
   fn : string;
   ln: string;
-  id: Number;
+  id: string;
   school: string;
   email: string;
   interests: Array<string>;
@@ -11,7 +11,8 @@ export default class Student {
   joined_clubs: Array<string>;      // Stores ID's of clubs this student joined
   lead_clubs: Array<string>; // Stores ID's of clubs this student leads
 
-  constructor(fn : string, ln: string, id: number, school: string, email: string, interests: Array<string>, clubs: Array<string>, lead_clubs: Array<string>, major?: string, collegeOf?: string, favoriteClubType?: string) {
+  constructor(fn : string, ln: string, id: string, school: string, email: string, interests: Array<string>, clubs: Array<string>, 
+    lead_clubs: Array<string>, major?: string, collegeOf?: string, favoriteClubType?: string) {
     this.fn = fn;
     this.ln = ln;
     this.id = id;
@@ -20,13 +21,9 @@ export default class Student {
     this.interests = interests;
     this.joined_clubs = clubs;
     this.lead_clubs = lead_clubs;
-
-    if (major)
-      this.major = major
-    if (collegeOf)
-      this.collegeOf = collegeOf
-    if (favoriteClubType)
-      this.favoriteClubType = favoriteClubType
+    this.major = major;
+    this.collegeOf = collegeOf;
+    this.favoriteClubType = favoriteClubType;
   }
 
   // Method

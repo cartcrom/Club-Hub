@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonGrid, IonRow, IonCol, IonChip, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonChip, IonCard, IonCardContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import './UserSettings.css';
@@ -12,6 +11,8 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
   if (user === undefined) {
     throw new Error("Undefined user error");
   } 
+
+  let interests = user.interests.map(intrest => <IonChip className="tag">{intrest}</IonChip>)
 
   return (
   <IonPage>
@@ -68,11 +69,7 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
 
       <IonCard>
         <IonCardContent className="settings-card">
-          <IonItem lines="none" className="tags" >
-            <IonChip className="tag">Recreational</IonChip>
-            <IonChip  className="tag">Food</IonChip>
-            <IonChip className="tag">Poppin'</IonChip>
-          </IonItem>
+          {interests}
           <IonItem lines="none" className="data" >
             <IonButton onClick={() => props.history.push("/interestQuiz")}>retake interest quiz</IonButton>
           </IonItem>

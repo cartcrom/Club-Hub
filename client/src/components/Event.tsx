@@ -1,5 +1,5 @@
 import React from 'react';
-import {  IonGrid, IonLabel, IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import {  IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow} from '@ionic/react';
 import './Post.css';
 import Post from './Post'
 import Club from './Club'
@@ -17,7 +17,7 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
     let e = this.props.e;
 
     return (
-      <IonGrid className='post' key={e.id}>
+      <IonGrid className='post'>
         <IonRow className='post-header'>
             <IonImg src={e.club.profileImage} className="post-profile-image"></IonImg>
           <IonCol size="auto">
@@ -25,18 +25,19 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonImg src={e.image}></IonImg>
+          <div className="container">
+            <IonImg className='post-image' src={e.image}></IonImg>
+            <div className="bottom-right">
+              <IonItem lines="none" className="calendar">
+                <IonIcon src={calendarOutline}></IonIcon>
+              </IonItem>
+              <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
+              <IonLabel className='event-date'>{e.eventDate}</IonLabel>
+            </div>
+          </div>
         </IonRow>
         <IonRow className="event-info">
-          <IonItem lines="none" className="calendar">
-            <IonIcon src={calendarOutline}></IonIcon>
-          </IonItem>
-          <IonCol size="auto">
-            <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
-          </IonCol>
-          <IonCol >
-            <IonLabel className='event-date'>{e.date}</IonLabel>
-          </IonCol>
+          
         </IonRow>
         <IonRow>
           <IonItem lines="none">
@@ -58,7 +59,7 @@ export default class Event extends Post {
   location: string;
   loved: boolean = false;
 
-  constructor(club : Club, id: number, description: string, date: string, image: string,
+  constructor(club : Club, id: string, description: string, date: string, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
     super(club, id, description, date, image);
     this.title = title;
@@ -69,7 +70,7 @@ export default class Event extends Post {
 
   getFeedItem() {
     return (
-      <EventView e={this}/>
+      <EventView e={this} key={this.id}/>
       // <IonItem key={this.id}>
       //   <IonCol >
       //       <IonRow className="club-banner">

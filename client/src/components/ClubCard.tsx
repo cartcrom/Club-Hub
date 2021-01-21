@@ -1,6 +1,6 @@
 import React from 'react';
 import Club from './Club'
-import {  IonButton, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar, IonCard, IonCardTitle, IonGrid, IonChip } from '@ionic/react';
+import { IonImg, IonCard, IonCardTitle, IonGrid, IonChip } from '@ionic/react';
 import './ClubCard.css';
 
 export default class Post {

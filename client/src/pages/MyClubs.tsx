@@ -6,7 +6,7 @@ import Club from '../components/Club';
 
 import add from '../images/add.png';
 
-import { IonContent, IonItem, IonItemDivider, IonAvatar, IonLabel, IonButton, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
+import { IonContent, IonItem, IonAvatar, IonLabel,  IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
 import './MyClubs.css';
 
 import { RouteComponentProps } from 'react-router';
@@ -41,7 +41,7 @@ const MyClubs: React.FC<RouteComponentProps> = (props) => {
 
   const ClubView = (data : {club: Club}) => {
     return(
-      <IonItem lines="none" button onClick={() => {props.history.push('club/' + data.club.name) }}>
+      <IonItem lines="none" button onClick={() => {props.history.push('club/' + data.club.id) }}>
         <IonAvatar slot="start">
           <img src={data.club.profileImage} />
         </IonAvatar>

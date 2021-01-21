@@ -80,6 +80,7 @@ import { stringify } from 'query-string';
 /* Sample Pics - Remove later */
 import john from './images/john.jpg';
 import ice from './images/rsz_ice_cream.jpg';
+import {DD_fake_clubs, DD_guest_user} from './DummyData'
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -124,23 +125,15 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   fetch_club_data() {
-    let fake = new Map<string, Club>();
 
-    let test_club = new Club("Ice Cream Club", 1, "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
-    let test_club2 = new Club("John Club", 2, "A club for people who like John", john, john, [], "Cal Poly SLO", [], undefined, [], [])
-    let test_club3 = new Club("John Club 2", 3, "A club for people who like John even more", john, john, [], "Cal Poly SLO", [], undefined, [], [])
-    fake.set("Ice Cream Club", test_club)
-    fake.set("John Club", test_club2)
-    fake.set("John Club 2", test_club3)
-
-    setTimeout(() => {  this.setState({club_data: fake}); }, 1500);
+    setTimeout(() => {  this.setState({club_data: DD_fake_clubs}); }, 1500);
   }
 
   authenticate = (user : any) => {
     if (user)
       this.setUser(user);
     else // Change - remove clubs before release build
-      this.setState({user: new Student("Guest", "", -1, "Cal Poly SLO", "unregistered", ["social", "recreation", "outdoors", "athletic", "games"], ["John Club","John Club 2"], ["Ice Cream Club"])});
+      this.setState({user: DD_guest_user});
     
     history.push("/")
 
@@ -150,8 +143,8 @@ export default class App extends React.Component<{}, AppState> {
 
   setUser = (u : any) => {
     this.setState({user: new Student(
-      u.name,
-      u.name,
+      u.firstName,
+      u.lastName,
       u._id,
       u.school,
       u.email,

@@ -28,7 +28,8 @@ function login(email, pass) {
 function sign_up(details) {
     return new Promise(function (resolve, reject) {
             let user = new User()
-            user.name = details.name
+            user.firstName = details.firstName
+            user.lastName = details.lastName
             user.email = details.email
             user.password = details.password
             email_verification(details.email, user._id).then((ok)=>{

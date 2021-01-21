@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';

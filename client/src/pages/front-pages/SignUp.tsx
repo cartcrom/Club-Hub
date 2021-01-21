@@ -12,7 +12,8 @@ interface LoginProps extends RouteComponentProps {
 }
 
 type SignUpInfo = {
-    name: string;
+    firstName: string;
+    lastName: string;
     college: string | undefined;
     email: string;
     password: string;
@@ -49,13 +50,6 @@ const SignUp: React.FC<LoginProps> = (props) =>{
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar className="transparent">
-                    <IonButtons slot="start">
-                        <IonBackButton text="" className="white-color"/>
-                    </IonButtons>
-                </IonToolbar>
-            </IonHeader>
 
             <IonContent fullscreen className="gradient-content" scrollY={false}>
                 <img src={logo} alt="ClubHub Logo" id="logo"/>
@@ -67,10 +61,21 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                     <IonItem className="chip-input">
                         <IonIcon src={personOutline} slot="start" />
                         <Controller
-                            name="name"
+                            name="firstName"
                             control={control}
                             render={({onChange, onBlur}) => (
-                                <IonInput placeholder="full name" type="text" required
+                                <IonInput placeholder="first name" type="text" required
+                                    onIonChange={onChange} onIonBlur={onBlur} />
+                            )}
+                        />
+                    </IonItem>
+                    <IonItem className="chip-input">
+                        <IonIcon src={personOutline} slot="start" />
+                        <Controller
+                            name="firstName"
+                            control={control}
+                            render={({onChange, onBlur}) => (
+                                <IonInput placeholder="last name" type="text" required
                                     onIonChange={onChange} onIonBlur={onBlur} />
                             )}
                         />
