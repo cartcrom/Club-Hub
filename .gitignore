@@ -28,3 +28,4 @@ client/debug.log
 backend/node_modules
 *.log
 client/debug.log
+server/sessions/-lgEIZv-8GOCAL4WU4GOOZJBKe6w1AJ-.json
