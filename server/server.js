@@ -16,6 +16,7 @@ const Club = require('./schemas/club');
 const Event = require('./schemas/event');
 
 const session = require("express-session");
+const User = require("./schemas/user");
 var FileStore = require("session-file-store")(session);
 // const User = require("./user");
 // const dataB = require("./database");
@@ -194,6 +195,18 @@ app.get('/add/club', (req, res) => {
     res.status(400)
     res.send('Invalid club structure')
   }
+})
+
+app.get("/test/populate/:id", async (req,res) => {
+  const studentId = req.params.id
+  let student = await User.findById(studentId)
+    .populate('joined_clubs')
+    .populate('lead_clubs')
+    .populate({
+      path: 'lead_clubs',
+      populate: {path: 'events'}
+    })
+  res.send(student)
 })
 
 app.get("/", (req, res) => {
