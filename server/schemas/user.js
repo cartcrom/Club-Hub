@@ -30,12 +30,16 @@ const uSchema = new Schema({
         required: true,
     },
     joined_clubs: {
-        type: Schema.Types.Mixed,
-        default: {}, /// we can also just creat an object for each club : { <"clubid">: <"position"> }
+        type: [{ type: Schema.Types.ObjectId, ref: 'Club' }],
+        default: [], /// we can also just creat an object for each club : { <"clubid">: <"position"> }
+    },
+    lead_clubs: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'Club' }],
+        default: [],
     },
     interests: {
-        type: Schema.Types.Mixed,
-        default: {}, 
+        type: [String],
+        default: [], 
     },
     school: {
         type: String,

@@ -7,7 +7,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 const Schema = mongoose.Schema;
 
 const eSchema = new Schema({
-    club: [{ type: Schema.Types.ObjectId, ref: 'Club' }],
+    club: { type: Schema.Types.ObjectId, ref: 'Club' },
     name: String,
     desc: String,
     postDate: String,

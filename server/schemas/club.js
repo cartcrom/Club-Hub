@@ -24,7 +24,7 @@ const cSchema = new Schema({
     },
     leaders: { //list of all the leaders (id)
         type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-        default: {},
+        default: [],
     },
     school: {
         type: String,
