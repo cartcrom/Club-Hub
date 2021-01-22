@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
 
-import { IonContent, IonList, IonBackButton, IonButtons, IonChip, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
+import { IonContent, IonList, IonItem, IonBackButton, IonButtons, IonChip, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import Club from '../components/Club';
@@ -32,8 +32,9 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
     throw new Error("Undefined club error with ID " + id);
   }
 
-  let feed : Array<JSX.Element> = [];
-  club.events.forEach((e : Event) => feed.push(e.getFeedItem()))
+  let feed = club.events.map((e : Event) => e.getFeedItem(false));
+
+  let tags = club.tags.map(t => <IonChip key={t} className="club-tag">{t}</IonChip>);
 
   return(
     <IonPage>
@@ -62,12 +63,9 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
           <button className="following">following</button>
 
           <div className="club-tags" >
-            <IonChip className="club-tag">recreational</IonChip>
-            <IonChip  className="club-tag">food</IonChip>
-            <IonChip className="club-tag">diverse</IonChip>
-            <IonChip className="club-tag club-tag-grey">fun</IonChip>
-            <IonChip  className="club-tag club-tag-grey">medium size</IonChip>
-            <IonChip className="club-tag club-tag-grey">on campus</IonChip>
+            {
+              tags
+            }
           </div>
         </div>
 
@@ -78,9 +76,10 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
             {"Events and Meetings"}
           </IonLabel> */}
 
-          <IonLabel className="club-label">
-            {"Posts"}
-          </IonLabel>
+          <IonItem lines="none" className="content-label">Posts</IonItem>
+
+          <div className="divider"/>
+
           
           <IonList>
             {feed}

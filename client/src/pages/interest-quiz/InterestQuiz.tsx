@@ -31,15 +31,16 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
         var interestArray:string[] = [];
         this.setState({
           page: 0,
-          schoolName: " ",
-          college: " ",
-          major: " ",
+          schoolName: "",
+          college: "",
+          major: "",
           interests: interestArray
         });
     }
 
     submitQuiz = () => {
         //axios.post('http://localhost:5000/interestQuiz', this.state.interests)
+        this.props.finishQuiz(this.state.interests, this.state.schoolName,this.state.college,this.state.major);
         this.props.history.push("/feed");
     }
 

@@ -20,7 +20,7 @@ export default class Post {
     this.image = image;
   }
 
-  getFeedItem() {
+  getFeedItem(useHeader: boolean) {
     return (
       <IonItem>
         <IonCol>

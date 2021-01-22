@@ -47,6 +47,8 @@ ion-toolbar:after {
     background-clip: content-box, border-box;
   
     width: 70pt;
+    height: 70pt;
+    object-fit: cover;
     margin:  -35pt 0;
     position: absolute;
     
@@ -87,13 +89,7 @@ ion-toolbar:after {
 .club-tag-grey {
     background-color: lightgrey;
 }
-
-.club-content {
-    margin-left: 3%;
-    margin-top: 3%;
-}
-
-.club-content ion-label {
+.content-label {
     font-family: 'Proxima Nova Bold' !important;
     font-size: 14pt !important;
 }

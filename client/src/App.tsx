@@ -150,7 +150,10 @@ export default class App extends React.Component<{}, AppState> {
       u.email,
       ["social", "recreation", "outdoors", "athletic", "games"],
       ["John Club","John Club 2"],
-      ["Ice Cream Club"]
+      ["Ice Cream Club"],
+      "",
+      "",
+      undefined
     )})
   }
 
@@ -160,9 +163,25 @@ export default class App extends React.Component<{}, AppState> {
     })
   }
 
-  finishQuiz = () => {
+  finishQuiz = (interests: Array<string>, school: string, college: string, major: string) => {
+
+    let user = this.state.user;
+
     this.setState({
-      hasTakenQuiz: true
+      hasTakenQuiz: true,
+      user: new Student(
+        user!.fn,
+        user!.ln,
+        user!.id,
+        school,
+        user!.email,
+        interests,
+        user!.joined_clubs,
+        user!.lead_clubs,
+        major,
+        college,
+        user!.favoriteClubType
+      )
     })
   }
 

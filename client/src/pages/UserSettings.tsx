@@ -12,7 +12,7 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
     throw new Error("Undefined user error");
   } 
 
-  let interests = user.interests.map(intrest => <IonChip className="tag">{intrest}</IonChip>)
+  let interests = user.interests.map(interest => <IonChip key={interest} className="tag">{interest}</IonChip>)
 
   return (
   <IonPage>
