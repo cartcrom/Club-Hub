@@ -1,52 +1,38 @@
 import React, {useState} from 'react';
 import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider, IonCheckbox } from '@ionic/react';
 import './InterestQuiz.css';
+import { map } from 'ionicons/icons';
 
 interface InterestQuizProps {
     nextPage: Function
+    addInterest: Function
 }
 
 const InterestQuizPg2 = (props: InterestQuizProps) => {
-    const [selected, setSelected] = useState<string>('empty');
+    const [checked, setChecked] = useState(false)
+    const checkboxes = 
+    [{ title: "Business", val: "business" },
+     { title: "Community Service", val: "service" },
+     { title: "Greek Life", val: "greek" },
+     { title: "History, Law, and Politics", val: "history" },
+     { title: "Language and Culture", val: "culture" },
+     { title: "Nature and Agriculture", val: "nature" }]
+    
+
     return (
         <IonPage>
             <IonContent fullscreen className="quiz-gradient" >
                 <IonProgressBar className="progress-bar" color="secondary" value={0.3}></IonProgressBar>
                 <h2 id="quiz-header">I am Interested In:</h2>
                 <IonList className="transparent">
-
-                        <IonItem className="checkbox-box" >
-                            <IonLabel>Business</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="business" />
+                    {checkboxes.map(({ title, val }, i) => (
+                        <IonItem className="checkbox-box" key={i}>
+                            <IonLabel>{title}</IonLabel>
+                            <IonCheckbox className="checkbox" slot="start" value={val} onIonChange={e => props.addInterest(e.detail.value, e.detail.checked)} />
                         </IonItem>
-
-                        <IonItem className="checkbox-box">
-                            <IonLabel>Community Service</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="communityService" />
-                        </IonItem>
-
-                        <IonItem className="checkbox-box">
-                            <IonLabel>Greek Life</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="greekLife" />
-                        </IonItem>
-
-                        <IonItem className="checkbox-box">
-                            <IonLabel>History, Law, and Politics</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="historyLawPolitics" />
-                        </IonItem>
-                    
-                        <IonItem className="checkbox-box">
-                            <IonLabel>Language and Culture</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="languageCulture" />
-                        </IonItem>
-
-                        <IonItem className="checkbox-box">
-                            <IonLabel>Nature and Agriculture</IonLabel>
-                            <IonCheckbox className="checkbox" slot="start" value="natureAgriculture" />
-                        </IonItem>
-                   
-                    
+                    ))}
                 </IonList>
+    
                 <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
                     <IonLabel>next</IonLabel>
                 </IonItem>
