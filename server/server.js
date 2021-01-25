@@ -32,6 +32,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(cors())
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({
