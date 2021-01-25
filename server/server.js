@@ -197,18 +197,6 @@ app.get('/add/club', (req, res) => {
   }
 })
 
-app.get("/test/populate/:id", async (req,res) => {
-  const studentId = req.params.id
-  let student = await User.findById(studentId)
-    .populate('joined_clubs')
-    .populate('lead_clubs')
-    .populate({
-      path: 'lead_clubs',
-      populate: {path: 'events'}
-    })
-  res.send(student)
-})
-
 app.get("/", (req, res) => {
     res.send("hey");
 });
