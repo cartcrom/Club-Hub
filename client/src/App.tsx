@@ -81,6 +81,7 @@ import { stringify } from 'query-string';
 import john from './images/john.jpg';
 import ice from './images/rsz_ice_cream.jpg';
 import {DD_fake_clubs, DD_guest_user} from './DummyData'
+import { backendToClub, backendToStudent } from './components/backendDataConversion';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -124,21 +125,26 @@ export default class App extends React.Component<{}, AppState> {
   componentDidMount() {
   }
 
-  fetch_club_data() {
+  fetch_club_data(clubData : any) {
+    let clubs = new Map<string, Club>()
 
-    setTimeout(() => {  this.setState({club_data: DD_fake_clubs}); }, 1500);
+    for (let club of clubData) {
+      clubs.set(club._id, backendToClub(club))
+    }
+
+    setTimeout(() => {  this.setState({club_data: clubs}); }, 1500);
   }
 
   authenticate = (user : any) => {
     if (user)
-      this.setUser(user);
+      this.setState({user : backendToStudent(user)})
     else // Change - remove clubs before release build
       this.setState({user: DD_guest_user});
     
     history.push("/")
 
     this.setState({isAuthenticated : true});
-    this.fetch_club_data();
+    this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
   }
 
   setUser = (u : any) => {
@@ -150,7 +156,10 @@ export default class App extends React.Component<{}, AppState> {
       u.email,
       ["social", "recreation", "outdoors", "athletic", "games"],
       ["John Club","John Club 2"],
-      ["Ice Cream Club"]
+      ["Ice Cream Club"],
+      "",
+      "",
+      undefined
     )})
   }
 
@@ -160,9 +169,25 @@ export default class App extends React.Component<{}, AppState> {
     })
   }
 
-  finishQuiz = () => {
+  finishQuiz = (interests: Array<string>, school: string, college: string, major: string) => {
+
+    let user = this.state.user;
+
     this.setState({
-      hasTakenQuiz: true
+      hasTakenQuiz: true,
+      user: new Student(
+        user!.fn,
+        user!.ln,
+        user!.id,
+        school,
+        user!.email,
+        interests,
+        user!.joined_clubs,
+        user!.lead_clubs,
+        major,
+        college,
+        user!.favoriteClubType
+      )
     })
   }
 

@@ -52,7 +52,7 @@ const Feed: React.FC = () => {
   
     let feed : Array<JSX.Element> = [];
     posts.forEach((post : Post) => 
-      feed.push(post.getFeedItem())
+      feed.push(post.getFeedItem(true))
     )
     return feed;
   }

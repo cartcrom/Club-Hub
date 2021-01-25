@@ -5,7 +5,7 @@ import Post from './Post'
 import Club from './Club'
 import { heart, heartOutline, calendarOutline } from 'ionicons/icons';
 
-class EventView extends React.Component<{e : Event}, {loved : boolean}> {
+class EventView extends React.Component<{e : Event, useHeader: boolean}, {loved : boolean}> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -18,12 +18,15 @@ class EventView extends React.Component<{e : Event}, {loved : boolean}> {
 
     return (
       <IonGrid className='post'>
-        <IonRow className='post-header'>
+        {this.props.useHeader && 
+          <IonRow className='post-header'>
             <IonImg src={e.club.profileImage} className="post-profile-image"></IonImg>
-          <IonCol size="auto">
-            <IonLabel className='post-club-name'>{e.club.name}</IonLabel>
-          </IonCol>
-        </IonRow>
+            <IonCol size="auto">
+              <IonLabel className='post-club-name'>{e.club.name}</IonLabel>
+            </IonCol>
+          </IonRow>
+        }
+        
         <IonRow>
           <div className="container">
             <IonImg className='post-image' src={e.image}></IonImg>
@@ -68,9 +71,9 @@ export default class Event extends Post {
     this.location = location;
   }
 
-  getFeedItem() {
+  getFeedItem(useHeader: boolean) {
     return (
-      <EventView e={this} key={this.id}/>
+      <EventView e={this} useHeader={useHeader} key={this.id}/>
       // <IonItem key={this.id}>
       //   <IonCol >
       //       <IonRow className="club-banner">
