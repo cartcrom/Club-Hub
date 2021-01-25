@@ -7,9 +7,7 @@ import './AddEvent.css';
 
 const AddEvent: React.FC<RouteComponentProps> = (props) => {
 
-    const nameInputRef = useRef<HTMLIonInputElement>(null);
-  var eventList = useRef<HTMLIonListElement>(null);
-  const doTheThing = () => {
+  const addEvent = () => {
     let name = (document.getElementById("nameID") as HTMLIonInputElement).value;
     let desc = (document.getElementById("descID") as HTMLIonInputElement).value;
     let loc = (document.getElementById("locID") as HTMLIonInputElement).value;
@@ -17,10 +15,9 @@ const AddEvent: React.FC<RouteComponentProps> = (props) => {
     let start = (document.getElementById("startID") as HTMLIonInputElement).value;
     let end = (document.getElementById("endID") as HTMLIonInputElement).value;
     console.log(name, desc, loc, date, start, end);
+    //make a post call here to send the data to the server
   }
 
-
-    
     return (
         <IonPage>
           <IonHeader>
@@ -53,7 +50,7 @@ const AddEvent: React.FC<RouteComponentProps> = (props) => {
                 <IonLabel>End</IonLabel>
                 <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
-                <IonButton onClick={() => doTheThing()}id="add-button" expand="full">Add Event</IonButton>
+                <IonButton onClick={() => addEvent()}id="add-button" expand="full">Add Event</IonButton>
                 <IonButton expand="full">Cancel</IonButton>
           </IonContent>
         </IonPage>
