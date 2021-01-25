@@ -18,7 +18,6 @@ const Event = require('./schemas/event');
 const session = require("express-session");
 const User = require("./schemas/user");
 var FileStore = require("session-file-store")(session);
-const User = require("./schemas/user");
 // const dataB = require("./database");
 /////////////////////////////////////////////////////////////////////////////////////////////
 

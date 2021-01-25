@@ -22,6 +22,12 @@ function login(email, pass) {
                 resolve(false)
             }
         })
+        .populate('joined_clubs')
+        .populate({ path: 'joined_clubs', populate: { path: 'events'} })
+        .populate({ path: 'joined_clubs', populate: { path: 'leaders'} })
+        .populate('lead_clubs')
+        .populate({ path: 'lead_clubs', populate: { path: 'events'} })
+        .populate({ path: 'joined_clubs', populate: { path: 'leaders'} })
     })
 }
 
