@@ -18,7 +18,7 @@ const Event = require('./schemas/event');
 const session = require("express-session");
 const User = require("./schemas/user");
 var FileStore = require("session-file-store")(session);
-// const User = require("./user");
+const User = require("./schemas/user");
 // const dataB = require("./database");
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -196,7 +196,28 @@ app.get('/add/club', (req, res) => {
     res.send('Invalid club structure')
   }
 })
-
+app.post("/intrest/quiz", (req,res)=>{
+  if(req.session.user._id){
+    User.findOne({_id: req.session.user._id}).then((usr)=>{
+      if(usr){
+        usr.school = req.body.school
+        usr.collegeOf = req.body.collegeOf
+        usr.major = req.body.major
+        usr.interests = req.body.interests
+        req.session.user = usr;
+        usr.save().then(res.send(true))
+        console.log("User updated", usr)
+      }else{
+        
+        console.log("invalid id for user")
+        res.send(false)
+      }
+    })
+  }else{
+    console.log("user does'nt have id", req.session.user)
+    res.send(false)
+  }
+})
 app.get("/", (req, res) => {
     res.send("hey");
 });
