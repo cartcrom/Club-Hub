@@ -2,6 +2,7 @@
 
 # dependencies
 /client/node_modules
+/client/cypress
 /server/node_modules
 /server/sessions
 
