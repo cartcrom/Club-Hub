@@ -75,9 +75,8 @@ app.post("/login", (req, res) => {
       if (user) {
         req.session.user = user;
         console.log("Current Session for ", req.session.user);
-        console.log(user);
         helper.object_trimmer(user, ["password"]).then((usr) => {
-          console.log("logged in as#", usr);
+          console.log("logged in as#", usr.firstName);
           res.send(usr);
         });
       } else {
