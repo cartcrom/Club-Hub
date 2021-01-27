@@ -34,7 +34,12 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:8100",
+    credentials: true,
+  })
+);
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({
