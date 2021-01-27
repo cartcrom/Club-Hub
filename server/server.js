@@ -10,10 +10,10 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const auth = require("./verification/auth")
-const helper = require("./helperFunc/helper")
-const Club = require('./schemas/club');
-const Event = require('./schemas/event');
+const auth = require("./verification/auth");
+const helper = require("./helperFunc/helper");
+const Club = require("./schemas/club");
+const Event = require("./schemas/event");
 
 const session = require("express-session");
 const User = require("./schemas/user");
@@ -28,10 +28,13 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
-app.use(cors())
+app.use(cors());
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({
@@ -53,37 +56,38 @@ app.use(express.json());
 
 //Routes ##############################################################################
 
-app.post("/authentication", (req,res)=>{
-  console.log(req.body.email, req.body.password)
-  auth.login(req.body.email, req.body.password)
-  .then((user) => {
+app.post("/authentication", (req, res) => {
+  console.log(req.body.email, req.body.password);
+  auth.login(req.body.email, req.body.password).then((user) => {
     if (user) {
-      res.send(true)
-    }else{
-      res.send(false)
+      res.send(true);
+    } else {
+      res.send(false);
     }
-  })
-})
-
+  });
+});
 
 app.post("/login", (req, res) => {
-  console.log("*Login route called with this req:*", req.body)
-  auth.login(req.body.email, req.body.password)
-  .then((user) => {
-    if (user) {
-      req.session.user = user;
-      helper.object_trimmer(user, ["password"]).then((usr) => {
-        console.log("logged in as#", usr.name)
-        res.send(usr)
-      })
-    }else{
-      res.send(false)
-    }
-  })
-  .catch((err) => {
-    console.log(err)
-    res.status(401).send(err)
-  })
+  console.log("*Login route called with this req:*", req.body);
+  auth
+    .login(req.body.email, req.body.password)
+    .then((user) => {
+      if (user) {
+        req.session.user = user;
+        console.log("Current Session for ", req.session.user);
+        console.log(user);
+        helper.object_trimmer(user, ["password"]).then((usr) => {
+          console.log("logged in as#", usr);
+          res.send(usr);
+        });
+      } else {
+        res.send(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send(err);
+    });
 });
 
 app.get("/verify/user", (req, res) => {
@@ -92,34 +96,34 @@ app.get("/verify/user", (req, res) => {
   });
 });
 
-
-app.get("/logout", async(req,res)=>{
+app.get("/logout", async (req, res) => {
   if (req.session.user) {
     req.session.destroy();
     console.log("session delete");
   } else {
     console.log("trying to log out without user.");
   }
-})
+});
 
 app.post("/SignUp", (req, res) => {
-  console.log("route called sign-up")
-  auth.sign_up(req.body)
-  .then((user) => {
-    req.session.user = user;
-    console.log("User = ",user)
-    res.send(user)
-  })
-  .catch((err) => {
-    console.log(err)
-    res.send(false)
-  })
-})
+  console.log("route called sign-up");
+  auth
+    .sign_up(req.body)
+    .then((user) => {
+      req.session.user = user;
+      console.log("User = ", user);
+      res.send(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(false);
+    });
+});
 
-app.post('/add/event', async (req, res) => {
-  let eventData = req.body
+app.post("/add/event", async (req, res) => {
+  let eventData = req.body;
   try {
-    let event = new Event ({
+    let event = new Event({
       club: eventData.club,
       name: eventData.name,
       desc: eventData.desc,
@@ -127,103 +131,96 @@ app.post('/add/event', async (req, res) => {
       eventEnd: eventData.eventEnd,
       eventLoc: eventData.eventLoc,
       postDate: eventData.postDate,
-      image: eventData.image
-    })
-    event.save()
+      image: eventData.image,
+    });
+    event.save();
 
-    const clubId = eventData.clubId
-    const eventId = event._id
+    const clubId = eventData.clubId;
+    const eventId = event._id;
     await Club.findByIdAndUpdate(clubId, {
-      $push: {events: eventId}
-    })
-    res.send('Success')
+      $push: { events: eventId },
+    });
+    res.send("Success");
+  } catch {
+    res.status(400);
+    res.send("Invalid Event");
   }
-  catch {
-    res.status(400)
-    res.send('Invalid Event')
-  }
-})
+});
 
-app.get('/get/event/:id', async (req, res) => {
-  const id = req.params.id
+app.get("/get/event/:id", async (req, res) => {
+  const id = req.params.id;
   try {
-    const event = await Event.findById(id)
-    res.send(event)
+    const event = await Event.findById(id);
+    res.send(event);
+  } catch {
+    res.status(400);
+    res.send("Invalid Id");
   }
-  catch {
-    res.status(400)
-    res.send('Invalid Id')
-  }
-})
+});
 
-app.get('/get/clubEvents/:clubId', async (req, res) => {
-  const clubId = req.params.clubId
+app.get("/get/clubEvents/:clubId", async (req, res) => {
+  const clubId = req.params.clubId;
   try {
-    const club = await Club.findById(clubId)
-  }
-  catch {
-    res.status(400)
-    res.send('Invalid clubId')
+    const club = await Club.findById(clubId);
+  } catch {
+    res.status(400);
+    res.send("Invalid clubId");
   }
 
-  let events = []
+  let events = [];
   for (eventId in club.events) {
-    events.push(await Event.findById(eventId))
+    events.push(await Event.findById(eventId));
   }
 
-  res.send(events)
-})
+  res.send(events);
+});
 
-app.get('/add/club', (req, res) => {
-  let clubData = req.body
+app.get("/add/club", (req, res) => {
+  let clubData = req.body;
   try {
     let club = new Club({
       name: clubData.name,
       description: clubData.description,
       profileImage: clubData.profileImage,
       school: clubData.school,
-      leaders: [clubData.leaderId]
-    })
-    if (clubData.bannerImage)
-      club.bannerImage = clubData.bannerImage
-    club.save()
+      leaders: [clubData.leaderId],
+    });
+    if (clubData.bannerImage) club.bannerImage = clubData.bannerImage;
+    club.save();
 
-    
-    res.send('Success')
+    res.send("Success");
+  } catch {
+    res.status(400);
+    res.send("Invalid club structure");
   }
-  catch {
-    res.status(400)
-    res.send('Invalid club structure')
-  }
-})
-app.post("/intrest/quiz", (req,res)=>{
-  if(req.session.user._id){
-    User.findOne({_id: req.session.user._id}).then((usr)=>{
-      if(usr){
-        usr.school = req.body.school
-        usr.collegeOf = req.body.collegeOf
-        usr.major = req.body.major
-        usr.interests = req.body.interests
+});
+app.post("/intrest/quiz", (req, res) => {
+  if (req.session.user) {
+    User.findOne({ _id: req.session.user._id }).then((usr) => {
+      if (usr) {
+        usr.school = req.body.school;
+        usr.collegeOf = req.body.collegeOf;
+        usr.major = req.body.major;
+        usr.interests = req.body.interests;
         req.session.user = usr;
-        usr.save().then(res.send(true))
-        console.log("User updated", usr)
-      }else{
-        
-        console.log("invalid id for user")
-        res.send(false)
+        usr.save().then(res.send(true));
+        console.log("User updated", usr);
+      } else {
+        console.log("invalid id for user");
+        res.send(false);
       }
-    })
-  }else{
-    console.log("user does'nt have id", req.session.user)
-    res.send(false)
+    });
+  } else {
+    console.log("user does'nt have id", req.session.user);
+    res.send(false);
   }
-})
+});
 app.get("/", (req, res) => {
-    res.send("hey");
+  res.send("hey");
 });
 
 app.get("/test", (req, res) => {
-  res.send('Success');
+  res.send("Success");
 });
 
 server.listen(5000, () => console.log("backend online at 5000"));
