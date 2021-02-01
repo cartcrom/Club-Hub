@@ -1,5 +1,6 @@
 const User = require("../schemas/user");
 const nodemailer = require("nodemailer");
+const verifier = require('academic-email-verifier').Verifier;
 
 function login(email, pass) {
   return new Promise(function (resolve, reject) {
@@ -37,13 +38,15 @@ function login(email, pass) {
   });
 }
 
-function sign_up(details) {
+async function sign_up(details) {
+  let school = await verifier.getInstitutionName(details.email)
   return new Promise(function (resolve, reject) {
     let user = new User();
     user.firstName = details.firstName;
     user.lastName = details.lastName;
     user.email = details.email;
     user.password = details.password;
+    user.school = school;
     email_verification(details.email, user._id).then((ok) => {
       user.save().then((obj) => {
         resolve(obj);
