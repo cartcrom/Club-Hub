@@ -14,6 +14,7 @@ const auth = require("./verification/auth");
 const helper = require("./helperFunc/helper");
 const Club = require("./schemas/club");
 const Event = require("./schemas/event");
+const verifier = require('academic-email-verifier').Verifier;
 
 const session = require("express-session");
 const User = require("./schemas/user");
@@ -109,8 +110,22 @@ app.get("/logout", async (req, res) => {
   }
 });
 
-app.post("/SignUp", (req, res) => {
+app.post("/SignUp", async (req, res) => {
   console.log("route called sign-up");
+  // User Error Checking
+  if (! (await verifier.isAcademic(req.body.email))) {
+    console.log('Non-academic email');
+    res.status(401).send('Email must end in .edu');
+    return
+  }
+  let dupEmail = await User.find({email: req.body.email})
+  console.log(dupEmail)
+  if (dupEmail.length != 0) {
+    console.log('Email Already in Use');
+    res.status(401).send('Email Already in Use');
+    return
+  }
+  // Regular Routes
   auth
     .sign_up(req.body)
     .then((user) => {
