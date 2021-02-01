@@ -29,10 +29,10 @@ const SignUp: React.FC<LoginProps> = (props) =>{
         console.log('submitting')
 
         axios.post('http://localhost:5000/SignUp', info)
-            .then((res : Object) => {
+            .then((res : any) => {
             // handle success
             console.log(res);
-            props.authenticate(undefined);   // Add user response from server here later
+            props.authenticate(res.data);   // Add user response from server here later
           })
           .catch((err : any) => {
             if (!err.response) {
@@ -72,7 +72,7 @@ const SignUp: React.FC<LoginProps> = (props) =>{
                     <IonItem className="chip-input">
                         <IonIcon src={personOutline} slot="start" />
                         <Controller
-                            name="firstName"
+                            name="lastName"
                             control={control}
                             render={({onChange, onBlur}) => (
                                 <IonInput placeholder="last name" type="text" required
