@@ -70,8 +70,53 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     return feed;
   }
 
-const [text, setText] = useState<string>();
+  const [search, setSearch] = useState<string>();
 
+  const ExploreHome = () => {
+    return(
+      <div>
+        <div className="everythingOnOneLine">
+              {interests}
+            </div>
+
+        <IonText className="listHeader">Recommended</IonText>
+        <IonList>
+          {fetch_posts()}
+        </IonList>
+        <AddButton {...props} />
+      </div>
+    )
+  }
+
+
+  
+
+  const SearchResult = (stats : {club : Club}) => {
+    return(
+      <IonItem lines="none" onClick={() => props.history.push('club/' + stats.club.id) }>
+        <IonAvatar slot="start">
+          <img className="club-image" src={stats.club.profileImage} />
+        </IonAvatar>
+        <IonLabel className="club-item">
+          {stats.club.name}
+        </IonLabel>
+      </IonItem>
+    )
+  }
+
+  const Searches = Array.from(clubs!.values()).map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
+
+  const SearchView = () => {
+    return(
+      <div>
+        {Searches}
+      </div>
+    )
+  }
+
+  let Content = () => { return (search == undefined || search == "") ? <ExploreHome/> : <SearchView/> }
+  console.log(search)
+  
   return (
     <IonPage>
       <IonHeader>
@@ -81,21 +126,9 @@ const [text, setText] = useState<string>();
       </IonHeader>
       <IonContent>
         
-          <IonSearchbar  className="search" value={text} placeholder="search" onIonChange={e => console.log(e.detail.value!)}></IonSearchbar>
-       
-        <IonRow>
-          <IonGrid>
-            <div className="everythingOnOneLine">
-              {interests}
-            </div>
+          <IonSearchbar  className="search" value={search} placeholder="search" onIonChange={e => setSearch(e.detail.value!)}></IonSearchbar>
+          <Content/>
             
-          </IonGrid>
-        </IonRow>
-        <IonText className="listHeader">Recommended</IonText>
-        <IonList>
-          {fetch_posts()}
-        </IonList>
-        <AddButton {...props} />
       </IonContent>
     </IonPage>
   );

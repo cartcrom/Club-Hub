@@ -17,6 +17,8 @@
 
 .everythingOnOneLine {
     white-space: nowrap;
+    height: 30pt;
+    padding-left: 8pt;
 }
    
 .everythingOnOneLine * {

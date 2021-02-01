@@ -64,6 +64,10 @@
     --ion-background-color: transparent !important
 }
 
+.event-data {
+    background-color: rgb(239, 241, 243);
+}
+
 .event-title {
     position: absolute;
     top: 10pt;
@@ -79,9 +83,12 @@
 }
 
 .event-date {
-    bottom: 12pt;
-    right: 10pt;
-    font: 10pt "Proxima Nova Bold";
+    font: bold 10pt "Proxima Nova";
+    padding: 10pt;
+    text-align: right;
+    justify-content: right;
+    align-items: center;
+    width: 50%;
 }
 
 .heart {
@@ -93,7 +100,6 @@
     padding: 5pt;
 
     display: flex;
-    align-content: center;
     align-items: center;
     width: 50%;
 }
