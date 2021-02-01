@@ -16,7 +16,7 @@ import {
 /* Router */
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import history from './history';
 
 /* UI */

@@ -10,7 +10,7 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
     throw new Error("Undefined user error");
-  } 
+  }
 
   let interests = user.interests.map(interest => <IonChip key={interest} className="tag">{interest}</IonChip>)
 

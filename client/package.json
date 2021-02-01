@@ -62,7 +62,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.1"
+    "@capacitor/cli": "2.4.1",
+    "cypress": "^6.3.0"
   },
   "description": "CSC 308 Project for clubs"
 }

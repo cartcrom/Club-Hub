@@ -40,27 +40,6 @@
     color: #2e2e2e;
   }
   
-  /* Bottom left text */
-  .bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
-  }
-  
-  /* Top left text */
-  .top-left {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-  }
-  
-  /* Top right text */
-  .top-right {
-    position: absolute;
-    top: 8px;
-    right: 16px;
-  }
-  
   /* Bottom right text */
   .bottom-right {
     position: absolute;
@@ -69,18 +48,6 @@
     height: 40pt;
     background-color: rgba(239, 241, 243, .8);
   }
-  
-  /* Centered text */
-  .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-
-
-
 
 .event-info {
     position: absolute;
@@ -92,21 +59,26 @@
 }
 
 .calendar {
-    padding: 5pt 0;
+  
     background: transparent;
     --ion-background-color: transparent !important
 }
 
 .event-title {
     position: absolute;
-    bottom: 12pt;
+    top: 10pt;
     left: 50pt;
+    margin-right: 30pt;
     font:  10pt "Proxima Nova Bold", Helvetica, sans-serif;
+    
+    display: flex;
+    align-content: center;
+    align-items: center;
+    width: 50%;
 
 }
 
 .event-date {
-    position: absolute;
     bottom: 12pt;
     right: 10pt;
     font: 10pt "Proxima Nova Bold";
@@ -119,6 +91,11 @@
 .event-description {
     font: bold 10pt "Proxima Nova";
     padding: 5pt;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    width: 50%;
 }
 
 .details{

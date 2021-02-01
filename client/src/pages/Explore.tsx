@@ -3,7 +3,10 @@ import { IonAvatar,  IonChip,  IonContent, IonGrid, IonHeader, IonItem, IonLabel
 import './Explore.css';
 import { RouteComponentProps } from 'react-router';
 import ClubCard from '../components/ClubCard';
+
+import { UserContext } from '../UserContext';
 import Club from '../components/Club';
+import Student from '../components/Student';
 import { ClubContext } from '../ClubContext';
 
 import club from '../images/ClubSoda.jpg'
@@ -28,10 +31,17 @@ const AddButton = (props: RouteComponentProps) => {
 
 const Explore: React.FC<RouteComponentProps> = (props) => {
 
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
+
   let clubs : Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
+
+  let interests = user.interests.map(interest => <IonChip key={interest} className="explore-tag">{interest}</IonChip>)
 
   function fetch_posts() {
 
@@ -59,8 +69,8 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     )
     return feed;
   }
-  
-  const [text, setText] = useState<string>();
+
+const [text, setText] = useState<string>();
 
   return (
     <IonPage>
@@ -71,13 +81,14 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
       </IonHeader>
       <IonContent>
         
-          <IonSearchbar  className="search" value={text} placeholder="Search Clubs" onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
+          <IonSearchbar  className="search" value={text} placeholder="search" onIonChange={e => console.log(e.detail.value!)}></IonSearchbar>
        
         <IonRow>
           <IonGrid>
-            <IonChip className="tag">Recreational</IonChip>
-            <IonChip  className="tag">Food</IonChip>
-            <IonChip className="tag">Poppin'</IonChip>
+            <div className="everythingOnOneLine">
+              {interests}
+            </div>
+            
           </IonGrid>
         </IonRow>
         <IonText className="listHeader">Recommended</IonText>

@@ -24,6 +24,10 @@ type QuizState = {
     interests: Array<string>;
 }
 
+type SubmitReponse = {
+    data : boolean;
+}
+
 export default class InterestQuiz extends React.Component<InterestQuizProps, QuizState> {
 
     //make update functions, pass those to pages, then push to context at end
@@ -40,8 +44,37 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
 
     submitQuiz = () => {
         //axios.post('http://localhost:5000/interestQuiz', this.state.interests)
-        this.props.finishQuiz(this.state.interests, this.state.schoolName,this.state.college,this.state.major);
-        this.props.history.push("/feed");
+        
+        axios.post('http://localhost:5000/intrest/quiz', {
+            school: this.state.schoolName,
+            collegeOf: this.state.college,
+            major: this.state.major,
+            interests: this.state.interests
+        }).then((res : SubmitReponse) => {
+            // handle success
+            console.log(res);
+            if (res.data) {
+                this.props.finishQuiz(this.state.interests, this.state.schoolName,this.state.college,this.state.major);
+                this.props.history.push("/feed");
+            }
+            else {
+                console.log("Interest Quiz Submission Error")
+            }
+                
+            })
+            .catch((err : any) => {
+            // handle error
+            if (!err.response) {
+                // network error
+                alert("Network Connection Error");
+            } else {
+                console.log(err);
+            }
+          })
+          .then(function () {
+            // always executed
+        });
+        
     }
 
     updateSchoolInfo = (s:string, c:string, m:string) => {

@@ -6,9 +6,21 @@
     --border-color: rgb(185, 106, 185);
 }
 
+.search {
+    --border-radius: 20pt;
+}
 
-.tag{
-    font-size: 10px
+.explore-tag{
+    background-color: lightgrey;
+    font-size: 10pt;
+}
+
+.everythingOnOneLine {
+    white-space: nowrap;
+}
+   
+.everythingOnOneLine * {
+    display: inline;
 }
 
 .listHeader{
