@@ -92,6 +92,8 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   
 
   const SearchResult = (stats : {club : Club}) => {
+    
+
     return(
       <IonItem lines="none" onClick={() => props.history.push('club/' + stats.club.id) }>
         <IonAvatar slot="start">
@@ -104,9 +106,12 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     )
   }
 
-  const Searches = Array.from(clubs!.values()).map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
-
   const SearchView = () => {
+    let club_list = Array.from(clubs!.values())
+    club_list = club_list.filter(c => search!.length < 2 || c.name.includes(search!))
+
+    let Searches = club_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
+
     return(
       <div>
         {Searches}
