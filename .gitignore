@@ -3,6 +3,7 @@
 # dependencies
 /client/node_modules
 /client/cypress
+/client/debug.log
 /server/node_modules
 /server/sessions
 
