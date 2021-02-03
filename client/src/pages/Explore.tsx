@@ -3,10 +3,7 @@ import { IonAvatar,  IonChip,  IonContent, IonGrid, IonHeader, IonItem, IonLabel
 import './Explore.css';
 import { RouteComponentProps } from 'react-router';
 import ClubCard from '../components/ClubCard';
-
-import { UserContext } from '../UserContext';
 import Club from '../components/Club';
-import Student from '../components/Student';
 import { ClubContext } from '../ClubContext';
 
 import club from '../images/ClubSoda.jpg'
@@ -15,33 +12,13 @@ import john from '../images/john.jpg';
 
 import add from '../images/add.png'
 
-const AddButton = (props: RouteComponentProps) => {
-    return(
-      <IonItem title="addButton" lines="none" button onClick={() => props.history.push('addEvent')}>
-        <IonAvatar slot="start">
-          <img className="club-image" src={add} />
-        </IonAvatar>
-        <IonLabel className="club-item">
-          {"Add an Event"}
-        </IonLabel>
-      </IonItem>
-    )
-  }
-
 
 const Explore: React.FC<RouteComponentProps> = (props) => {
-
-  let user: Student | undefined = useContext(UserContext)
-  if (user === undefined) {
-    throw new Error("Undefined user error");
-  }
 
   let clubs : Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
-
-  let interests = user.interests.map(interest => <IonChip key={interest} className="explore-tag">{interest}</IonChip>)
 
   function fetch_posts() {
 
@@ -69,59 +46,9 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     )
     return feed;
   }
-
-  const [search, setSearch] = useState<string>();
-
-  const ExploreHome = () => {
-    return(
-      <div>
-        <div className="everythingOnOneLine">
-              {interests}
-            </div>
-
-        <IonText className="listHeader">Recommended</IonText>
-        <IonList>
-          {fetch_posts()}
-        </IonList>
-        <AddButton {...props} />
-      </div>
-    )
-  }
-
-
   
+  const [text, setText] = useState<string>();
 
-  const SearchResult = (stats : {club : Club}) => {
-    
-
-    return(
-      <IonItem lines="none" onClick={() => props.history.push('club/' + stats.club.id) }>
-        <IonAvatar slot="start">
-          <img className="club-image" src={stats.club.profileImage} />
-        </IonAvatar>
-        <IonLabel className="club-item">
-          {stats.club.name}
-        </IonLabel>
-      </IonItem>
-    )
-  }
-
-  const SearchView = () => {
-    let club_list = Array.from(clubs!.values())
-    club_list = club_list.filter(c => search!.length < 2 || c.name.includes(search!))
-
-    let Searches = club_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
-
-    return(
-      <div>
-        {Searches}
-      </div>
-    )
-  }
-
-  let Content = () => { return (search == undefined || search == "") ? <ExploreHome/> : <SearchView/> }
-  console.log(search)
-  
   return (
     <IonPage>
       <IonHeader>
@@ -131,9 +58,19 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
       </IonHeader>
       <IonContent>
         
-          <IonSearchbar  className="search" value={search} placeholder="search" onIonChange={e => setSearch(e.detail.value!)}></IonSearchbar>
-          <Content/>
-            
+          <IonSearchbar  className="search" value={text} placeholder="Search Clubs" onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
+       
+        <IonRow>
+          <IonGrid>
+            <IonChip className="tag">Recreational</IonChip>
+            <IonChip  className="tag">Food</IonChip>
+            <IonChip className="tag">Poppin'</IonChip>
+          </IonGrid>
+        </IonRow>
+        <IonText className="listHeader">Recommended</IonText>
+        <IonList>
+          {fetch_posts()}
+        </IonList>
       </IonContent>
     </IonPage>
   );

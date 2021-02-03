@@ -3,18 +3,26 @@ import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
 import React, { useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
+import Club from '../components/Club';
+import Event from '../components/Event';
 
+interface AddEventProps extends RouteComponentProps {
+  addEvent: Function;
+}
 
-const AddEvent: React.FC<RouteComponentProps> = (props) => {
+const AddEvent: React.FC<AddEventProps> = (props) => {
 
   const addEvent = () => {
-    let name = (document.getElementById("nameID") as HTMLIonInputElement).value;
-    let desc = (document.getElementById("descID") as HTMLIonInputElement).value;
-    let loc = (document.getElementById("locID") as HTMLIonInputElement).value;
-    let date = (document.getElementById("dateID") as HTMLIonInputElement).value;
-    let start = (document.getElementById("startID") as HTMLIonInputElement).value;
-    let end = (document.getElementById("endID") as HTMLIonInputElement).value;
-    console.log(name, desc, loc, date, start, end);
+    let name = (document.getElementById("nameID") as HTMLIonInputElement).toString();
+    let desc = (document.getElementById("descID") as HTMLIonInputElement).toString();
+    let loc = (document.getElementById("locID") as HTMLIonInputElement).toString();
+    let date = (document.getElementById("dateID") as HTMLIonInputElement).toString();
+    let start = (document.getElementById("startID") as HTMLIonInputElement).toString();
+    //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+    let curClub = new Club("a rly cool club", "id", "hi", "img", "img", [], "Stanford", [], [], [], [])
+    let myEvent = new Event(curClub, "id", desc, Date.prototype.toString(), "img", name, date, start, loc)
+    //props.saveEvent(myEvent)
+    
     //make a post call here to send the data to the server
   }
 
