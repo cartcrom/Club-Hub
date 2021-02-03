@@ -17,9 +17,13 @@ import add from '../images/add.png';
 let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
 let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
 
-const EventButton = (props: RouteComponentProps) => {
+interface EventButtonProps extends RouteComponentProps {
+  id: string;
+}
+
+const EventButton = (props: EventButtonProps) => {
   return(
-    <IonItem lines="none" button onClick={() => props.history.push('../addEvent')}>
+    <IonItem lines="none" button onClick={() => props.history.push('../addEvent/' + props.id)}>
       <IonAvatar slot="start">
         <img className="club-image" src={add} />
       </IonAvatar>
@@ -82,7 +86,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
               tags
             }
           </div>
-          <EventButton {...props} />
+          <EventButton {...props} id={id}/>
         </div>
 
         <div className="divider"/>

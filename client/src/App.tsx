@@ -238,7 +238,7 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubRegistration' component={ClubRegistration} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent' component={AddEvent} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent/:id' component={AddEvent} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubTypes' component={ClubTypes} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubSocials' component={ClubSocials} />

@@ -1,16 +1,22 @@
 import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { ClubContext } from '../ClubContext';
 import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
-import React, { useRef } from 'react';
+import React, { useRef, useContext} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
 import Event from '../components/Event';
 
-interface AddEventProps extends RouteComponentProps {
-  addEvent: Function;
+interface AddEventProps extends RouteComponentProps<{id : string}> {
+  saveEvent: Function;
 }
 
 const AddEvent: React.FC<AddEventProps> = (props) => {
+
+  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+    if (clubs === undefined) {
+      throw new Error("Undefined clubs error");
+    }
 
   const addEvent = () => {
     let name = (document.getElementById("nameID") as HTMLIonInputElement).toString();
@@ -19,9 +25,17 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     let date = (document.getElementById("dateID") as HTMLIonInputElement).toString();
     let start = (document.getElementById("startID") as HTMLIonInputElement).toString();
     //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
-    let curClub = new Club("a rly cool club", "id", "hi", "img", "img", [], "Stanford", [], [], [], [])
-    let myEvent = new Event(curClub, "id", desc, Date.prototype.toString(), "img", name, date, start, loc)
-    //props.saveEvent(myEvent)
+
+    
+
+    let id = props.match.params.id;
+    let currentClub = clubs!.get(id);
+    if (!currentClub) {
+      throw new Error("Undefined club error with ID " + id);
+    }
+
+    currentClub.addEvent("id", desc, Date.prototype.toString(), "img", name, date, start, loc);
+    clubs!.set(id, currentClub);
     
     //make a post call here to send the data to the server
   }
