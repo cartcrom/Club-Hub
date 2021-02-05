@@ -1,5 +1,6 @@
 {
   "name": "ClubHub",
+  "homepage": "https://cromer.dev/Club-Hub/",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
