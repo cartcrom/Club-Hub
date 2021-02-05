@@ -19,11 +19,11 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
   const addEvent = () => {
-    let name = (document.getElementById("nameID") as HTMLIonInputElement).toString();
-    let desc = (document.getElementById("descID") as HTMLIonInputElement).toString();
-    let loc = (document.getElementById("locID") as HTMLIonInputElement).toString();
-    let date = (document.getElementById("dateID") as HTMLIonInputElement).toString();
-    let start = (document.getElementById("startID") as HTMLIonInputElement).toString();
+    let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
+    let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
+    let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+    let date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
+    let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;
     //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
 
     
@@ -34,7 +34,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       throw new Error("Undefined club error with ID " + id);
     }
 
-    currentClub.addEvent("id", desc, Date.prototype.toString(), "img", name, date, start, loc);
+    currentClub.addEvent("id", desc, Date.toString(), "img", name.toString(), date, start, loc);
     clubs!.set(id, currentClub);
     
     //make a post call here to send the data to the server
