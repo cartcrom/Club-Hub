@@ -4,6 +4,8 @@ node_js:
 cache:
   directories:
   - node_modules
+env: 
+  CI: false
 script:
   - cd client
   - npm install -g @ionic/cli
