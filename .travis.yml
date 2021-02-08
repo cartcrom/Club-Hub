@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+env: 
+  CI: false
+script:
+  - cd client
+  - npm install -g @ionic/cli
+  - npm install react-scripts
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: client/build
+  target_branch: gh-pages
+  on:
+    branch: master

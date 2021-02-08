@@ -30,18 +30,28 @@ class EventView extends React.Component<{e : Event, useHeader: boolean}, {loved 
         <IonRow>
           <div className="container">
             <IonImg className='post-image' src={e.image}></IonImg>
-            <div className="bottom-right">
+            {/* <div className="bottom-right">
               <IonItem lines="none" className="calendar">
                 <IonIcon src={calendarOutline}></IonIcon>
               </IonItem>
               <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
               <IonLabel className='event-date'>{e.eventDate}</IonLabel>
-            </div>
+            </div> */}
           </div>
         </IonRow>
-        <IonRow className="event-info">
+        {/* <IonRow className="event-info">
           
+        </IonRow> */}
+
+        <IonRow className="event-data">
+          <IonItem lines="none" className="calendar">
+            <IonIcon src={calendarOutline}></IonIcon>
+          </IonItem>
+          
+          <IonCol size="8" className="event-description">{"EVENT - " + e.title}</IonCol>
+          <IonCol className="event-date">{e.eventDate}</IonCol>
         </IonRow>
+
         <IonRow>
           <IonItem lines="none">
             <IonIcon className={(this.state.loved) ? "heart" : ""} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({loved: !this.state.loved})}></IonIcon>

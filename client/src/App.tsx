@@ -16,7 +16,7 @@ import {
 /* Router */
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import history from './history';
 
 /* UI */
@@ -119,10 +119,18 @@ export default class App extends React.Component<{}, AppState> {
       hasTakenQuiz: false,    // Should actually be set by data received from server
       skipQuiz: false         // Default to false
     });
+
+    //Auto Login, remove later
+    document.addEventListener("keydown", this.logIn, false);
   }
 
   // After the component did mount, we set the state
   componentDidMount() {
+  }
+
+  componentWillUnmount(){
+    //Auto Login, remove later
+    document.removeEventListener("keydown", this.logIn, false);
   }
 
   fetch_club_data(clubData : any) {
@@ -230,7 +238,7 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubRegistration' component={ClubRegistration} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent' component={AddEvent} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent/:id' component={AddEvent} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubTypes' component={ClubTypes} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubSocials' component={ClubSocials} />
@@ -269,4 +277,38 @@ export default class App extends React.Component<{}, AppState> {
       </IonApp>
     )
   }
+
+  // Auto Login
+  logIn = async (event : KeyboardEvent) => {
+    if(event.key !== '`') {
+      return
+    }
+    axios.post('http://localhost:5000/login', {email: "maxkennedy@school.edu", password: "1234"})
+        .then((res : {data : Object}) => {
+        // handle success
+        console.log(res);
+        if (res.data) {
+            console.log(res.data);
+            this.authenticate(res.data);
+        }
+        else
+            alert("password");
+        })
+        .catch((err : any) => {
+        // handle error
+        if (!err.response) {
+            // network error
+            alert("Network Connection Error");
+        } else {
+            console.log(err);
+            alert("password");
+        }
+      })
+      .then(function () {
+        // always executed
+    });
+  }
+
 }
+
+
