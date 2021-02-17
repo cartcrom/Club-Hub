@@ -2,7 +2,8 @@ import React, {useContext} from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
 
-import { IonContent, IonList, IonItem, IonBackButton, IonButtons, IonChip, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll, IonAvatar } from '@ionic/react';
+import { IonContent, IonList, IonIcon, IonItem, IonBackButton, IonButton, IonButtons, IonChip, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll, IonAvatar } from '@ionic/react';
+import {addOutline} from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 import Student from '../components/Student';
 import Club from '../components/Club';
@@ -51,7 +52,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
     throw new Error("Undefined club error with ID " + id);
   }
 
-  let feed = club.events.map((e : Event) => e.getFeedItem(false));
+  let feed = club.events.map((e : Event) => e.getFeedItem(false, undefined));
 
   let tags = club.tags.map(t => <IonChip key={t} className="club-tag">{t}</IonChip>);
 
@@ -61,6 +62,12 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton text="" color="dark"/>
+          </IonButtons>
+          <IonButtons slot="end">
+            <IonButton>
+              Event
+              <IonIcon slot="icon-only" icon={addOutline} />
+            </IonButton>
           </IonButtons>
           <IonTitle>{club.name}</IonTitle>
         </IonToolbar>
