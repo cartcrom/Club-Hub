@@ -3,7 +3,7 @@ import { findByTitle, fireEvent, prettyDOM, render, screen } from '@testing-libr
 import App from './App';
 import { UserContext } from './UserContext';
 import Student from './components/Student';
-import UserSettings from './pages/UserSettings';
+import UserSettings from './pages/UserProfile';
 import { Route, StaticRouter, MemoryRouter } from 'react-router';
 import FrontPage from './pages/front-pages/FrontPage';
 import SignIn from './pages/front-pages/SignIn';

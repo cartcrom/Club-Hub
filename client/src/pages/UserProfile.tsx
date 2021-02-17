@@ -5,8 +5,12 @@ import Student from '../components/Student';
 import './UserSettings.css';
 import { UserContext } from '../UserContext';
 
+interface SettingsProps extends RouteComponentProps {
+  logOut : Function
+}
 
-const UserSettings: React.FC<RouteComponentProps> = (props) => {
+
+const UserSettings: React.FC<SettingsProps> = (props) => {
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
     throw new Error("Undefined user error");
@@ -49,12 +53,13 @@ const UserSettings: React.FC<RouteComponentProps> = (props) => {
               <IonLabel>School</IonLabel>
               <IonNote slot="end" color="black">{user.school}</IonNote>
             </IonItem>
-            <IonItem lines="none" className="data" >
-              <IonButton>edit my info</IonButton>
-            </IonItem>
           </IonList>
-            
-
+            <IonItem lines="none" className="data" >
+              <IonButton onClick={() => props.logOut()}>
+                log out
+              </IonButton>
+            </IonItem>
+         
         </IonCardContent>
         
       </IonCard>

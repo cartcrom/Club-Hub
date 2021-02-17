@@ -8,9 +8,9 @@ import Post from '../components/Post';
 import Event from '../components/Event';
 import Club from '../components/Club';
 import Student from '../components/Student';
+import { RouteComponentProps } from 'react-router';
 
-
-const Feed: React.FC = () => {
+const Feed: React.FC<RouteComponentProps> = (props) => {
 
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
@@ -22,7 +22,6 @@ const Feed: React.FC = () => {
   }
 
   function fetch_posts() {
-    //Need to call back end. Still using dummy data
 
     let posts : Array<Event> = [];
 
@@ -52,7 +51,7 @@ const Feed: React.FC = () => {
   
     let feed : Array<JSX.Element> = [];
     posts.forEach((post : Post) => 
-      feed.push(post.getFeedItem(true))
+      feed.push(post.getFeedItem(true, () => props.history.push('club/' + post.club.id)))
     )
     return feed;
   }

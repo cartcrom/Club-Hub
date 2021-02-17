@@ -32,7 +32,7 @@ import Feed from './pages/Feed';
 import Explore from './pages/Explore';
 import MyClubs from './pages/MyClubs';
 import ClubProfile from './pages/ClubProfile';
-import UserSettings from './pages/UserSettings';
+import UserSettings from './pages/UserProfile';
 
 /* Components */
 import Club from './components/Club';
@@ -156,6 +156,11 @@ export default class App extends React.Component<{}, AppState> {
     this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
   }
 
+  logOut = () => {
+    this.setState({isAuthenticated: false, user: undefined, club_data: undefined})
+    history.push("/")
+  }
+
   setUser = (u : any) => {
     this.setState({user: new Student(
       u.firstName,
@@ -236,8 +241,8 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/feed' component={Feed} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
-                    <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
+                    <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' render={(props) => <UserSettings {...props} logOut={(this.logOut)}/>}/>
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent/:id' component={AddEvent} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/daysOfWeek' component={DaysOfWeek} />

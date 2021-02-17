@@ -20,7 +20,7 @@ export default class Post {
     this.image = image;
   }
 
-  getFeedItem(useHeader: boolean) {
+  getFeedItem(useHeader: boolean, route: Function | undefined) {
     return (
       <IonItem>
         <IonCol>
