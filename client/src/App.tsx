@@ -82,6 +82,7 @@ import john from './images/john.jpg';
 import ice from './images/rsz_ice_cream.jpg';
 import {DD_fake_clubs, DD_guest_user} from './DummyData'
 import { backendToClub, backendToStudent } from './components/backendDataConversion';
+import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -236,14 +237,12 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
                     <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubRegistration' component={ClubRegistration} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent/:id' component={AddEvent} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubTypes' component={ClubTypes} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubSocials' component={ClubSocials} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/daysOfWeek' component={DaysOfWeek} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
+                    <ProtectedRoute {...ProtectedRouteProps} path='/clubRegistration' component={ClubRegistrationManager}/>
                     {default_route}
                   </Switch>
                 </IonRouterOutlet>

@@ -1,8 +1,29 @@
 import React from 'react'
 import {IonPage, IonToolbar, IonHeader, IonButtons, IonBackButton, IonTitle, IonContent, IonItem, IonIcon, IonLabel, IonInput} from '@ionic/react'
 import {globeOutline, helpOutline, logoFacebook, logoInstagram, mailOutline} from 'ionicons/icons';
+import { RouteComponentProps } from 'react-router';
 
-const ClubSocials: React.FC = () => {
+interface ClubMediaProps extends RouteComponentProps {
+    editMedia: Function,
+    media: {[key: string]: string},
+}
+
+const ClubSocials: React.FC<ClubMediaProps> = (props) => {
+    const validMedia = [
+        {name: 'Facebook', logo: logoFacebook},
+        {name: 'Instagram', logo: logoInstagram},
+        {name: 'Personal Website', logo: globeOutline}
+    ]
+    
+    const mediaInput = validMedia.map(({name, logo}) => (
+        <IonItem key={name}>
+            <IonIcon icon={logo} slot="start"></IonIcon>
+            <IonLabel>{name}:</IonLabel>
+            <IonInput placeholder="link" value={props.media[name]} name={name} type='url'
+                onIonChange={e => props.editMedia(name, e.detail.value)} ></IonInput>
+        </IonItem>
+    ))
+
     return (
         <IonPage>
             <IonHeader>
@@ -15,31 +36,7 @@ const ClubSocials: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonItem>
-                    <IonIcon icon={logoFacebook} slot="start"></IonIcon>
-                    <IonLabel>Facebook</IonLabel>
-                    <IonInput></IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonIcon icon={logoInstagram} slot="start"></IonIcon>
-                    <IonLabel>Instagram</IonLabel>
-                    <IonInput></IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonIcon icon={globeOutline} slot="start"></IonIcon>
-                    <IonLabel>Personal Website</IonLabel>
-                    <IonInput></IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonIcon icon={mailOutline} slot="start"></IonIcon>
-                    <IonLabel>Mailing List</IonLabel>
-                    <IonInput></IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonIcon icon={helpOutline} slot="start"></IonIcon>
-                    <IonLabel>Other</IonLabel>
-                    <IonInput></IonInput>
-                </IonItem>
+                {mediaInput}
             </IonContent>
         </IonPage>
     );
