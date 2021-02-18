@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IonAvatar, IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonRouterOutlet, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import { Plugins, CameraResultType} from '@capacitor/core';
 import './ClubRegistration.css'
+import { UserContext } from '../../UserContext';
+import axios from 'axios';
 
 interface ClubRegistrationProps extends RouteComponentProps {
   tags: string[],
@@ -15,11 +17,13 @@ interface ClubRegistrationProps extends RouteComponentProps {
   setDescription: Function,
   setProfile: Function,
   setBanner: Function,
+  addClub: Function,
 }
 
 const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
   const {Camera} = Plugins;
   const [profileUploaded, setProfileUploaded] = useState<boolean>(false);
+  const student = useContext(UserContext)  
 
   const takePhoto = async () => {
     const image = await Camera.getPhoto({
@@ -60,16 +64,30 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
 
   //Submit
   function handleSubmit() {
+
     const newClub = {
       name: props.name,
       description: props.description,
-      profImg: props.profile,
-      bannerImg: props.banner,
+      profileImage: props.profile,
+      bannerImage: props.banner,
       tags: props.tags,
-      media: props.media
+      media: props.media,
+      school: student?.school,
+      leaderId: student?.id,
     }
-    console.log(newClub)
+    try {
+      axios.post('http://localhost:5000/add/club', newClub)
+      .then((res) => {
+        props.addClub(res.data)
+      })
+      .catch((err) => console.log(err))
+      // props.addClub(backendClub)
+    }
+    catch (e) {
+      console.error(e)
+    }
     props.history.push('tab2')
+
   }
 
   // Other
