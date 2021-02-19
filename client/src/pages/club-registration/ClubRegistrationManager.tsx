@@ -4,7 +4,11 @@ import ClubRegistration from './ClubRegistration';
 import ClubSocials from './ClubSocials';
 import ClubTypes from './ClubTypes';
 
-export const ClubRegistrationManager: React.FC<RouteComponentProps> = props => {
+interface ManagerProps extends RouteComponentProps {
+  addClub: Function
+} 
+
+export const ClubRegistrationManager: React.FC<ManagerProps> = props => {
   const [tags, setTags] = useState<string[]>([]);
   const [media, setMedia] = useState< {[key: string]: string}>({
     'Facebook': '',
@@ -15,9 +19,10 @@ export const ClubRegistrationManager: React.FC<RouteComponentProps> = props => {
   const [description, setDescription] = useState<string>('');
   const [profile, setProfile] = useState<string>(process.env.PUBLIC_URL + '/avatar.svg');
   const [banner, setBanner] = useState<string>('');
-
+  const addClub = props.addClub
+  
   const clubRegistrationProps = {
-    name, setName, description, setDescription, profile, setProfile, banner, setBanner,
+    name, setName, description, setDescription, profile, setProfile, banner, setBanner, addClub,
   }
 
   function addTag(isChecked: boolean, tag: string) {

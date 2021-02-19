@@ -111,6 +111,7 @@ export default class App extends React.Component<{}, AppState> {
       club_data: undefined
     }
 
+    this.addClub = this.addClub.bind(this)
   }
 
   // Before the component mounts, we initialise our state
@@ -142,6 +143,35 @@ export default class App extends React.Component<{}, AppState> {
     }
 
     setTimeout(() => {  this.setState({club_data: clubs}); }, 1500);
+  }
+
+  addClub(newClub: any) {
+    console.log('Adding a new Club!')
+    // Add club to club_data
+    this.setState(prevState => {
+      if (prevState.club_data === undefined) {
+        return {
+          club_data: new Map<string, Club>([[newClub._id, backendToClub(newClub)]])
+        }
+      }
+      else {
+        let prevClubs = Array.from(prevState.club_data.entries())
+        return {
+          club_data: new Map<string, Club>([...prevClubs, [newClub._id, backendToClub(newClub)]])
+        }
+      }
+    })
+    // Add clubId to user's lead_clubs
+    this.setState(prevState => {
+      if (prevState.user !== undefined) {
+        let userCopy: Student =  Object.assign(Object.create(Object.getPrototypeOf(prevState.user)), prevState.user)
+        userCopy.addLeadClub(newClub._id)
+        return { user: userCopy }
+      }
+      else {
+        return { user: undefined }
+      }
+    })
   }
 
   authenticate = (user : any) => {
@@ -247,7 +277,7 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/daysOfWeek' component={DaysOfWeek} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
-                    <ProtectedRoute {...ProtectedRouteProps} path='/clubRegistration' component={ClubRegistrationManager}/>
+                    <ProtectedRoute {...ProtectedRouteProps} path='/clubRegistration' render={(props) => <ClubRegistrationManager {...props} addClub={this.addClub}/>}/>
                     {default_route}
                   </Switch>
                 </IonRouterOutlet>
