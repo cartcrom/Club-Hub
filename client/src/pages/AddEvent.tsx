@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
 import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
 import React, { useRef, useContext} from 'react';
@@ -58,6 +58,9 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
           <IonHeader>
             <IonToolbar className="header">
               <IonTitle>Event Adder</IonTitle>
+              <IonButtons slot="start">
+                <IonBackButton text="" color="dark"/>
+              </IonButtons>
             </IonToolbar>
           </IonHeader>
           <IonContent fullscreen>

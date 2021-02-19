@@ -18,6 +18,7 @@ import add from '../images/add.png';
 let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
 //let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
 
+<<<<<<< HEAD
  interface EventButtonProps extends RouteComponentProps {
    id: string;
  }
@@ -88,6 +89,8 @@ const EventButton = (props: EventButtonProps) => {
   }
 }
 
+=======
+>>>>>>> 583fb3d13451b33b679864687b98bfba750de438
 const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
 
   let user: Student | undefined = useContext(UserContext)
@@ -117,10 +120,14 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
             <IonBackButton text="" color="dark"/>
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton>
-              Event
-              <IonIcon slot="icon-only" icon={addOutline} />
-            </IonButton>
+            {
+              (user.lead_clubs.includes(club.id)) && 
+              <IonButton onClick={() => props.history.push('../addEvent/' + id)}>
+                Event
+                <IonIcon slot="icon-only" icon={addOutline} />
+              </IonButton>
+            }
+            
           </IonButtons>
           <IonTitle>{club.name}</IonTitle>
         </IonToolbar>
@@ -146,7 +153,6 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
               tags
             }
           </div>
-          <EventButton {...props} id = {id}/>
         </div>
 
         <div className="divider"/>
