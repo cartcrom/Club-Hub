@@ -6,7 +6,7 @@ An app  for college students to find on campus clubs
 2. Use React framework
 3. Use Typescript
 4. Use Javascript for config
-5. Use tabs for indents
+5. Use spaces for indents
 6. Use double quotes for strings
 7. Use unix line endings 
 8. Use semicolons
