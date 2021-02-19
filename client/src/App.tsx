@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
+import { backend_URL } from './constants'
 
 /* Ionic */
 import {
@@ -261,7 +262,7 @@ export default class App extends React.Component<{}, AppState> {
             {(isauth && !this.state.club_data) && 
               <Loader></Loader>
             }
-            <IonReactRouter history={history}>
+            <IonReactRouter history={history} basename={process.env.PUBLIC_URL} >
               <IonTabs>
                 <IonRouterOutlet>
                   <Switch>
@@ -317,7 +318,7 @@ export default class App extends React.Component<{}, AppState> {
     if(event.key !== '`') {
       return
     }
-    axios.post('http://localhost:5000/login', {email: "maxkennedy@school.edu", password: "1234"})
+    axios.post(backend_URL + '/login', {email: "maxkennedy@school.edu", password: "1234"})
         .then((res : {data : Object}) => {
         // handle success
         console.log(res);

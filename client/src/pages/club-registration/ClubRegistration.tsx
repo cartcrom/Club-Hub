@@ -5,6 +5,7 @@ import { Plugins, CameraResultType} from '@capacitor/core';
 import './ClubRegistration.css'
 import { UserContext } from '../../UserContext';
 import axios from 'axios';
+import { backend_URL } from '../../constants'
 
 interface ClubRegistrationProps extends RouteComponentProps {
   tags: string[],
@@ -76,7 +77,7 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
       leaderId: student?.id,
     }
     try {
-      axios.post('http://localhost:5000/add/club', newClub)
+      axios.post(backend_URL + '/add/club', newClub)
       .then((res) => {
         props.addClub(res.data)
       })
