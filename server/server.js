@@ -252,4 +252,4 @@ app.get("/test", (req, res) => {
   res.send("Success");
 });
 
-server.listen(5000, () => console.log("backend online at 5000"));
+server.listen(process.env.PORT || 5000, () => console.log("backend online at 5000"));

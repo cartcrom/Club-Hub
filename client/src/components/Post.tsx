@@ -8,11 +8,11 @@ export default class Post {
   club : Club;
   id: string;
   description: string;
-  date: string;
+  date: Date;
   image: string;
 
 
-  constructor(club : Club, id: string, description: string, date: string, image: string) {
+  constructor(club : Club, id: string, description: string, date: Date, image: string) {
     this.club = club;
     this.id = id;
     this.description = description;

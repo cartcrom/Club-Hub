@@ -1,5 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
+import axios from 'axios';
+import { backend_URL } from '../../constants'
 
 import { IonContent, IonLabel, IonPage, IonFooter, IonItem, IonButtons, IonHeader, IonToolbar, IonButton} from '@ionic/react';
 
@@ -9,7 +11,7 @@ import InterestQuizPg2 from './InterestQuizPg2';
 import InterestQuizPg3 from './InterestQuizPg3';
 import InterestQuizPg4 from './InterestQuizPg4';
 import { type } from 'os';
-import axios from 'axios';
+
 
 interface InterestQuizProps extends RouteComponentProps {
     skipQuiz: Function;
@@ -43,9 +45,7 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
     }
 
     submitQuiz = () => {
-        //axios.post('http://localhost:5000/interestQuiz', this.state.interests)
-        
-        axios.post('http://localhost:5000/intrest/quiz', {
+        axios.post(backend_URL + '/intrest/quiz', {
             school: this.state.schoolName,
             collegeOf: this.state.college,
             major: this.state.major,
