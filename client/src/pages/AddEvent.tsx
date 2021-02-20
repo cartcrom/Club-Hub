@@ -7,6 +7,7 @@ import './AddEvent.css';
 import Club from '../components/Club';
 import Event from '../components/Event';
 import { wait } from '@testing-library/react';
+import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {
   saveEvent: Function;
@@ -78,16 +79,31 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     String s = d.toString;
     Date theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(s);*/
     let now = new Date
-    sleep(5000);
-    currentClub.addEvent("id", desc, timeSince(now) , "img", name.toString(),timeSince(now) , start, loc);
-
+    name = name.toString()
+    currentClub.addEvent("id", desc, timeSince(now) , "https://placeimg.com/640/640/nature", name,timeSince(now) , start, loc);
     
     clubs!.set(id, currentClub);
 
-    props.history.goBack();
-
-    
     //make a post call here to send the data to the server
+    let eventDate = new Date(date).toDateString().slice(0, -5);
+    let postDate = now.toString();
+    let image = "https://placeimg.com/640/640/nature";
+    const backendEventStructure = {
+      id,
+      name,
+      desc,
+      postDate,
+      eventDate,
+      start,
+      loc,
+      image,
+    }
+    
+    axios.post('http://localhost:5000/add/event', backendEventStructure)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+    props.history.goBack();
   }
 
     return (

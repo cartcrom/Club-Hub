@@ -143,18 +143,18 @@ app.post("/add/event", async (req, res) => {
   let eventData = req.body;
   try {
     let event = new Event({
-      club: eventData.club,
+      club: eventData.id,
       name: eventData.name,
       desc: eventData.desc,
-      eventStart: eventData.eventStart,
-      eventEnd: eventData.eventEnd,
-      eventLoc: eventData.eventLoc,
       postDate: eventData.postDate,
-      image: eventData.image,
+      eventDate: eventData.eventDate,
+      eventTime: eventData.start,
+      eventLoc: eventData.loc,
+      img: eventData.image,
     });
     event.save();
 
-    const clubId = eventData.clubId;
+    const clubId = eventData.id;
     const eventId = event._id;
     await Club.findByIdAndUpdate(clubId, {
       $push: { events: eventId },
