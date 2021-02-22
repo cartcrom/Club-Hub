@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import { backend_URL } from '../../constants'
 import { IonContent, IonLabel, IonPage, IonFooter, IonToolbar, IonHeader, IonButtons, IonBackButton, IonInput, IonIcon, IonItem, IonButton, IonChip} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, mailOutline, personOutline} from 'ionicons/icons';
 import './FrontPage.css';
@@ -22,13 +24,12 @@ type SignUpInfo = {
 
 const SignUp: React.FC<LoginProps> = (props) =>{
     const {control, handleSubmit, setError, errors} = useForm<SignUpInfo>();
-    const axios = require('axios').default;
 
 
     const registerUser = async (info: SignUpInfo) => {
         console.log('submitting')
 
-        axios.post('http://localhost:5000/SignUp', info)
+        axios.post(backend_URL + '/SignUp', info)
             .then((res : any) => {
             // handle success
             console.log(res);

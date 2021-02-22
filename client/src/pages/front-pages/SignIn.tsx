@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import { backend_URL } from '../../constants';
 import { IonContent, IonLabel, IonPage, IonFooter, IonToolbar, IonHeader, IonButtons, IonBackButton, IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
@@ -22,11 +24,10 @@ type LoginResponse = {
 
 const SignIn: React.FC<LoginProps> = (props) => {
     const {control, handleSubmit, setError, errors} = useForm<LoginInfo>();
-    const axios = require('axios').default;
 
     const logIn = async (info: LoginInfo) => {
 
-        axios.post('http://localhost:5000/login', info)
+        axios.post(backend_URL + '/login', info)
             .then((res : LoginResponse) => {
             // handle success
             console.log(res);

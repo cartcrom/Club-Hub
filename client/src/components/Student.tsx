@@ -30,4 +30,8 @@ export default class Student {
   getId() {
     return this.id;
   }
+
+  addLeadClub(clubId: string) {
+    this.lead_clubs.push(clubId)
+  }
 }

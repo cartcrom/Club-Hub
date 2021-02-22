@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
+import { backend_URL } from './constants'
 
 /* Ionic */
 import {
@@ -32,7 +33,7 @@ import Feed from './pages/Feed';
 import Explore from './pages/Explore';
 import MyClubs from './pages/MyClubs';
 import ClubProfile from './pages/ClubProfile';
-import UserSettings from './pages/UserSettings';
+import UserSettings from './pages/UserProfile';
 
 /* Components */
 import Club from './components/Club';
@@ -82,6 +83,7 @@ import john from './images/john.jpg';
 import ice from './images/rsz_ice_cream.jpg';
 import {DD_fake_clubs, DD_guest_user} from './DummyData'
 import { backendToClub, backendToStudent } from './components/backendDataConversion';
+import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -110,6 +112,7 @@ export default class App extends React.Component<{}, AppState> {
       club_data: undefined
     }
 
+    this.addClub = this.addClub.bind(this)
   }
 
   // Before the component mounts, we initialise our state
@@ -143,6 +146,35 @@ export default class App extends React.Component<{}, AppState> {
     setTimeout(() => {  this.setState({club_data: clubs}); }, 1500);
   }
 
+  addClub(newClub: any) {
+    console.log('Adding a new Club!')
+    // Add club to club_data
+    this.setState(prevState => {
+      if (prevState.club_data === undefined) {
+        return {
+          club_data: new Map<string, Club>([[newClub._id, backendToClub(newClub)]])
+        }
+      }
+      else {
+        let prevClubs = Array.from(prevState.club_data.entries())
+        return {
+          club_data: new Map<string, Club>([...prevClubs, [newClub._id, backendToClub(newClub)]])
+        }
+      }
+    })
+    // Add clubId to user's lead_clubs
+    this.setState(prevState => {
+      if (prevState.user !== undefined) {
+        let userCopy: Student =  Object.assign(Object.create(Object.getPrototypeOf(prevState.user)), prevState.user)
+        userCopy.addLeadClub(newClub._id)
+        return { user: userCopy }
+      }
+      else {
+        return { user: undefined }
+      }
+    })
+  }
+
   authenticate = (user : any) => {
     if (user)
       this.setState({user : backendToStudent(user)})
@@ -153,6 +185,11 @@ export default class App extends React.Component<{}, AppState> {
 
     this.setState({isAuthenticated : true});
     this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
+  }
+
+  logOut = () => {
+    this.setState({isAuthenticated: false, user: undefined, club_data: undefined})
+    history.push("/")
   }
 
   setUser = (u : any) => {
@@ -225,7 +262,7 @@ export default class App extends React.Component<{}, AppState> {
             {(isauth && !this.state.club_data) && 
               <Loader></Loader>
             }
-            <IonReactRouter history={history}>
+            <IonReactRouter history={history} basename={process.env.PUBLIC_URL} >
               <IonTabs>
                 <IonRouterOutlet>
                   <Switch>
@@ -235,15 +272,13 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/feed' component={Feed} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
-                    <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} /> 
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubRegistration' component={ClubRegistration} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' component={UserSettings} />
+                    <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/profile' render={(props) => <UserSettings {...props} logOut={(this.logOut)}/>}/>
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/addEvent/:id' component={AddEvent} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubTypes' component={ClubTypes} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubColleges' component={ClubColleges} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/clubSocials' component={ClubSocials} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/daysOfWeek' component={DaysOfWeek} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />}/>
+                    <ProtectedRoute {...ProtectedRouteProps} path='/clubRegistration' render={(props) => <ClubRegistrationManager {...props} addClub={this.addClub}/>}/>
                     {default_route}
                   </Switch>
                 </IonRouterOutlet>
@@ -283,7 +318,7 @@ export default class App extends React.Component<{}, AppState> {
     if(event.key !== '`') {
       return
     }
-    axios.post('http://localhost:5000/login', {email: "maxkennedy@school.edu", password: "1234"})
+    axios.post(backend_URL + '/login', {email: "maxkennedy@school.edu", password: "1234"})
         .then((res : {data : Object}) => {
         // handle success
         console.log(res);

@@ -25,7 +25,6 @@ const AddButton = (props: RouteComponentProps) => {
 }
 
 
-
 const MyClubs: React.FC<RouteComponentProps> = (props) => {
 
   let user: Student | undefined = useContext(UserContext)

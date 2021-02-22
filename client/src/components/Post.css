@@ -15,11 +15,12 @@
 }
 
 .post-profile-image {
-    width: 40pt;
-    height: 40pt;
+    object-fit: cover;
+    width: 36pt;
+    height: 36pt;
     border-radius: 10pt !important;
     overflow: hidden;
-    margin: 2pt 5pt;
+    margin: 4pt 5pt;
 }
 
 .post-club-name {

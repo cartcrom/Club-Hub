@@ -11,7 +11,8 @@
 }
 
 .explore-tag{
-    background-color: lightgrey;
+    background-color: white;
+    border: 1pt solid lightgrey;
     font-size: 10pt;
 }
 
@@ -26,12 +27,12 @@
 }
 
 .listHeader{
-    padding-left: 10px;
+    padding-left: 12pt;
     font: bold 18px "Proxima Nova Rg", Helvetica, sans-serif;
 }
 
 .cardHeader{
-    padding-left: 10px;
+    padding-left: 12pt;
 }
 
 

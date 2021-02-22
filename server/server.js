@@ -143,18 +143,18 @@ app.post("/add/event", async (req, res) => {
   let eventData = req.body;
   try {
     let event = new Event({
-      club: eventData.club,
+      club: eventData.id,
       name: eventData.name,
       desc: eventData.desc,
-      eventStart: eventData.eventStart,
-      eventEnd: eventData.eventEnd,
-      eventLoc: eventData.eventLoc,
       postDate: eventData.postDate,
-      image: eventData.image,
+      eventDate: eventData.eventDate,
+      eventTime: eventData.start,
+      eventLoc: eventData.loc,
+      img: eventData.image,
     });
     event.save();
 
-    const clubId = eventData.clubId;
+    const clubId = eventData.id;
     const eventId = event._id;
     await Club.findByIdAndUpdate(clubId, {
       $push: { events: eventId },
@@ -194,21 +194,31 @@ app.get("/get/clubEvents/:clubId", async (req, res) => {
   res.send(events);
 });
 
-app.get("/add/club", (req, res) => {
+app.post("/add/club", async (req, res) => {
+  console.log('Adding a club')
   let clubData = req.body;
   try {
     let club = new Club({
       name: clubData.name,
       description: clubData.description,
       profileImage: clubData.profileImage,
+      bannerImage: clubData.bannerImage,
       school: clubData.school,
       leaders: [clubData.leaderId],
+      tags: clubData.tags,
+      mediaPlugs: clubData.media,
     });
-    if (clubData.bannerImage) club.bannerImage = clubData.bannerImage;
+
     club.save();
 
-    res.send("Success");
-  } catch {
+    await User.findByIdAndUpdate(clubData.leaderId, {
+      $push: {lead_clubs: club._id}
+    })
+
+    console.log(club);
+    res.send(club);
+  } catch (e) {
+    console.log(e)
     res.status(400);
     res.send("Invalid club structure");
   }
@@ -242,4 +252,4 @@ app.get("/test", (req, res) => {
   res.send("Success");
 });
 
-server.listen(5000, () => console.log("backend online at 5000"));
+server.listen(process.env.PORT || 5000, () => console.log("backend online at 5000"));
