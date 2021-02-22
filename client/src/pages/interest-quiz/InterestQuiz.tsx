@@ -77,13 +77,12 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
         
     }
 
-    updateSchoolInfo = (s:string, c:string, m:string) => {
+    updateSchoolInfo = (c:string, m:string) => {
         this.setState({
-            schoolName: s,
             college: c,
             major: m
         })
-        console.log("school name: %s, college: %s, major: %s", s, c, m)
+        console.log("college: %s, major: %s", c, m)
     }
 
     addInterest = (interest: string, checked:boolean) => {    
