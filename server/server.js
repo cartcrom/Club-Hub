@@ -35,12 +35,15 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+var env = process.argv[2] || 'dev';
 app.use(
   cors({
-    origin: "http://localhost:8100",
+    origin: (env === "dev") ? "http://localhost:8100" : "https://cromer.dev",
     credentials: true,
   })
 );
+
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({

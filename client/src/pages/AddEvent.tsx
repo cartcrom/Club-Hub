@@ -1,12 +1,9 @@
 import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
-import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
 import React, { useRef, useContext} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
-import Event from '../components/Event';
-import { wait } from '@testing-library/react';
 import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {

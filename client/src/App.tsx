@@ -265,7 +265,7 @@ export default class App extends React.Component<{}, AppState> {
             {(isauth && !this.state.club_data) && 
               <Loader></Loader>
             }
-            <IonReactRouter history={history} basename={process.env.PUBLIC_URL} >
+            <IonReactRouter history={history} basename={process.env.PUBLIC_URL}>
               <IonTabs>
                 <IonRouterOutlet>
                   <Switch>

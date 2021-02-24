@@ -1,6 +1,6 @@
 import React from 'react';
 import './InterestQuiz.css'
-import { IonContent, IonLabel, IonPage, IonFooter, IonItem, IonButtons, IonHeader, IonToolbar, IonButton} from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonItem} from '@ionic/react';
 
 interface InterestQuizProps {
     nextPage: Function;

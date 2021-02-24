@@ -7,7 +7,6 @@ import InterestQuizPg1 from './InterestQuizPg1';
 import InterestQuizPg2 from './InterestQuizPg2';
 import InterestQuizPg3 from './InterestQuizPg3';
 import InterestQuizPg4 from './InterestQuizPg4';
-import { type } from 'os';
 import { UserContext } from '../../UserContext';
 
 

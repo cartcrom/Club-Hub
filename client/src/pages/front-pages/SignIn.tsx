@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { backend_URL } from '../../constants';
-import { IonContent, IonLabel, IonPage, IonFooter, IonToolbar, IonHeader, IonButtons, IonBackButton, IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonFooter,  IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
 import logo from '../../images/CHLogo.png'
