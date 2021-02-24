@@ -6,9 +6,7 @@ import { UserContext } from '../UserContext';
 import Club from '../components/Club';
 import Student from '../components/Student';
 import { ClubContext } from '../ClubContext';
-import club from '../images/ClubSoda.jpg'
-import ice from '../images/rsz_ice_cream.jpg';
-import john from '../images/john.jpg';
+
 
 interface ClubCardProps extends RouteComponentProps {
   club: Club

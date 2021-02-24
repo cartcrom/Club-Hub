@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { IonContent, IonProgressBar, IonFooter, IonPage, IonTitle, IonToolbar, IonList, IonRadioGroup, IonListHeader, IonLabel, IonItem, IonRadio, IonItemDivider, IonCheckbox } from '@ionic/react';
+import { IonContent, IonProgressBar, IonPage, IonList, IonLabel, IonItem, IonCheckbox } from '@ionic/react';
 import './InterestQuiz.css';
-import { map } from 'ionicons/icons';
+
 
 interface InterestQuizProps {
     nextPage: Function

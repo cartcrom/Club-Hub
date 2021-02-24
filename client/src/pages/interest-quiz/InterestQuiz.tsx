@@ -3,14 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import axios from 'axios';
 import { backend_URL } from '../../constants'
 
-import { IonContent, IonLabel, IonPage, IonFooter, IonItem, IonButtons, IonHeader, IonToolbar, IonButton} from '@ionic/react';
 
 import InterestQuizIntro from './InterestQuizIntro';
 import InterestQuizPg1 from './InterestQuizPg1';
 import InterestQuizPg2 from './InterestQuizPg2';
 import InterestQuizPg3 from './InterestQuizPg3';
 import InterestQuizPg4 from './InterestQuizPg4';
-import { type } from 'os';
 
 
 interface InterestQuizProps extends RouteComponentProps {
