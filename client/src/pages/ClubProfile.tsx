@@ -14,9 +14,102 @@ import john from '../images/john.jpg'
 import ice from '../images/rsz_ice_cream.jpg'
 
 import add from '../images/add.png';
+import axios from 'axios';
 
 let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
-let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+//let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
+
+ interface EventButtonProps extends RouteComponentProps {
+   id: string;
+ }
+
+async function joinClubBackend(studentId: string, clubId: string) {
+  const joinClubData = { studentId, clubId };
+  try {
+    const res = axios.post('http://localhost:5000/joinClub', joinClubData);
+    console.log(res);
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+
+async function leaveClubBackend(studentId: string, clubId: string) {
+  const joinClubData = { studentId, clubId };
+  try {
+    const res = axios.post('http://localhost:5000/leaveClub', joinClubData);
+    console.log(res);
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+
+const RatingButton = (props: EventButtonProps) => {
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
+  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  if (clubs === undefined) {
+    throw new Error("Undefined clubs error");
+
+  }
+
+  let id = props.id;
+  let club = clubs.get(id);
+
+  return(
+    <IonItem lines="none" button onClick={() => props.history.push('../addEvent/' + props.id)}>
+      <IonAvatar slot="start">
+        <img className="club-image" src={add} />
+      </IonAvatar>
+      <IonLabel className="club-item">
+        {"Add an Event"}
+      </IonLabel>
+    </IonItem>
+  )
+
+}
+
+
+
+
+const EventButton = (props: EventButtonProps) => {
+
+  let user: Student | undefined = useContext(UserContext)
+  if (user === undefined) {
+    throw new Error("Undefined user error");
+  }
+  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  if (clubs === undefined) {
+    throw new Error("Undefined clubs error");
+  }
+
+  let id = props.id;
+  let club = clubs.get(id);
+
+  if(club != null){
+    if(user.lead_clubs.includes(club.id) ){
+      return(
+        <IonItem lines="none" button onClick={() => props.history.push('../addEvent/' + props.id)}>
+          <IonAvatar slot="start">
+            <img className="club-image" src={add} />
+          </IonAvatar>
+          <IonLabel className="club-item">
+            {"Add an Event"}
+          </IonLabel>
+        </IonItem>
+      )
+    }
+    else{
+      return null
+    }
+  }
+  else{
+    return null
+  }
+}
 
 const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
 
@@ -99,7 +192,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
           </IonList>
 
         </div>
-        
+
         </IonInfiniteScroll>
       </IonContent>
     </IonPage>

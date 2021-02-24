@@ -7,6 +7,7 @@ import './AddEvent.css';
 import Club from '../components/Club';
 import Event from '../components/Event';
 import { wait } from '@testing-library/react';
+import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {
   saveEvent: Function;
@@ -19,36 +20,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       throw new Error("Undefined clubs error");
     }
 
-    function timeSince(date : Date) {
-
-      var seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
     
-      var interval = seconds / 31536000;
-    
-      if (interval > 1) {
-        return Math.floor(interval) + " years ago";
-      }
-      interval = seconds / 2592000;
-      if (interval > 1) {
-        return Math.floor(interval) + " months ago";
-      }
-      interval = seconds / 86400;
-      if (interval > 1) {
-        return Math.floor(interval) + " days ago";
-      }
-      interval = seconds / 3600;
-      if (interval > 1) {
-        return Math.floor(interval) + " hours ago";
-      }
-      interval = seconds / 60;
-      if (interval > 1) {
-        return Math.floor(interval) + " minutes ago";
-      }
-      return Math.floor(seconds) + " seconds ago";
-    }
-    var aDay = 24*60*60*1000;
-    console.log(timeSince(new Date(Date.now()-aDay)));
-    console.log(timeSince(new Date(Date.now()-aDay*2)));
 
   const addEvent = () => {
     let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
@@ -66,28 +38,37 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       throw new Error("Undefined club error with ID " + id);
     }
 
-    function sleep(milliseconds : Number) {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < milliseconds);
-    }
 
     /*Date d = new Date();
     String s = d.toString;
     Date theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(s);*/
     let now = new Date
-    sleep(5000);
-    currentClub.addEvent("id", desc, timeSince(now) , "img", name.toString(),timeSince(now) , start, loc);
+    currentClub.addEvent("id", desc, now , "https://placeimg.com/640/640/nature", name.toString(), now.toString() , start, loc);
 
     
     clubs!.set(id, currentClub);
 
-    props.history.goBack();
-
-    
     //make a post call here to send the data to the server
+    name = name.toString();
+    let eventDate = new Date(date).toDateString().slice(0, -5);
+    let postDate = now.toString();
+    let image = "https://placeimg.com/640/640/nature";
+    const backendEventStructure = {
+      id,
+      name,
+      desc,
+      postDate,
+      eventDate,
+      start,
+      loc,
+      image,
+    }
+    
+    axios.post('http://localhost:5000/add/event', backendEventStructure)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+    props.history.goBack();
   }
 
     return (

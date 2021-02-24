@@ -143,18 +143,18 @@ app.post("/add/event", async (req, res) => {
   let eventData = req.body;
   try {
     let event = new Event({
-      club: eventData.club,
+      club: eventData.id,
       name: eventData.name,
       desc: eventData.desc,
-      eventStart: eventData.eventStart,
-      eventEnd: eventData.eventEnd,
-      eventLoc: eventData.eventLoc,
       postDate: eventData.postDate,
-      image: eventData.image,
+      eventDate: eventData.eventDate,
+      eventTime: eventData.start,
+      eventLoc: eventData.loc,
+      img: eventData.image,
     });
     event.save();
 
-    const clubId = eventData.clubId;
+    const clubId = eventData.id;
     const eventId = event._id;
     await Club.findByIdAndUpdate(clubId, {
       $push: { events: eventId },
@@ -244,6 +244,35 @@ app.post("/intrest/quiz", (req, res) => {
     res.send(false);
   }
 });
+
+app.post("/joinClub", (req, res) => {
+  let {studentId, clubId} = req.body;
+  try {
+    User.findByIdAndUpdate(studentId, {
+      $addToSet: { joined_clubs: clubId }
+    })
+    res.send('Club Added');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot add club");
+  }
+})
+
+app.post("/leaveClub", (req, res) => {
+  let {studentId, clubId} = req.body;
+  try {
+    User.findByIdAndUpdate(studentId, {
+      $pull: { joined_clubs: clubId }
+    })
+    res.send('Club Removed');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot remove club");
+  }
+})
+
 app.get("/", (req, res) => {
   res.send("hey");
 });

@@ -13,6 +13,7 @@ export default class Club {
   meetings?: Array<Event>;
   socialMedia: Array<string>
   events: Array<Event>
+  //ratings: Array<Number>
 
   constructor(name : string, id: string, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
     school: string, tags: Array<string>, meetings: Array<Event> | undefined, socialMedia: Array<string>, events: Array<Event>) {
@@ -27,6 +28,7 @@ export default class Club {
     this.meetings = meetings;
     this.socialMedia = socialMedia;
     this.events = events;
+    //this.ratings = ratings;
   }
 
   // Method
@@ -34,7 +36,7 @@ export default class Club {
     return this.id;
   }
 
-  addEvent(id: string, description: string, date: string, image: string,
+  addEvent(id: string, description: string, date: Date, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
     let e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
     this.events.push(e);
