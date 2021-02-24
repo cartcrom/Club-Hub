@@ -14,6 +14,7 @@ import john from '../images/john.jpg'
 import ice from '../images/rsz_ice_cream.jpg'
 
 import add from '../images/add.png';
+import axios from 'axios';
 
 let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccromer@calpoly.edu", ["social", "recreation", "outdoors", "athletic", "games"], ["1","2","3","4"], ["3"]);
 //let test_club = new Club("Ice Cream Club", "id1", "A club for people who like Ice Cream", ice, john, [], "Cal Poly SLO", [], undefined, [], [])
@@ -21,6 +22,28 @@ let test_student = new Student("Carter", "Cromer", "id1", "Cal Poly SLO", "ccrom
  interface EventButtonProps extends RouteComponentProps {
    id: string;
  }
+
+async function joinClubBackend(studentId: string, clubId: string) {
+  const joinClubData = { studentId, clubId };
+  try {
+    const res = axios.post('http://localhost:5000/joinClub', joinClubData);
+    console.log(res);
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+
+async function leaveClubBackend(studentId: string, clubId: string) {
+  const joinClubData = { studentId, clubId };
+  try {
+    const res = axios.post('http://localhost:5000/leaveClub', joinClubData);
+    console.log(res);
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
 
 const RatingButton = (props: EventButtonProps) => {
   let user: Student | undefined = useContext(UserContext)

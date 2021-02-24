@@ -244,6 +244,35 @@ app.post("/intrest/quiz", (req, res) => {
     res.send(false);
   }
 });
+
+app.post("/joinClub", (req, res) => {
+  let {studentId, clubId} = req.body;
+  try {
+    User.findByIdAndUpdate(studentId, {
+      $addToSet: { joined_clubs: clubId }
+    })
+    res.send('Club Added');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot add club");
+  }
+})
+
+app.post("/leaveClub", (req, res) => {
+  let {studentId, clubId} = req.body;
+  try {
+    User.findByIdAndUpdate(studentId, {
+      $pull: { joined_clubs: clubId }
+    })
+    res.send('Club Removed');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot remove club");
+  }
+})
+
 app.get("/", (req, res) => {
   res.send("hey");
 });
