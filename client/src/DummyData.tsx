@@ -26,4 +26,4 @@ DD_fake_clubs.set("id2", test_club2)
 DD_fake_clubs.set("id3", test_club3)
 DD_fake_clubs.set("id4", test_club4)
 
-export const DD_guest_user = new Student("Guest", "", "-1", "Cal Poly SLO", "unregistered", ["social", "recreation", "outdoors", "athletic", "games"], ["id1","id2"], ["id3", "id4"])
+export const DD_guest_user = new Student("Guest", "", "", "", "", [], [], [])
