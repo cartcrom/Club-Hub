@@ -48,7 +48,8 @@
     "us-university-list": "^1.0.0"
   },
   "scripts": {
-    "clubhub": "nodemon serever.js",
+    "start": "NODE_ENV=production node server.js",
+    "clubhub": "nodemon server.js",
     "test": "jest"
   },
   "eslintConfig": {
