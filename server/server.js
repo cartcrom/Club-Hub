@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 var env = process.argv[2] || 'dev';
 app.use(
   cors({
-    origin: (env === "dev") ? "http://localhost:8100" : "https://cromer.dev/",
+    origin: (env === "dev") ? "http://localhost:8100" : "https://cromer.dev",
     credentials: true,
   })
 );
