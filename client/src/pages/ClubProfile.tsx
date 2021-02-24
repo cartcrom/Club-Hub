@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { UserContext } from '../UserContext';
 import { ClubContext } from '../ClubContext';
 
@@ -45,73 +45,25 @@ async function leaveClubBackend(studentId: string, clubId: string) {
   }
 }
 
-const RatingButton = (props: EventButtonProps) => {
-  let user: Student | undefined = useContext(UserContext)
-  if (user === undefined) {
-    throw new Error("Undefined user error");
-  }
-  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
-  if (clubs === undefined) {
-    throw new Error("Undefined clubs error");
 
-  }
-
-  let id = props.id;
-  let club = clubs.get(id);
-
-  return(
-    <IonItem lines="none" button onClick={() => props.history.push('../addEvent/' + props.id)}>
-      <IonAvatar slot="start">
-        <img className="club-image" src={add} />
-      </IonAvatar>
-      <IonLabel className="club-item">
-        {"Add an Event"}
-      </IonLabel>
-    </IonItem>
-  )
-
-}
-
-
-
-
-const EventButton = (props: EventButtonProps) => {
-
-  let user: Student | undefined = useContext(UserContext)
-  if (user === undefined) {
-    throw new Error("Undefined user error");
-  }
-  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
-  if (clubs === undefined) {
-    throw new Error("Undefined clubs error");
-  }
-
-  let id = props.id;
-  let club = clubs.get(id);
-
-  if(club != null){
-    if(user.lead_clubs.includes(club.id) ){
-      return(
-        <IonItem lines="none" button onClick={() => props.history.push('../addEvent/' + props.id)}>
-          <IonAvatar slot="start">
-            <img className="club-image" src={add} />
-          </IonAvatar>
-          <IonLabel className="club-item">
-            {"Add an Event"}
-          </IonLabel>
-        </IonItem>
-      )
-    }
-    else{
-      return null
-    }
-  }
-  else{
-    return null
-  }
-}
 
 const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
+
+  function joinButton(student: Student | undefined, club: Club | undefined){
+    if(student != undefined && club!= undefined){
+      if(student.joined_clubs.includes(club.id)){
+        leaveClubBackend(student.id, club.id)
+        student.joined_clubs = student.joined_clubs.filter((item) => item != club.id? item : null)
+        setHasJoined(false)
+        
+      }
+      else{
+        joinClubBackend(student.id, club.id)
+        student.joined_clubs.push(club.id)
+        setHasJoined(true)
+      }
+    }
+  }
 
   let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
@@ -127,6 +79,10 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
   if (!club) {
     throw new Error("Undefined club error with ID " + id);
   }
+
+  let joined = user.joined_clubs.includes(club.id)
+  const [hasJoined, setHasJoined] = useState(joined);
+  
 
   let feed = club.events.map((e : Event) => e.getFeedItem(false, undefined));
 
@@ -166,7 +122,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
             {club.description}
           </p>
 
-          <button className="following">following</button>
+          <button className="following" onClick={() =>joinButton(user , club)}> {hasJoined? "Following" : "Join"} </button>
 
           <div className="club-tags" >
             {
