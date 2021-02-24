@@ -48,7 +48,7 @@
     "us-university-list": "^1.0.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "node server.js prod",
     "clubhub": "nodemon server.js",
     "test": "jest"
   },
