@@ -104,7 +104,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
                 <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
                 <IonButton onClick={() => addEvent()}id="add-button" expand="full">Add Event</IonButton>
-                <IonButton expand="full">Cancel</IonButton>
+                <IonButton expand="full" onClick={() => props.history.goBack()}>Cancel</IonButton>
           </IonContent>
         </IonPage>
     );
