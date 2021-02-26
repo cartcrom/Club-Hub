@@ -248,10 +248,11 @@ app.post("/intrest/quiz", (req, res) => {
   }
 });
 
-app.post("/joinClub", (req, res) => {
+app.post("/joinClub", async (req, res) => {
   let {studentId, clubId} = req.body;
+  console.log(`Student ${studentId} joining club with id ${clubId}`);
   try {
-    User.findByIdAndUpdate(studentId, {
+    await User.findByIdAndUpdate(studentId, {
       $addToSet: { joined_clubs: clubId }
     })
     res.send('Club Added');
@@ -262,10 +263,11 @@ app.post("/joinClub", (req, res) => {
   }
 })
 
-app.post("/leaveClub", (req, res) => {
+app.post("/leaveClub", async (req, res) => {
   let {studentId, clubId} = req.body;
+  console.log(`Student ${studentId} leaving club with id ${clubId}`);
   try {
-    User.findByIdAndUpdate(studentId, {
+    await User.findByIdAndUpdate(studentId, {
       $pull: { joined_clubs: clubId }
     })
     res.send('Club Removed');

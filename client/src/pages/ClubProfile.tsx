@@ -19,7 +19,7 @@ import axios from 'axios';
 async function joinClubBackend(studentId: string, clubId: string) {
   const joinClubData = { studentId, clubId };
   try {
-    const res = axios.post('http://localhost:5000/joinClub', joinClubData);
+    const res = await axios.post('http://localhost:5000/joinClub', joinClubData);
     console.log(res);
   }
   catch (e) {
@@ -30,7 +30,7 @@ async function joinClubBackend(studentId: string, clubId: string) {
 async function leaveClubBackend(studentId: string, clubId: string) {
   const joinClubData = { studentId, clubId };
   try {
-    const res = axios.post('http://localhost:5000/leaveClub', joinClubData);
+    const res = await axios.post('http://localhost:5000/leaveClub', joinClubData);
     console.log(res);
   }
   catch (e) {
@@ -71,6 +71,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
     throw new Error("Undefined club error with ID " + id);
   }
 
+  let leading = user.lead_clubs.includes(club.id)
   let joined = user.joined_clubs.includes(club.id)
   const [hasJoined, setHasJoined] = useState(joined);
   
@@ -113,7 +114,8 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
             {club.description}
           </p>
 
-          <button className="following" onClick={() =>joinButton(user , club)}> {hasJoined? "Following" : "Join"} </button>
+          {!leading ? <button className="following" onClick={() =>joinButton(user , club)}> {hasJoined? "Following" : "Join"} </button> 
+            : <button className="following">Leading</button>}
 
           <div className="club-tags" >
             {

@@ -96,7 +96,7 @@ const MyClubs: React.FC<RouteComponentProps> = (props) => {
             </IonLabel>
           </IonItem>
           { lead_clubs_view }
-          <AddButton {...props} />
+          { user.id && <AddButton {...props} /> }
 
           <div className="divider"/>
 
