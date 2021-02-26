@@ -1,12 +1,9 @@
 import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
-import { getElement } from 'ionicons/dist/types/stencil-public-runtime';
 import React, { useRef, useContext} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
-import Event from '../components/Event';
-import { wait } from '@testing-library/react';
 import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {
@@ -107,7 +104,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
                 <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
                 <IonButton onClick={() => addEvent()}id="add-button" expand="full">Add Event</IonButton>
-                <IonButton expand="full">Cancel</IonButton>
+                <IonButton expand="full" onClick={() => props.history.goBack()}>Cancel</IonButton>
           </IonContent>
         </IonPage>
     );

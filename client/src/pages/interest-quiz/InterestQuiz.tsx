@@ -2,15 +2,12 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import axios from 'axios';
 import { backend_URL } from '../../constants'
-
-import { IonContent, IonLabel, IonPage, IonFooter, IonItem, IonButtons, IonHeader, IonToolbar, IonButton} from '@ionic/react';
-
 import InterestQuizIntro from './InterestQuizIntro';
 import InterestQuizPg1 from './InterestQuizPg1';
 import InterestQuizPg2 from './InterestQuizPg2';
 import InterestQuizPg3 from './InterestQuizPg3';
 import InterestQuizPg4 from './InterestQuizPg4';
-import { type } from 'os';
+import { UserContext } from '../../UserContext';
 
 
 interface InterestQuizProps extends RouteComponentProps {
@@ -31,8 +28,9 @@ type SubmitReponse = {
 }
 
 export default class InterestQuiz extends React.Component<InterestQuizProps, QuizState> {
-
     //make update functions, pass those to pages, then push to context at end
+    context!: React.ContextType<typeof UserContext>
+
     componentWillMount() {
         var interestArray:string[] = [];
         this.setState({
@@ -45,6 +43,13 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
     }
 
     submitQuiz = () => {
+        let user = this.context;
+        if (!user || !user.id) {
+            this.props.finishQuiz(this.state.interests, this.state.schoolName,this.state.college,this.state.major);
+            this.props.history.push("/feed");
+            return
+        }
+
         axios.post(backend_URL + '/intrest/quiz', {
             school: this.state.schoolName,
             collegeOf: this.state.college,
@@ -55,12 +60,11 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
             console.log(res);
             if (res.data) {
                 this.props.finishQuiz(this.state.interests, this.state.schoolName,this.state.college,this.state.major);
-                this.props.history.push("/feed");
             }
             else {
                 console.log("Interest Quiz Submission Error")
             }
-                
+            this.props.history.push("/feed");
             })
             .catch((err : any) => {
             // handle error

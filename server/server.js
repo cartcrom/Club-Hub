@@ -35,12 +35,15 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+var env = process.argv[2] || 'dev';
 app.use(
   cors({
-    origin: "http://localhost:8100",
+    origin: (env === "dev") ? "http://localhost:8100" : "https://cromer.dev",
     credentials: true,
   })
 );
+
 app.use(cookieParser("djaJK&(4kaUjfkbSU872dD3"));
 app.use(
   session({
@@ -244,6 +247,37 @@ app.post("/intrest/quiz", (req, res) => {
     res.send(false);
   }
 });
+
+app.post("/joinClub", async (req, res) => {
+  let {studentId, clubId} = req.body;
+  console.log(`Student ${studentId} joining club with id ${clubId}`);
+  try {
+    await User.findByIdAndUpdate(studentId, {
+      $addToSet: { joined_clubs: clubId }
+    })
+    res.send('Club Added');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot add club");
+  }
+})
+
+app.post("/leaveClub", async (req, res) => {
+  let {studentId, clubId} = req.body;
+  console.log(`Student ${studentId} leaving club with id ${clubId}`);
+  try {
+    await User.findByIdAndUpdate(studentId, {
+      $pull: { joined_clubs: clubId }
+    })
+    res.send('Club Removed');
+  }
+  catch {
+    res.status(400)
+    res.send("Backend cannot remove club");
+  }
+})
+
 app.get("/", (req, res) => {
   res.send("hey");
 });

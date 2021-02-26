@@ -176,15 +176,18 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   authenticate = (user : any) => {
-    if (user)
+    if (user) {
       this.setState({user : backendToStudent(user)})
-    else // Change - remove clubs before release build
+      this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
+    }
+    else {
       this.setState({user: DD_guest_user});
+      this.setState({ club_data: new Map<string, Club>() })
+    }
     
     history.push("/")
 
     this.setState({isAuthenticated : true});
-    this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
   }
 
   logOut = () => {
@@ -262,7 +265,7 @@ export default class App extends React.Component<{}, AppState> {
             {(isauth && !this.state.club_data) && 
               <Loader></Loader>
             }
-            <IonReactRouter history={history} basename={process.env.PUBLIC_URL} >
+            <IonReactRouter history={history} basename={process.env.PUBLIC_URL}>
               <IonTabs>
                 <IonRouterOutlet>
                   <Switch>
