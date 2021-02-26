@@ -36,17 +36,15 @@ const InterestQuizPg1 = (props: InterestQuizProps) : ReactElement => {
                 <IonProgressBar className="progress-bar" color="secondary" value={0.1}></IonProgressBar>
                 <h2 id="quiz-header">School Information </h2>
                 
-                    <input type="text" id="college" list="collegeList" placeholder="College" className="drop-down-button">
-                            <datalist id="collegeList" >
-                                {addOptions(colleges)}
-                            </datalist> 
-                    </input>
+                    <input type="text" id="college" list="collegeList" placeholder="College" className="drop-down-button" />
+                    <datalist id="collegeList" >
+                        {addOptions(colleges)}
+                    </datalist> 
                               
-                    <input type="text" id="major" list="majorList" placeholder="Major" className="drop-down-button" >
-                        <datalist id="majorList">
+                    <input type="text" id="major" list="majorList" placeholder="Major" className="drop-down-button" />
+                    <datalist id="majorList">
                         {addOptions(majors)}
-                        </datalist>
-                    </input>
+                    </datalist>
                 
 
             </IonContent>
