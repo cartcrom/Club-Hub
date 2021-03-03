@@ -105,6 +105,12 @@
     width: 50%;
 }
 
+.event-timesince {
+    font: bold 10pt "Proxima Nova";
+    color: rgb(48, 48, 48);
+    padding: 0 0 5pt 18pt;
+}
+
 .details{
     --background: rgba(232, 236, 241, 1);
     --color: #000000;

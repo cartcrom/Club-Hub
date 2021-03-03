@@ -50,7 +50,7 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
             return
         }
 
-        axios.post(backend_URL + '/intrest/quiz', {
+        axios.post(backend_URL + '/interest/quiz', {
             school: this.state.schoolName,
             collegeOf: this.state.college,
             major: this.state.major,

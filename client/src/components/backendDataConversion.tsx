@@ -42,7 +42,7 @@ export function backendToClub (c : any) : Club {
     c.mediaPlugs,
     [],
   )
-  console.log(club)
+  // console.log(club)
   if (!!c.events) {
     for (let event of c.events) {
       backendAddEvent(event, club)

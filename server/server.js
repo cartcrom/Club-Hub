@@ -226,7 +226,7 @@ app.post("/add/club", async (req, res) => {
     res.send("Invalid club structure");
   }
 });
-app.post("/intrest/quiz", (req, res) => {
+app.post("/interest/quiz", (req, res) => {
   if (req.session.user) {
     User.findOne({ _id: req.session.user._id }).then((usr) => {
       if (usr) {

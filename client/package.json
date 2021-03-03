@@ -38,6 +38,7 @@
     "mutationobserver-shim": "^0.3.7",
     "query-string": "^6.13.8",
     "react": "^16.13.0",
+    "react-datalist-input": "^2.1.1",
     "react-dom": "^16.13.0",
     "react-hook-form": "^6.11.0",
     "react-router": "^5.1.2",

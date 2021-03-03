@@ -33,12 +33,6 @@ function timeSince(date : Date) {
   return Math.floor(seconds) + " seconds ago";
 }
 
-var aDay = 24*60*60*1000;
-console.log(timeSince(new Date(Date.now()-aDay)));
-console.log(timeSince(new Date(Date.now()-aDay*2)));
-
-
-
 class EventView extends React.Component<{e : Event, useHeader: boolean, route : Function | undefined}, {loved : boolean}> {
   constructor(props: any) {
     super(props)
@@ -66,19 +60,8 @@ class EventView extends React.Component<{e : Event, useHeader: boolean, route : 
         <IonRow>
           <div className="container">
             <IonImg className='post-image' src={e.image}></IonImg>
-            {/* <div className="bottom-right">
-              <IonItem lines="none" className="calendar">
-                <IonIcon src={calendarOutline}></IonIcon>
-              </IonItem>
-              <IonLabel className='event-title'>{"EVENT - " + e.title}</IonLabel>
-              <IonLabel className='event-date'>{e.eventDate}</IonLabel>
-            </div> */}
           </div>
         </IonRow>
-        {/* <IonRow className="event-info">
-          
-        </IonRow> */}
-
         <IonRow className="event-data">
           <IonItem lines="none" className="calendar">
             <IonIcon src={calendarOutline}></IonIcon>
@@ -97,9 +80,9 @@ class EventView extends React.Component<{e : Event, useHeader: boolean, route : 
         </IonRow>
 
         <IonRow>
-          <IonCol>
-              {timeSince(new Date(e.date))}
-            </IonCol>
+          <IonText className="event-timesince">
+            {timeSince(new Date(e.date))}
+          </IonText>
         </IonRow>
 
       </IonGrid>
