@@ -14,7 +14,7 @@ const auth = require("./verification/auth");
 const helper = require("./helperFunc/helper");
 const Club = require("./schemas/club");
 const Event = require("./schemas/event");
-const verifier = require('academic-email-verifier').Verifier;
+const verifier = require("academic-email-verifier").Verifier;
 
 const session = require("express-session");
 const User = require("./schemas/user");
@@ -36,10 +36,10 @@ app.use((req, res, next) => {
   next();
 });
 
-var env = process.argv[2] || 'dev';
+var env = process.argv[2] || "dev";
 app.use(
   cors({
-    origin: (env === "dev") ? "http://localhost:8100" : "https://cromer.dev",
+    origin: env === "dev" ? "http://localhost:8100" : "https://cromer.dev",
     credentials: true,
   })
 );
@@ -116,17 +116,17 @@ app.get("/logout", async (req, res) => {
 app.post("/SignUp", async (req, res) => {
   console.log("route called sign-up");
   // User Error Checking
-  if (! (await verifier.isAcademic(req.body.email))) {
-    console.log('Non-academic email');
-    res.status(401).send('Email must end in .edu');
-    return
+  if (!(await verifier.isAcademic(req.body.email))) {
+    console.log("Non-academic email");
+    res.status(401).send("Email must end in .edu");
+    return;
   }
-  let dupEmail = await User.find({email: req.body.email})
-  console.log(dupEmail)
+  let dupEmail = await User.find({ email: req.body.email });
+  console.log(dupEmail);
   if (dupEmail.length != 0) {
-    console.log('Email Already in Use');
-    res.status(401).send('Email Already in Use');
-    return
+    console.log("Email Already in Use");
+    res.status(401).send("Email Already in Use");
+    return;
   }
   // Regular Routes
   auth
@@ -198,7 +198,7 @@ app.get("/get/clubEvents/:clubId", async (req, res) => {
 });
 
 app.post("/add/club", async (req, res) => {
-  console.log('Adding a club')
+  console.log("Adding a club");
   let clubData = req.body;
   try {
     let club = new Club({
@@ -215,68 +215,78 @@ app.post("/add/club", async (req, res) => {
     club.save();
 
     await User.findByIdAndUpdate(clubData.leaderId, {
-      $push: {lead_clubs: club._id}
-    })
+      $push: { lead_clubs: club._id },
+    });
 
     console.log(club);
     res.send(club);
   } catch (e) {
-    console.log(e)
+    console.log(e);
     res.status(400);
     res.send("Invalid club structure");
   }
 });
-app.post("/interest/quiz", (req, res) => {
-  if (req.session.user) {
-    User.findOne({ _id: req.session.user._id }).then((usr) => {
-      if (usr) {
-        usr.school = req.body.school;
-        usr.collegeOf = req.body.collegeOf;
-        usr.major = req.body.major;
-        usr.interests = req.body.interests;
-        req.session.user = usr;
-        usr.save().then(res.send(true));
-        console.log("User updated", usr);
-      } else {
-        console.log("invalid id for user");
-        res.send(false);
-      }
+app.get("/get/clubs", (req, res) => {
+  Club.find({})
+    .then((arr) => {
+      res.send(arr);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.send(false);
     });
+});
+app.post("/interest/quiz", (req, res) => {
+  if (req.body.id) {
+    User.findOne({ _id: req.body.id })
+      .then((usr) => {
+        if (usr) {
+          usr.school = req.body.school;
+          usr.collegeOf = req.body.collegeOf;
+          usr.major = req.body.major;
+          usr.interests = req.body.interests;
+          req.session.user = usr;
+          usr.save().then(res.send(true));
+          console.log("User updated", usr);
+        } else {
+          console.log("invalid id for user");
+          res.send(false);
+        }
+      })
+      .catch();
   } else {
-    console.log("user does'nt have id", req.session.user);
+    console.log("no id found in request");
     res.send(false);
   }
 });
 
 app.post("/joinClub", async (req, res) => {
-  let {studentId, clubId} = req.body;
+  let { studentId, clubId } = req.body;
   console.log(`Student ${studentId} joining club with id ${clubId}`);
   try {
     await User.findByIdAndUpdate(studentId, {
-      $addToSet: { joined_clubs: clubId }
-    })
-    res.send('Club Added');
-  }
-  catch {
-    res.status(400)
+      $addToSet: { joined_clubs: clubId },
+    });
+    res.send("Club Added");
+  } catch {
+    res.status(400);
     res.send("Backend cannot add club");
   }
-})
+});
 
 app.post("/leaveClub", async (req, res) => {
-  let {studentId, clubId} = req.body;
+  let { studentId, clubId } = req.body;
   console.log(`Student ${studentId} leaving club with id ${clubId}`);
   try {
     await User.findByIdAndUpdate(studentId, {
-      $pull: { joined_clubs: clubId }
-    })
-    res.send('Club Removed');
-  }
-  catch {
-    res.status(400)
+      $pull: { joined_clubs: clubId },
+    });
+    res.send("Club Removed");
+  } catch {
+    res.status(400);
     res.send("Backend cannot remove club");
   }
-})
+});
 
 app.get("/", (req, res) => {
   res.send("hey");
@@ -286,4 +296,6 @@ app.get("/test", (req, res) => {
   res.send("Success");
 });
 
-server.listen(process.env.PORT || 5000, () => console.log("backend online at 5000"));
+server.listen(process.env.PORT || 5000, () =>
+  console.log("backend online at 5000")
+);
