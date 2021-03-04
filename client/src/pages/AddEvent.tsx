@@ -1,6 +1,6 @@
-import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
-import React, { useRef, useContext} from 'react';
+import React, { useRef, useContext, useState} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
@@ -11,6 +11,7 @@ interface AddEventProps extends RouteComponentProps<{id : string}> {
 }
 
 const AddEvent: React.FC<AddEventProps> = (props) => {
+  const [showAlert1, setShowAlert1] = useState(false);
 
   let clubs : Map<string, Club> | undefined = useContext(ClubContext);
     if (clubs === undefined) {
@@ -18,7 +19,6 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
     
-
   const addEvent = () => {
     let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
     let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
@@ -26,6 +26,19 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     let date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
     let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;
     //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+
+    if(name == "" || desc == "" || loc == "" || date == ""){
+      setShowAlert1(true)
+      return(
+        <IonAlert
+        isOpen={true}
+        onDidDismiss={() => setShowAlert1(false)}
+        cssClass='my-custom-class'
+        header={'Must fill all fields.'}
+        message={'Please fill out each field for your event.'}
+        buttons={['OK']}
+      />)
+    }
 
     
 
@@ -70,6 +83,14 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
 
     return (
         <IonPage>
+          <IonAlert
+          isOpen={showAlert1}
+          onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
+          header={'Must fill all fields.'}
+          message={'Please fill out each field for your event.'}
+          buttons={['OK']}
+        />
           <IonHeader>
             <IonToolbar className="header">
               <IonTitle>Event Adder</IonTitle>
@@ -81,7 +102,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
           <IonContent fullscreen>
             <IonItem>
                 <IonLabel position="floating">Title</IonLabel>
-                <IonInput id={"nameID"}></IonInput>
+                <IonInput id={"nameID"} ></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Description</IonLabel>
@@ -89,7 +110,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Location</IonLabel>
-                <IonInput id={"locID"}></IonInput>
+                <IonInput id={"locID"} minlength={1} required={true}></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Date</IonLabel>
@@ -103,7 +124,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
                 <IonLabel>End</IonLabel>
                 <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
             </IonItem>
-                <IonButton onClick={() => addEvent()}id="add-button" expand="full">Add Event</IonButton>
+                <IonButton onClick={() => addEvent()} expand="block" id="add-button">Add Event</IonButton>
                 <IonButton expand="full" onClick={() => props.history.goBack()}>Cancel</IonButton>
           </IonContent>
         </IonPage>
