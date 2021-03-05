@@ -48,7 +48,7 @@ const Feed: React.FC<RouteComponentProps> = (props) => {
       }
     }
 
-    let feed: Array<JSX.Element> = [];
+    const feed: Array<JSX.Element> = [];
     posts.forEach((post: Post) =>
       feed.push(post.getFeedItem(true, () => props.history.push("club/" + post.club.id)))
     );
