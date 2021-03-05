@@ -1,6 +1,6 @@
 const User = require("../schemas/user");
 const nodemailer = require("nodemailer");
-const verifier = require('academic-email-verifier').Verifier;
+const verifier = require("academic-email-verifier").Verifier;
 
 function login(email, pass) {
   return new Promise(function (resolve, reject) {
@@ -10,7 +10,7 @@ function login(email, pass) {
         if (docs.password === pass && docs.isVerified) {
           resolve(docs);
         } else if (docs.password === pass && !docs.isVerified) {
-          console.log("User is not verified");
+          console.log("User is not verified the email :", docs.email);
           email_verification(docs.email, docs._id);
           resolve(false);
         } else {
@@ -38,23 +38,21 @@ function login(email, pass) {
   });
 }
 
-async function sign_up(details) {
-  let school = await verifier.getInstitutionName(details.email)
+async function sign_up(details, env) {
+  let school = await verifier.getInstitutionName(details.email);
   return new Promise(function (resolve, reject) {
     let user = new User();
+    console.log("un verified account created for", details.email);
     user.firstName = details.firstName;
     user.lastName = details.lastName;
     user.email = details.email;
     user.password = details.password;
     user.school = school;
-    user.save().then((obj) => {
-      resolve(obj);
+    email_verification(details.email, user._id, env).then((ok) => {
+      user.save().then((obj) => {
+        resolve(obj);
+      });
     });
-    // email_verification(details.email, user._id).then((ok) => {
-    //   user.save().then((obj) => {
-    //     resolve(obj);
-    //   });
-    // });
   });
 }
 
@@ -62,8 +60,8 @@ function verify_user(id) {
   return new Promise(function (resolve, reject) {
     User.findById(id, (err, docs) => {
       if (docs) {
-        console.log(docs.email);
-        docs.verified = true;
+        console.log(docs.email, "=> is now verified");
+        docs.isVerified = true;
         docs.save();
         console.log("email verified for #", docs.name);
         resolve(true);
@@ -73,24 +71,31 @@ function verify_user(id) {
     });
   });
 }
-function email_verification(email, id) {
+function email_verification(email, id, env) {
   return new Promise(function (resolve, reject) {
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "clubhub2020@gmail.com",
-        pass: "@IluvCSC309",
+        user: "MustangConnectAuthenticate@gmail.com",
+        pass: "307AssignmentRocks",
       },
     });
+    let verification_route =
+      (env === "dev"
+        ? "http://localhost:8100"
+        : "https://cromer.dev/Club-Hub/#") +
+      "/verification?id=" +
+      id;
+
     var mailOptions = {
-      from: "clubhub2020@gmail.com",
+      from: "Club Hub",
       to: email,
-      subject: "Club-Hub Email-Verification Request",
+      subject: "ClubHub Email-Verification Request",
       text: `Click on this link to activate your account:
-        http://localhost:3000/verification?id=${id}
+        ${verification_route}
         We hope you enjoy our site
         Sincerely,
-        Team Culb Hub`,
+        Team Club Hub`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -98,7 +103,7 @@ function email_verification(email, id) {
         console.log(error);
         reject(error);
       } else {
-        console.log("Email sent: " + info.response);
+        console.log("Verification Email sent to: " + email);
         resolve(true);
       }
     });
@@ -108,3 +113,4 @@ function email_verification(email, id) {
 exports.login = login;
 exports.sign_up = sign_up;
 exports.verify_user = verify_user;
+exports.email_verification = email_verification;

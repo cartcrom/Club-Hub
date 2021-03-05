@@ -43,7 +43,7 @@ export function backendToClub (c : any) : Club {
     [],
   )
   // console.log(club)
-  if (!!c.events) {
+  if (c.events) {
     for (let event of c.events) {
       backendAddEvent(event, club)
     }

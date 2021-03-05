@@ -4,8 +4,8 @@ import { RouteComponentProps } from 'react-router';
 import { Plugins, CameraResultType} from '@capacitor/core';
 import './ClubRegistration.css'
 import { UserContext } from '../../UserContext';
-import axios from 'axios';
 import { backend_URL } from '../../constants'
+import API from '../../services/api';
 
 interface ClubRegistrationProps extends RouteComponentProps {
   tags: string[],
@@ -66,6 +66,11 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
   //Submit
   function handleSubmit() {
 
+    if (!student){
+      alert("Student Undefined")
+      return
+    }
+      
     const newClub = {
       name: props.name,
       description: props.description,
@@ -73,21 +78,11 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
       bannerImage: props.banner,
       tags: props.tags,
       media: props.media,
-      school: student?.school,
-      leaderId: student?.id,
+      school: student.school,
+      leaderId: student.id,
     }
-    try {
-      axios.post(backend_URL + '/add/club', newClub)
-      .then((res) => {
-        props.addClub(res.data)
-      })
-      .catch((err) => console.log(err))
-      // props.addClub(backendClub)
-    }
-    catch (e) {
-      console.error(e)
-    }
-    props.history.push('tab2')
+
+    API.createClub(newClub, (data: any) => {props.addClub(data); props.history.push('tab2')}, (err: any) => console.log(err))
 
   }
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import { backend_URL } from '../../constants';
+import API from '../../services/api'
 import { IonContent, IonLabel, IonPage, IonFooter,  IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
@@ -18,39 +17,11 @@ type LoginInfo = {
     password: string;
 }
 
-type LoginResponse = {
-    data : Object
-}
-
 const SignIn: React.FC<LoginProps> = (props) => {
     const {control, handleSubmit, setError, errors} = useForm<LoginInfo>();
 
-    const logIn = async (info: LoginInfo) => {
-
-        axios.post(backend_URL + '/login', info)
-            .then((res : LoginResponse) => {
-            // handle success
-            console.log(res);
-            if (res.data) {
-                console.log(res.data);
-                props.authenticate(res.data);
-            }
-            else
-                setError("password", {message: "Invalid Login"});
-            })
-            .catch((err : any) => {
-            // handle error
-            if (!err.response) {
-                // network error
-                alert("Network Connection Error");
-            } else {
-                console.log(err);
-                setError("password", {message: err.message});
-            }
-          })
-          .then(function () {
-            // always executed
-        });
+    const logIn = async (loginInfo: LoginInfo) => {
+        API.login(loginInfo, (data: Object) => {props.authenticate(data);}, (err : any) => setError("password", {message: err}))
     }
 
     return (

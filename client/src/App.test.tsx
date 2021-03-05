@@ -21,6 +21,8 @@ import ClubProfile from './pages/ClubProfile';
 import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
 import { add } from 'lodash';
 
+
+
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
   expect(baseElement).toBeDefined();
@@ -117,7 +119,7 @@ test('All interest quiz pages render', () => {
       <ClubContext.Provider value={DD_fake_clubs}>
         <MemoryRouter initialEntries={['/interestQuiz']}>
             <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => {}} finishQuiz={() => {}} />}/>
-        </MemoryRouter>
+            </MemoryRouter>
       </ClubContext.Provider>
     </UserContext.Provider>
   )
@@ -128,6 +130,21 @@ test('All interest quiz pages render', () => {
     let nextPage = screen.getByText('next')
     ionFireEvent.click(nextPage)
   }
+})
+
+test('Cannot submit an event if fields are blank', () => {
+  render(
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/addEvent/id2']}>
+            <Route path="/addEvent/:id" component={AddEvent} />
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
+  )
+  const button = screen.getByText('Add Event');
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('Event Adder')).not.toThrow()
 })
 
 test('Explore page renders', () => {
@@ -162,3 +179,12 @@ test('Club Registration can be accessed', () => {
   expect( () => screen.getByText("Register your Club!")).not.toThrow()
 })
 
+
+test('Signup renders', () => {
+  const { baseElement } = render(
+    <MemoryRouter initialEntries={['/frontPage']}>
+        <Route path="/frontPage" render={(props) => <SignUp {...props} authenticate={() => {}}/>}/>
+    </MemoryRouter>
+  )
+  expect(baseElement).toBeDefined();
+})

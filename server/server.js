@@ -18,6 +18,7 @@ const verifier = require("academic-email-verifier").Verifier;
 
 const session = require("express-session");
 const User = require("./schemas/user");
+const e = require("express");
 var FileStore = require("session-file-store")(session);
 // const dataB = require("./database");
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,16 +66,16 @@ app.use(express.json());
 
 //Routes ##############################################################################
 
-app.post("/authentication", (req, res) => {
-  console.log(req.body.email, req.body.password);
-  auth.login(req.body.email, req.body.password).then((user) => {
-    if (user) {
-      res.send(true);
-    } else {
-      res.send(false);
-    }
-  });
-});
+// app.post("/authentication", (req, res) => {
+//   console.log(req.body.email, req.body.password);
+//   auth.login(req.body.email, req.body.password).then((user) => {
+//     if (user) {
+//       res.send(true);
+//     } else {
+//       res.send(false);
+//     }
+//   });
+// });
 
 app.post("/login", (req, res) => {
   console.log("*Login route called with this req:*", req.body);
@@ -130,7 +131,7 @@ app.post("/SignUp", async (req, res) => {
   }
   // Regular Routes
   auth
-    .sign_up(req.body)
+    .sign_up(req.body, env)
     .then((user) => {
       req.session.user = user;
       console.log("User = ", user);
@@ -184,17 +185,18 @@ app.get("/get/clubEvents/:clubId", async (req, res) => {
   const clubId = req.params.clubId;
   try {
     const club = await Club.findById(clubId);
+    let events = [];
+    for (eventId of club.events) {
+      events.push(await Event.findById(eventId));
+    }
+  
+    res.send(events);
   } catch {
     res.status(400);
     res.send("Invalid clubId");
   }
 
-  let events = [];
-  for (eventId in club.events) {
-    events.push(await Event.findById(eventId));
-  }
-
-  res.send(events);
+  
 });
 
 app.post("/add/club", async (req, res) => {
@@ -226,15 +228,21 @@ app.post("/add/club", async (req, res) => {
     res.send("Invalid club structure");
   }
 });
-app.get("/get/clubs", (req, res) => {
-  Club.find({})
-    .then((arr) => {
-      res.send(arr);
-    })
-    .catch((e) => {
-      console.log(e);
-      res.send(false);
-    });
+
+app.get("/get/clubs", async (req, res) => {
+
+  try {
+    const clubs = await Club.find({})
+    for (let i = 0; i < clubs.length; i++) {
+      for (let j = 0; j < clubs[i].events.length; j++) {
+        clubs[i].events[j] = await Event.findById(clubs[i].events[j]._id)
+      }
+    }
+    res.send(clubs)
+  } catch {
+    res.status(400);
+    res.send("error");
+  }
 });
 app.post("/interest/quiz", (req, res) => {
   if (req.body.id) {
