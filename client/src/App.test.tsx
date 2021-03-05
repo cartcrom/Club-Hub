@@ -18,6 +18,8 @@ import AddEvent from './pages/AddEvent';
 import { ClubContext } from './ClubContext';
 import { DD_fake_clubs, DD_guest_user } from './DummyData';
 import ClubProfile from './pages/ClubProfile';
+import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
+import { add } from 'lodash';
 
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
@@ -107,5 +109,56 @@ test('The AddEvent Button functions', () => {
   const button = screen.getByTitle('addButton');
   ionFireEvent.click(button)
   expect( () => screen.getByText('Event Adder')).not.toThrow()
+})
+
+test('All interest quiz pages render', () => {
+  render(
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/interestQuiz']}>
+            <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => {}} finishQuiz={() => {}} />}/>
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
+  )
+  let goButton = screen.getByText('let\'s go!')
+  ionFireEvent.click(goButton)
+
+  for(let i = 0; i < 4; i++) {
+    let nextPage = screen.getByText('next')
+    ionFireEvent.click(nextPage)
+  }
+})
+
+test('Explore page renders', () => {
+  render(
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/explore']}>
+            <Route path="/explore" component={Explore} exact={true} />
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
+  )
+  expect( () => screen.getByText('Explore')).not.toThrow()
+})
+
+test('Club Registration can be accessed', () => {
+  let stduent = DD_guest_user;
+  stduent.id = "1"
+  render(
+    <UserContext.Provider value={stduent}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/myclubs']}>
+            <Route path="/myclubs" component={MyClubs} exact={true} />
+            <Route path='/clubRegistration' render={(props) => <ClubRegistrationManager {...props} addClub={() => {}}/>}/>
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
+  )
+
+  const addClubButton = screen.getByText('Register your club')
+  ionFireEvent.click(addClubButton)
+  expect( () => screen.getByText("Register your Club!")).not.toThrow()
 })
 
