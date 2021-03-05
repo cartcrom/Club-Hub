@@ -19,26 +19,32 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
     
-  const addEvent = () => {
-    let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
-    let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
-    let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
-    let date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
-    let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;
-    //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
-
-    if(name == "" || desc == "" || loc == "" || date == ""){
-      setShowAlert1(true)
-      return(
-        <IonAlert
-        isOpen={true}
-        onDidDismiss={() => setShowAlert1(false)}
-        cssClass='my-custom-class'
-        header={'Must fill all fields.'}
-        message={'Please fill out each field for your event.'}
-        buttons={['OK']}
-      />)
-    }
+    const addEvent = () => {
+      let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
+      let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
+      let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+      let date = "";
+      if(document.getElementById("dateID") != null){
+        date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
+      }
+      let start = ""
+      if(document.getElementById("startID") != null){
+      let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;}
+      //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+  
+      if(name == "" || desc == "" || loc == "" || date == ""){
+        setShowAlert1(true)
+        return(
+          <IonAlert
+          isOpen={true}
+          onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
+          header={'Must fill all fields.'}
+          message={'Please fill out each field for your event.'}
+          buttons={['OK']}
+        />)
+      }
+  
 
     
 
