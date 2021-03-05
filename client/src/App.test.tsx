@@ -22,7 +22,7 @@ test('renders without crashing', () => {
 });
 
 test('Settings correctly access UserContext', () => {
-  const student = new Student("Vance", "Winstead", 123456789, "Cal Poly SLO", "vance@calpoly.edu", ["Coding", "Music"])
+  const student = new Student("Vance", "Winstead", "123456789" , "Cal Poly SLO", "vance@calpoly.edu", ["Coding", "Music"], ["club club"], ["club club"], "SE", "Engineering", "some type")
   render(
     <UserContext.Provider value={student}>
       <StaticRouter location="/">
