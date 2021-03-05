@@ -259,6 +259,7 @@ export default class App extends React.Component<{}, AppState> {
                     <Route path="/signin" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignIn {...props} authenticate={this.authenticate}/>}/>
                     <Route path="/signup" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignUp {...props} authenticate={this.authenticate} />} />
                     <Route path="/login"  render={(props) => (isauth) ? <Redirect to={'/'} /> : <FrontPage {...props} authenticate={this.authenticate} />} />
+                    <Route path="/verification?id=:id"  render={(props) => (isauth) ? <Redirect to={'/'} /> : <FrontPage {...props} authenticate={this.authenticate} />} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/feed' component={Feed} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
