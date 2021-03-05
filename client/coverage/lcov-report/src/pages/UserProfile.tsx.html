@@ -144,10 +144,7 @@
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -235,105 +232,102 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext } from 'react';
-import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonChip, IonCard, IonCardContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { RouteComponentProps } from 'react-router';
-import Student from '../components/Student';
-import './UserSettings.css';
-import { UserContext } from '../UserContext';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext } from "react";
+import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonChip, IonCard, IonCardContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import { RouteComponentProps } from "react-router";
+import Student from "../components/Student";
+import "./UserSettings.css";
+import { UserContext } from "../UserContext";
 &nbsp;
 interface SettingsProps extends RouteComponentProps {
-  logOut : Function
+  logOut: Function;
 }
 &nbsp;
-&nbsp;
 const UserSettings: React.FC&lt;SettingsProps&gt; = (props) =&gt; {
-  let user: Student | undefined = useContext(UserContext)
+  const user: Student | undefined = useContext(UserContext);
   <span class="missing-if-branch" title="if path not taken" >I</span>if (user === undefined) {
 <span class="cstat-no" title="statement not covered" >    throw new Error("Undefined user error");</span>
   }
 &nbsp;
-  let interests = user.interests.map(interest =&gt; &lt;IonChip key={interest} className="tag"&gt;{interest}&lt;/IonChip&gt;)
+  const interests = user.interests.map(interest =&gt; &lt;IonChip key={interest} className="tag"&gt;{interest}&lt;/IonChip&gt;);
 &nbsp;
   return (
-  &lt;IonPage&gt;
-    &lt;IonHeader&gt;
-      &lt;IonToolbar&gt;
-        &lt;IonTitle&gt;User Settings&lt;/IonTitle&gt;
-      &lt;/IonToolbar&gt;
-    &lt;/IonHeader&gt;
-    &lt;IonContent fullscreen&gt;
-      
-      &lt;IonItem lines="none"&gt;
-        &lt;IonLabel className="settings-label"&gt;
-          {"My Info"}
-        &lt;/IonLabel&gt;
-      &lt;/IonItem&gt;
+    &lt;IonPage&gt;
+      &lt;IonHeader&gt;
+        &lt;IonToolbar&gt;
+          &lt;IonTitle&gt;User Settings&lt;/IonTitle&gt;
+        &lt;/IonToolbar&gt;
+      &lt;/IonHeader&gt;
+      &lt;IonContent fullscreen&gt;
 &nbsp;
-      &lt;IonCard&gt;
+        &lt;IonItem lines="none"&gt;
+          &lt;IonLabel className="settings-label"&gt;
+            {"My Info"}
+          &lt;/IonLabel&gt;
+        &lt;/IonItem&gt;
 &nbsp;
-        &lt;IonCardContent className="settings-card"&gt;
-          &lt;IonList&gt;
-            &lt;IonItem lines="none" className="data" &gt;
-              &lt;IonLabel&gt;First Name&lt;/IonLabel&gt;
-              &lt;IonNote slot="end" color="black"&gt;{user.fn}&lt;/IonNote&gt;
-            &lt;/IonItem&gt;
-            &lt;IonItem lines="none" className="data" &gt;
-              &lt;IonLabel&gt;Last Name&lt;/IonLabel&gt;
-              &lt;IonNote slot="end" color="black"&gt;{user.ln}&lt;/IonNote&gt;
-            &lt;/IonItem&gt;
-            &lt;IonItem lines="none" className="data" &gt;
-              &lt;IonLabel&gt;Email Address&lt;/IonLabel&gt;
-              &lt;IonNote slot="end" color="black"&gt;{user.email}&lt;/IonNote&gt;
-            &lt;/IonItem&gt;
-            &lt;IonItem lines="none" className="data" &gt;
-              &lt;IonLabel&gt;School&lt;/IonLabel&gt;
-              &lt;IonNote slot="end" color="black"&gt;{user.school}&lt;/IonNote&gt;
-            &lt;/IonItem&gt;
-          &lt;/IonList&gt;
+        &lt;IonCard&gt;
+&nbsp;
+          &lt;IonCardContent className="settings-card"&gt;
+            &lt;IonList&gt;
+              &lt;IonItem lines="none" className="data" &gt;
+                &lt;IonLabel&gt;First Name&lt;/IonLabel&gt;
+                &lt;IonNote slot="end" color="black"&gt;{user.fn}&lt;/IonNote&gt;
+              &lt;/IonItem&gt;
+              &lt;IonItem lines="none" className="data" &gt;
+                &lt;IonLabel&gt;Last Name&lt;/IonLabel&gt;
+                &lt;IonNote slot="end" color="black"&gt;{user.ln}&lt;/IonNote&gt;
+              &lt;/IonItem&gt;
+              &lt;IonItem lines="none" className="data" &gt;
+                &lt;IonLabel&gt;Email Address&lt;/IonLabel&gt;
+                &lt;IonNote slot="end" color="black"&gt;{user.email}&lt;/IonNote&gt;
+              &lt;/IonItem&gt;
+              &lt;IonItem lines="none" className="data" &gt;
+                &lt;IonLabel&gt;School&lt;/IonLabel&gt;
+                &lt;IonNote slot="end" color="black"&gt;{user.school}&lt;/IonNote&gt;
+              &lt;/IonItem&gt;
+            &lt;/IonList&gt;
             &lt;IonItem lines="none" className="data" &gt;
               &lt;IonButton onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.logOut()}</span>&gt;
                 log out
               &lt;/IonButton&gt;
             &lt;/IonItem&gt;
-         
-        &lt;/IonCardContent&gt;
-        
-      &lt;/IonCard&gt;
 &nbsp;
-      &lt;div className="divider"/&gt;
+          &lt;/IonCardContent&gt;
 &nbsp;
-      &lt;IonItem lines="none"&gt;
-        &lt;IonLabel className="clubs-label"&gt;
-          {"My Interests"}
-        &lt;/IonLabel&gt;
-      &lt;/IonItem&gt;
+        &lt;/IonCard&gt;
 &nbsp;
-      &lt;IonCard&gt;
-        &lt;IonCardContent className="settings-card"&gt;
-          {interests}
-          &lt;IonItem lines="none" className="data" &gt;
-            &lt;IonButton onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.history.push("/interestQuiz")}</span>&gt;retake interest quiz&lt;/IonButton&gt;
-          &lt;/IonItem&gt;
-        &lt;/IonCardContent&gt;
+        &lt;div className="divider" /&gt;
 &nbsp;
-&lt;/IonCard&gt;
+        &lt;IonItem lines="none"&gt;
+          &lt;IonLabel className="clubs-label"&gt;
+            {"My Interests"}
+          &lt;/IonLabel&gt;
+        &lt;/IonItem&gt;
 &nbsp;
-    &lt;/IonContent&gt;
-  &lt;/IonPage&gt;
+        &lt;IonCard&gt;
+          &lt;IonCardContent className="settings-card"&gt;
+            {interests}
+            &lt;IonItem lines="none" className="data" &gt;
+              &lt;IonButton onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.history.push("/interestQuiz")}</span>&gt;retake interest quiz&lt;/IonButton&gt;
+            &lt;/IonItem&gt;
+          &lt;/IonCardContent&gt;
+&nbsp;
+        &lt;/IonCard&gt;
+&nbsp;
+      &lt;/IonContent&gt;
+    &lt;/IonPage&gt;
   );
 };
 &nbsp;
-export default UserSettings;
-&nbsp;</pre></td></tr></table></pre>
+export default UserSettings;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Mar 04 2021 16:56:34 GMT-0800 (Pacific Standard Time)
+                at Fri Mar 05 2021 13:26:31 GMT-0800 (Pacific Standard Time)
             </div>
         </div>
         <script src="..\..\prettify.js"></script>

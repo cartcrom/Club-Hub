@@ -133,8 +133,7 @@
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,7 +154,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,61 +210,60 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext } from 'react';
-import { UserContext } from '../UserContext';
-import { ClubContext } from '../ClubContext';
-import {  IonContent, IonHeader,IonInfiniteScroll, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Feed.css';
-import '../global_styles.css';
-import Post from '../components/Post';
-import Event from '../components/Event';
-import Club from '../components/Club';
-import Student from '../components/Student';
-import { RouteComponentProps } from 'react-router';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useContext } from "react";
+import { UserContext } from "../UserContext";
+import { ClubContext } from "../ClubContext";
+import { IonContent, IonHeader, IonInfiniteScroll, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
+import "./Feed.css";
+import "../global_styles.css";
+import Post from "../components/Post";
+import Event from "../components/Event";
+import Club from "../components/Club";
+import Student from "../components/Student";
+import { RouteComponentProps } from "react-router";
 &nbsp;
 const Feed: React.FC&lt;RouteComponentProps&gt; = (props) =&gt; {
 &nbsp;
-  let user: Student | undefined = useContext(UserContext)
+  const user: Student | undefined = useContext(UserContext);
   <span class="missing-if-branch" title="if path not taken" >I</span>if (user === undefined) {
 <span class="cstat-no" title="statement not covered" >    throw new Error("Undefined user error");</span>
   }
-  let clubs : Map&lt;string, Club&gt; | undefined = useContext(ClubContext);
+  const clubs: Map&lt;string, Club&gt; | undefined = useContext(ClubContext);
   <span class="missing-if-branch" title="if path not taken" >I</span>if (clubs === undefined) {
 <span class="cstat-no" title="statement not covered" >    throw new Error("Undefined clubs error");</span>
   }
 &nbsp;
   function fetch_posts() {
-&nbsp;
-    let posts : Array&lt;Event&gt; = [];
+    const posts: Array&lt;Event&gt; = [];
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!user || !clubs)
 <span class="cstat-no" title="statement not covered" >      return;</span>
 &nbsp;
     // Create frames for each club
-    for (let id of user.joined_clubs) {
-      let club = clubs.get(id);
+    for (const id of user.joined_clubs) {
+      const club = clubs.get(id);
       <span class="missing-if-branch" title="if path not taken" >I</span>if (!club) {
 <span class="cstat-no" title="statement not covered" >        throw new Error("Undefined club error with club ID: " + id);</span>
       }
       else {
-        club.events.forEach((e : Event) =&gt; posts.push(e))
+        club.events.forEach((e: Event) =&gt; posts.push(e));
       }
     }
 &nbsp;
-    for (let id of user.lead_clubs) {
-      let club = clubs.get(id);
+    for (const id of user.lead_clubs) {
+      const club = clubs.get(id);
       <span class="missing-if-branch" title="if path not taken" >I</span>if (!club) {
 <span class="cstat-no" title="statement not covered" >        throw new Error("Undefined club error with club ID: " + id);</span>
       }
       else {
-        club.events.forEach((e : Event) =&gt; posts.push(e))
+        club.events.forEach((e: Event) =&gt; posts.push(e));
       }
     }
-  
-    let feed : Array&lt;JSX.Element&gt; = [];
-    posts.forEach((post : Post) =&gt; 
-      feed.push(post.getFeedItem(true, <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.history.push('club/' + post.club.id))</span>)
-    )
+&nbsp;
+    const feed: Array&lt;JSX.Element&gt; = [];
+    posts.forEach((post: Post) =&gt;
+      feed.push(post.getFeedItem(true, <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.history.push("club/" + post.club.id))</span>)
+    );
     return feed;
   }
 &nbsp;
@@ -278,11 +275,11 @@ const Feed: React.FC&lt;RouteComponentProps&gt; = (props) =&gt; {
         &lt;/IonToolbar&gt;
       &lt;/IonHeader&gt;
       &lt;IonContent fullscreen&gt;
-          &lt;IonInfiniteScroll&gt;
-            &lt;IonList&gt;
-              {fetch_posts()}
-            &lt;/IonList&gt;
-          &lt;/IonInfiniteScroll&gt;
+        &lt;IonInfiniteScroll&gt;
+          &lt;IonList&gt;
+            {fetch_posts()}
+          &lt;/IonList&gt;
+        &lt;/IonInfiniteScroll&gt;
 &nbsp;
       &lt;/IonContent&gt;
     &lt;/IonPage&gt;
@@ -297,7 +294,7 @@ export default Feed;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Mar 04 2021 16:56:34 GMT-0800 (Pacific Standard Time)
+                at Fri Mar 05 2021 13:26:31 GMT-0800 (Pacific Standard Time)
             </div>
         </div>
         <script src="..\..\prettify.js"></script>

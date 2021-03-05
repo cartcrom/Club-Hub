@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -36,16 +36,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.67% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,55 +100,55 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import './InterestQuiz.css'
-import { IonContent, IonLabel, IonPage, IonItem} from '@ionic/react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
+import "./InterestQuiz.css";
+import { IonContent, IonLabel, IonPage, IonItem } from "@ionic/react";
 &nbsp;
 interface InterestQuizProps {
-    nextPage: Function;
-    skipQuiz: Function;
+  nextPage: Function;
+  skipQuiz: Function;
 }
 &nbsp;
 const InterestQuizIntro = (props: InterestQuizProps) =&gt; {
-    //return(      
-    //&lt;IonItem lines="none" button onClick={() =&gt; props.history.push('addEvent')}&gt;&lt;/IonItem&gt; 
+  //return(      
+  //&lt;IonItem lines="none" button onClick={() =&gt; props.history.push('addEvent')}&gt;&lt;/IonItem&gt; 
 &nbsp;
-    return (
-        &lt;IonPage&gt;
-            &lt;IonContent fullscreen &gt;
-                &lt;h2 id="title"&gt;Interest Quiz&lt;/h2&gt;
-                &lt;p className="quiz-p"&gt;now let's take a short quiz to find the best clubs for you&lt;/p&gt;
-                &lt;IonItem button detail={false} className="gradient-button" onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >props.nextPage()}</span>&gt;
-                    &lt;IonLabel&gt;let's go!&lt;/IonLabel&gt;
-                &lt;/IonItem&gt;
-                &lt;IonItem button title="skipButton" detail={false} className="outline-button" onClick={() =&gt; props.skipQuiz()}&gt;
-                    &lt;IonLabel&gt;skip&lt;/IonLabel&gt;
-                &lt;/IonItem&gt;
-               
-            &lt;/IonContent&gt;
-        &lt;/IonPage&gt;
-    );
-  };
-  
-  export default InterestQuizIntro;
+  return (
+    &lt;IonPage&gt;
+      &lt;IonContent fullscreen &gt;
+        &lt;h2 id="title"&gt;Interest Quiz&lt;/h2&gt;
+        &lt;p className="quiz-p"&gt;now let's take a short quiz to find the best clubs for you&lt;/p&gt;
+        &lt;IonItem button detail={false} className="gradient-button" onClick={() =&gt; props.nextPage()}&gt;
+          &lt;IonLabel&gt;let's go!&lt;/IonLabel&gt;
+        &lt;/IonItem&gt;
+        &lt;IonItem button title="skipButton" detail={false} className="outline-button" onClick={() =&gt; props.skipQuiz()}&gt;
+          &lt;IonLabel&gt;skip&lt;/IonLabel&gt;
+        &lt;/IonItem&gt;
+&nbsp;
+      &lt;/IonContent&gt;
+    &lt;/IonPage&gt;
+  );
+};
+&nbsp;
+export default InterestQuizIntro;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -156,7 +156,7 @@ const InterestQuizIntro = (props: InterestQuizProps) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Mar 04 2021 16:56:34 GMT-0800 (Pacific Standard Time)
+                at Fri Mar 05 2021 13:26:31 GMT-0800 (Pacific Standard Time)
             </div>
         </div>
         <script src="..\..\..\prettify.js"></script>
