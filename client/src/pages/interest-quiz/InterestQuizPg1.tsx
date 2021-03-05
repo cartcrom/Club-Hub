@@ -32,8 +32,6 @@ const InterestQuizPg1 = (props: InterestQuizProps) : ReactElement => {
     const collegeItems = colleges.map(x => ({label: x, key: x}))
     const majorItems = majors.map(x => ({label: x, key: x}))
     
-// HOW DO YOU GET VALUE FROM DATALIST
-//onChange={() => {setCollege(document.getElementById("collegeList")?.onchange?.name.valueOf.toString)}}>
     return (
         <IonPage>
             <IonContent fullscreen className="quiz-gradient" >
@@ -47,21 +45,11 @@ const InterestQuizPg1 = (props: InterestQuizProps) : ReactElement => {
                     />
 
                     <DataList
+                        className="drop-down-button"
                         placeholder="Major"
                         items={majorItems}
                         onSelect={(e: {label: string, key: string}) => setMajor(e.label)}
                     />
-                
-                    <input type="text" id="college" list="collegeList" placeholder="College" className="drop-down-button" onChange={(e) => console.log(e.nativeEvent)}/>
-                    <datalist id="collegeList" >
-                        {addOptions(colleges)}
-                    </datalist> 
-                              
-                    <input type="text" id="major" list="majorList" placeholder="Major" className="drop-down-button" />
-                    <datalist id="majorList">
-                        {addOptions(majors)}
-                    </datalist>
-                
 
             </IonContent>
 

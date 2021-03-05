@@ -9,19 +9,6 @@
     display: flex;
 }
 
-datalist {
-    position: absolute;
-    background-color: lightgrey;
-    font-family: sans-serif;
-    font-size: 0.8rem;
-  }
-  
-  option {
-    background-color: #bbb;
-    padding: 4px;
-    margin-bottom: 1px;
-    cursor: pointer;
-  }
 .gradient-button, .outline-button, .white-outline-button{
     height: 50px;
     width: 173px;
@@ -54,21 +41,6 @@ datalist {
     color: white;
 }
 
-
-.drop-down-button{
-    background-color: white;
-    color: black;
-    height: 7%;
-    width: 80%;
-    text-align: center;
-    margin: 8% auto;
-    border-radius: 14px;
-}
-.drop-down-button::after{
-    background-color: white;
-    color: black;
-    width: 80%;
-}
 .checkbox{
     --background-checked: #5337FF;
     --border-color-checked: #5337FF;
@@ -81,12 +53,36 @@ datalist {
     border-radius: 8px;
     height: 42px;
     width: 274px;
-    margin: 3% auto;
+    margin: 8% auto;
 }
 
 .center-elements {
     text-align: center;
     margin: 5px auto;
+}
+div.datalist-input{
+    background-color: white;
+    border-color: transparent;
+    color: black;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    border-radius: 14px;
+    width: 80%;
+    height: 8% !important;
+    text-align: center;
+}
+
+div.datalist-active-item-default{
+    background-color: #a537ff !important;
+}
+
+input{
+    background-color: white;
+    color: black;
+    border-color: tr;
+    border-radius: 14px;
+    height: 100%;
+    text-align: center;
 }
 
 .progress-bar{

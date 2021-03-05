@@ -11,7 +11,7 @@ export default class DataList extends React.Component {
     render() {
         return (
             <DataListInput
-            inputClassName="drop-down-button"
+            inputClassName="datalist-input"
             placeholder={this.props.placeholder}
             items={this.props.items}
             onSelect={this.props.onSelect}
