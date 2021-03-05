@@ -1,10 +1,10 @@
+import React, { useContext} from 'react';
+import API from '../services/api'
 import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
-import React, { useRef, useContext} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
-import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {
   saveEvent: Function;
@@ -45,27 +45,12 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     
     clubs!.set(id, currentClub);
 
-    //make a post call here to send the data to the server
     name = name.toString();
     let eventDate = new Date(date).toDateString().slice(0, -5);
     let postDate = now.toString();
     let image = "https://placeimg.com/640/640/nature";
-    const backendEventStructure = {
-      id,
-      name,
-      desc,
-      postDate,
-      eventDate,
-      start,
-      loc,
-      image,
-    }
     
-    axios.post('http://localhost:5000/add/event', backendEventStructure)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-
-    props.history.goBack();
+    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, image, () => props.history.goBack(), (err : any) => console.log(err))
   }
 
     return (

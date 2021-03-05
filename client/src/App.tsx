@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
-import { backend_URL } from './constants'
+import api from './services/api'
 
 /* Ionic */
 import {
@@ -76,14 +75,10 @@ import './theme/variables.css';
 import {UserContext} from './UserContext';
 import {ClubContext} from './ClubContext'
 import Student from './components/Student';
-import { stringify } from 'query-string';
 
-/* Sample Pics - Remove later */
-import john from './images/john.jpg';
-import ice from './images/rsz_ice_cream.jpg';
-import {DD_fake_clubs, DD_guest_user} from './DummyData'
 import { backendToClub, backendToStudent } from './components/backendDataConversion';
 import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
+import API from './services/api';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -98,8 +93,6 @@ type AppState = {
   club_data: Map<string,Club> | undefined;
 }
 
-
-
 export default class App extends React.Component<{}, AppState> {
 
   constructor(props: any) {
@@ -111,8 +104,6 @@ export default class App extends React.Component<{}, AppState> {
       user: undefined,
       club_data: undefined
     }
-
-    this.addClub = this.addClub.bind(this)
   }
 
   // Before the component mounts, we initialise our state
@@ -136,19 +127,31 @@ export default class App extends React.Component<{}, AppState> {
     document.removeEventListener("keydown", this.logIn, false);
   }
 
-  fetch_club_data(clubData : any) {
-    let clubs = new Map<string, Club>()
-
-    for (let club of clubData) {
-      clubs.set(club._id, backendToClub(club))
-    }
-
-    setTimeout(() => {  this.setState({club_data: clubs}); }, 1500);
+  fetch_club_data() {
+    API.getAllClubs((clubs : Map<string, Club>) => 
+      this.setState({club_data: clubs})
+    );
   }
 
-  addClub(newClub: any) {
+  authenticate = (user : any) => {
+    if (user) {
+      this.setState({user : backendToStudent(user)})
+      this.fetch_club_data();
+    }
+    else {
+      this.setState({user: new Student("Guest", "", "", "", "", [], [], [])});
+      this.setState({ club_data: new Map<string, Club>() })
+    }
+    
+    history.push("/")
+
+    this.setState({isAuthenticated : true});
+  }
+
+  addClub = (newClub: any) => {
     console.log('Adding a new Club!')
     // Add club to club_data
+    
     this.setState(prevState => {
       if (prevState.club_data === undefined) {
         return {
@@ -173,21 +176,6 @@ export default class App extends React.Component<{}, AppState> {
         return { user: undefined }
       }
     })
-  }
-
-  authenticate = (user : any) => {
-    if (user) {
-      this.setState({user : backendToStudent(user)})
-      this.fetch_club_data([...user.joined_clubs, ...user.lead_clubs]);
-    }
-    else {
-      this.setState({user: DD_guest_user});
-      this.setState({ club_data: new Map<string, Club>() })
-    }
-    
-    history.push("/")
-
-    this.setState({isAuthenticated : true});
   }
 
   logOut = () => {
@@ -241,7 +229,6 @@ export default class App extends React.Component<{}, AppState> {
 
   // render will know everything!
   render() {
-    console.log("rendering " + history.location.pathname)
     
     let isauth = this.state.isAuthenticated;
     let default_route = <Route render={() => <Redirect to="/login" />} exact={true} />
@@ -321,30 +308,7 @@ export default class App extends React.Component<{}, AppState> {
     if(event.key !== '`') {
       return
     }
-    axios.post(backend_URL + '/login', {email: "maxkennedy@school.edu", password: "1234"})
-        .then((res : {data : Object}) => {
-        // handle success
-        console.log(res);
-        if (res.data) {
-            console.log(res.data);
-            this.authenticate(res.data);
-        }
-        else
-            alert("password");
-        })
-        .catch((err : any) => {
-        // handle error
-        if (!err.response) {
-            // network error
-            alert("Network Connection Error");
-        } else {
-            console.log(err);
-            alert("password");
-        }
-      })
-      .then(function () {
-        // always executed
-    });
+    API.login({email: "maxkennedy@school.edu", password: "1234"}, (data : Object) => this.authenticate(data), (err : any) => alert(err))
   }
 
 }

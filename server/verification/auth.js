@@ -82,12 +82,12 @@ function email_verification(email, id) {
     var mailOptions = {
       from: "clubhub2020@gmail.com",
       to: email,
-      subject: "Club-Hub Email-Verification Request",
+      subject: "ClubHub Email-Verification Request",
       text: `Click on this link to activate your account:
-        http://localhost:3000/verification?id=${id}
+        http://localhost:5000/verification?id=${id}
         We hope you enjoy our site
         Sincerely,
-        Team Culb Hub`,
+        Team Club Hub`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
