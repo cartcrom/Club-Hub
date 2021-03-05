@@ -1,95 +1,95 @@
 @font-face {
-    font-family: 'Proxima Nova';
-    src: local('Proxima Nova'), url('../fonts/ProximaNova-Regular.otf') format('opentype');
-  }
+  font-family: "Proxima Nova";
+  src: local("Proxima Nova"), url("../fonts/ProximaNova-Regular.otf") format("opentype");
+}
 
 @font-face {
-    font-family: 'Proxima Nova Bold';
-    src: local('Proxima Nova'), url('../fonts/Proxima Nova Bold.otf') format('opentype');
+  font-family: "Proxima Nova Bold";
+  src: local("Proxima Nova"), url("../fonts/Proxima Nova Bold.otf") format("opentype");
 }
 
 .banner {
-    width: 100%;
-    height: 120pt;
-    object-fit: cover;
+  width: 100%;
+  height: 120pt;
+  object-fit: cover;
 }
 
 .border:after {
-    content:"";
-    background: -webkit-linear-gradient(left, #FB89FF 0% ,#7B87F2 100%);
-    display: block;
-    height: 2px;
-    width: 100%;
-    position: absolute;
-    margin: -4px 0;
+  content:"";
+  background: -webkit-linear-gradient(left, #FB89FF 0% ,#7B87F2 100%);
+  display: block;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  margin: -4px 0;
 }
 
 ion-toolbar:after {
-    content:"";
-    background: -webkit-linear-gradient(left, #FB89FF 0% ,#7B87F2 100%);
-    display: block;
-    height: 2px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    
+  content:"";
+  background: -webkit-linear-gradient(left, #FB89FF 0% ,#7B87F2 100%);
+  display: block;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  
 }
 
 .club-info {
-    margin-left: 3%;
+  margin-left: 3%;
 }
 
 .profile {
-    border: double 2pt transparent;
-    border-radius: 10pt;
-    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #DB88FC,#F889FF);
-    background-origin: border-box;
-    background-clip: content-box, border-box;
+  border: double 2pt transparent;
+  border-radius: 10pt;
+  background-image: linear-gradient(white, white), radial-gradient(circle at top left, #DB88FC,#F889FF);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  width: 70pt;
+  height: 70pt;
+  object-fit: cover;
+  margin:  -35pt 0;
+  position: absolute;
   
-    width: 70pt;
-    height: 70pt;
-    object-fit: cover;
-    margin:  -35pt 0;
-    position: absolute;
-    
 }
 
 .description {
-    position: absolute;
-    margin: 6pt 20pt 0 calc(2% + 74pt);
+  position: absolute;
+  margin: 6pt 20pt 0 calc(2% + 74pt);
 
-    font: 13pt "Proxima Nova";
+  font: 13pt "Proxima Nova";
 }
 
 .following {
-    font: 12pt "Proxima Nova";
+  font: 12pt "Proxima Nova";
 
-    border: 1pt solid lightgrey;
-    border-radius: 10pt;
-    background-color: white;
-    
-    width: 70pt;
-    margin: 36pt 3% 0 0;
+  border: 1pt solid lightgrey;
+  border-radius: 10pt;
+  background-color: white;
+  
+  width: 70pt;
+  margin: 36pt 3% 0 0;
 }
 
 .club-tags {
-    margin: 10pt 0;
+  margin: 10pt 0;
 }
 
 .club-tag {
-    font-family: 'Proxima Nova' !important;
-    font-size: 12pt !important;
-    margin: 6pt 6pt 0 0;
+  font-family: "Proxima Nova" !important;
+  font-size: 12pt !important;
+  margin: 6pt 6pt 0 0;
 
 
-    background-color: #61FF76;
-    font-size: 12pt;
+  background-color: #61FF76;
+  font-size: 12pt;
 }
 
 .club-tag-grey {
-    background-color: lightgrey;
+  background-color: lightgrey;
 }
 .content-label {
-    font-family: 'Proxima Nova Bold' !important;
-    font-size: 14pt !important;
+  font-family: "Proxima Nova Bold" !important;
+  font-size: 14pt !important;
 }
