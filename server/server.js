@@ -131,7 +131,7 @@ app.post("/SignUp", async (req, res) => {
   }
   // Regular Routes
   auth
-    .sign_up(req.body)
+    .sign_up(req.body, env)
     .then((user) => {
       req.session.user = user;
       console.log("User = ", user);

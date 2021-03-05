@@ -38,7 +38,7 @@ function login(email, pass) {
   });
 }
 
-async function sign_up(details) {
+async function sign_up(details, env) {
   let school = await verifier.getInstitutionName(details.email);
   return new Promise(function (resolve, reject) {
     let user = new User();
@@ -48,7 +48,7 @@ async function sign_up(details) {
     user.email = details.email;
     user.password = details.password;
     user.school = school;
-    email_verification(details.email, user._id).then((ok) => {
+    email_verification(details.email, user._id, env).then((ok) => {
       user.save().then((obj) => {
         resolve(obj);
       });
@@ -71,7 +71,7 @@ function verify_user(id) {
     });
   });
 }
-function email_verification(email, id) {
+function email_verification(email, id, env) {
   return new Promise(function (resolve, reject) {
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -83,12 +83,12 @@ function email_verification(email, id) {
     let verification_route =
       (env === "dev"
         ? "http://localhost:8100"
-        : "https://cromer.dev/Club-Hub/#/") +
-      "/verification?id=" +
+        : "https://cromer.dev/Club-Hub/#") +
+      "/verification/" +
       id;
 
     var mailOptions = {
-      from: "clubhub2020@gmail.com",
+      from: "Club Hub",
       to: email,
       subject: "ClubHub Email-Verification Request",
       text: `Click on this link to activate your account:
@@ -103,7 +103,7 @@ function email_verification(email, id) {
         console.log(error);
         reject(error);
       } else {
-        console.log("Email sent: " + info.response);
+        console.log("Verification Email sent to: " + email);
         resolve(true);
       }
     });
