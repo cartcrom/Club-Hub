@@ -1,12 +1,8 @@
-
-
 .header{
-    --color: #000000;
-    text-align: center;
+  --color: #000000;
+  text-align: center;
 }
 
-
-
 .image{
-    height: 40px;
+  height: 40px;
 }
