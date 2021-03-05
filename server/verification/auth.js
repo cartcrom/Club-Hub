@@ -84,7 +84,7 @@ function email_verification(email, id, env) {
       (env === "dev"
         ? "http://localhost:8100"
         : "https://cromer.dev/Club-Hub/#") +
-      "/verification?id=" +
+      "/verification/" +
       id;
 
     var mailOptions = {
