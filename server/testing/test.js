@@ -13,11 +13,13 @@ const User = require("../schemas/user");
 function delete_user(email) {
   User.deleteOne({ email: email }).then((doc) => {
     if (doc) {
-      console.log("deleted user : ", doc.email);
+      console.log("deleted user : ", email);
+      return true;
     } else {
       console.log("User does'nt exists : ", email);
+      return false;
     }
   });
 }
 
-delete_user("email@school.edu");
+delete_user("ccromer@calpoly.edu");
