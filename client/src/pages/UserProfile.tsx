@@ -9,7 +9,6 @@ interface SettingsProps extends RouteComponentProps {
   logOut: Function;
 }
 
-
 const UserSettings: React.FC<SettingsProps> = (props) => {
   const user: Student | undefined = useContext(UserContext);
   if (user === undefined) {
