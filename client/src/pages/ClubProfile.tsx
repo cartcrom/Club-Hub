@@ -90,7 +90,7 @@ const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
           <IonButtons slot="end">
             {
               (user.lead_clubs.includes(club.id)) && 
-              <IonButton onClick={() => props.history.push('../addEvent/' + id)}>
+              <IonButton title="addButton" onClick={() => props.history.push('../addEvent/' + id)}>
                 Event
                 <IonIcon slot="icon-only" icon={addOutline} />
               </IonButton>
