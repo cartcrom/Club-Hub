@@ -1,10 +1,10 @@
+import React, { useRef, useContext, useState} from 'react';
+import API from '../services/api'
 import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
-import React, { useRef, useContext, useState} from 'react';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
-import axios from 'axios';
 
 interface AddEventProps extends RouteComponentProps<{id : string}> {
   saveEvent: Function;
@@ -19,26 +19,32 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
     
-  const addEvent = () => {
-    let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
-    let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
-    let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
-    let date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
-    let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;
-    //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
-
-    if(name == "" || desc == "" || loc == "" || date == ""){
-      setShowAlert1(true)
-      return(
-        <IonAlert
-        isOpen={true}
-        onDidDismiss={() => setShowAlert1(false)}
-        cssClass='my-custom-class'
-        header={'Must fill all fields.'}
-        message={'Please fill out each field for your event.'}
-        buttons={['OK']}
-      />)
-    }
+    const addEvent = () => {
+      let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
+      let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
+      let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+      let date = "";
+      if(document.getElementById("dateID") != null){
+        date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
+      }
+      let start = ""
+      if(document.getElementById("startID") != null){
+      let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;}
+      //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+  
+      if(name == "" || desc == "" || loc == "" || date == ""){
+        setShowAlert1(true)
+        return(
+          <IonAlert
+          isOpen={true}
+          onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
+          header={'Must fill all fields.'}
+          message={'Please fill out each field for your event.'}
+          buttons={['OK']}
+        />)
+      }
+  
 
     
 
@@ -58,27 +64,12 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     
     clubs!.set(id, currentClub);
 
-    //make a post call here to send the data to the server
     name = name.toString();
     let eventDate = new Date(date).toDateString().slice(0, -5);
     let postDate = now.toString();
     let image = "https://placeimg.com/640/640/nature";
-    const backendEventStructure = {
-      id,
-      name,
-      desc,
-      postDate,
-      eventDate,
-      start,
-      loc,
-      image,
-    }
     
-    axios.post('http://localhost:5000/add/event', backendEventStructure)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-
-    props.history.goBack();
+    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, image, () => props.history.goBack(), (err : any) => console.log(err))
   }
 
     return (

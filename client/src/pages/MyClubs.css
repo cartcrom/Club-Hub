@@ -1,20 +1,20 @@
 @font-face {
-    font-family: 'Proxima Nova';
-    src: local('Proxima Nova'), url('../fonts/ProximaNova-Regular.otf') format('opentype');
-  }
+  font-family: "Proxima Nova";
+  src: local("Proxima Nova"), url("../fonts/ProximaNova-Regular.otf") format("opentype");
+}
 
 .club-item {
-    font-family: 'Proxima Nova' !important;
-    font-size: 14pt !important;
-    padding: 10pt 0 10pt 0;
+  font-family: "Proxima Nova" !important;
+  font-size: 14pt !important;
+  padding: 10pt 0 10pt 0;
 }
 
 .clubs-label {
-    font-family: 'Proxima Nova' !important;
-    font-size: 16pt !important;
-    padding: 5pt 0 0 0;
+  font-family: "Proxima Nova" !important;
+  font-size: 16pt !important;
+  padding: 5pt 0 0 0;
 }
 
 .divider {
-    border-bottom: 1pt solid lightgray;
+  border-bottom: 1pt solid lightgray;
 }

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import API from '../services/api'
 import { UserContext } from "../UserContext";
 import { ClubContext } from "../ClubContext";
 import { IonContent, IonList, IonIcon, IonItem, IonBackButton, IonButton, IonButtons, IonChip, IonHeader, IonPage, IonTitle, IonToolbar, IonInfiniteScroll } from "@ionic/react";
@@ -8,49 +9,10 @@ import Student from "../components/Student";
 import Club from "../components/Club";
 import Event from "../components/Event";
 import "./ClubProfile.css";
-import axios from "axios";
 
+const ClubProfile: React.FC<RouteComponentProps<{id : string}>> = (props) => {
 
-async function joinClubBackend(studentId: string, clubId: string) {
-  const joinClubData = { studentId, clubId };
-  try {
-    const res = await axios.post("http://localhost:5000/joinClub", joinClubData);
-    console.log(res);
-  }
-  catch (e) {
-    console.error(e);
-  }
-}
-
-async function leaveClubBackend(studentId: string, clubId: string) {
-  const joinClubData = { studentId, clubId };
-  try {
-    const res = await axios.post("http://localhost:5000/leaveClub", joinClubData);
-    console.log(res);
-  }
-  catch (e) {
-    console.error(e);
-  }
-}
-
-const ClubProfile: React.FC<RouteComponentProps<{ id: string; }>> = (props) => {
-
-  function joinButton(student: Student | undefined, club: Club | undefined) {
-    if (student != undefined && club != undefined) {
-      if (student.joined_clubs.includes(club.id)) {
-        leaveClubBackend(student.id, club.id);
-        student.joined_clubs = student.joined_clubs.filter((item) => item != club.id ? item : null);
-        setHasJoined(false);
-      }
-      else {
-        joinClubBackend(student.id, club.id);
-        student.joined_clubs.push(club.id);
-        setHasJoined(true);
-      }
-    }
-  }
-
-  const user: Student | undefined = useContext(UserContext);
+  let user: Student | undefined = useContext(UserContext)
   if (user === undefined) {
     throw new Error("Undefined user error");
   }
@@ -68,6 +30,23 @@ const ClubProfile: React.FC<RouteComponentProps<{ id: string; }>> = (props) => {
   const leading = user.lead_clubs.includes(club.id);
   const joined = user.joined_clubs.includes(club.id);
   const [hasJoined, setHasJoined] = useState(joined);
+
+  function joinButton(student: Student | undefined, club: Club | undefined){
+    if(student != undefined && club!= undefined){
+      if(student.joined_clubs.includes(club.id)){
+        API.leaveClub(student.id, club.id)
+        student.joined_clubs = student.joined_clubs.filter((item) => item != club.id? item : null)
+        setHasJoined(false)
+        
+      }
+      else{
+        API.joinClub(student.id, club.id)
+        student.joined_clubs.push(club.id)
+        setHasJoined(true)
+      }
+    }
+  }
+  
   const feed = club.events.map((e: Event) => e.getFeedItem(false, undefined));
   const tags = club.tags.map(t => <IonChip key={t} className="club-tag">{t}</IonChip>);
 

@@ -109,3 +109,28 @@ test('The AddEvent Button functions', () => {
   expect( () => screen.getByText('Event Adder')).not.toThrow()
 })
 
+test('Cannot submit an event if fields are blank', () => {
+  render(
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/club/id2']}>
+            <Route path="/club/:id" component={AddEvent} exact={true} />
+            <Route path="/addEvent/:id" component={AddEvent} />
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
+  )
+  const button = screen.getByTitle('addEvent');
+  ionFireEvent.click(button)
+  expect( () => screen.getByText('Event Adder')).not.toThrow()
+})
+
+
+test('Signup renders', () => {
+  const { baseElement } = render(
+    <MemoryRouter initialEntries={['/frontPage']}>
+        <Route path="/frontPage" render={(props) => <SignUp {...props} authenticate={() => {}}/>}/>
+    </MemoryRouter>
+  )
+  expect(baseElement).toBeDefined();
+})

@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import { backend_URL } from '../../constants'
+import API from '../../services/api';
 import { IonContent, IonLabel, IonPage, IonFooter, IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, mailOutline, personOutline} from 'ionicons/icons';
 import './FrontPage.css';
-import logo from '../../images/CHLogo.png'
+import logo from '../../images/CHLogo.png';
 import { RouteComponentProps } from 'react-router';
 import { Controller, useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
@@ -25,28 +24,9 @@ type SignUpInfo = {
 const SignUp: React.FC<LoginProps> = (props) =>{
     const {control, handleSubmit, setError, errors} = useForm<SignUpInfo>();
 
-
-    const registerUser = async (info: SignUpInfo) => {
+    const registerUser = (info: SignUpInfo) => {
         console.log('submitting')
-
-        axios.post(backend_URL + '/SignUp', info)
-            .then((res : any) => {
-            // handle success
-            console.log(res);
-            props.authenticate(res.data);   // Add user response from server here later
-          })
-          .catch((err : any) => {
-            if (!err.response) {
-                // network error
-                alert("Network Connection Error");
-            } else {
-                console.log(err);
-                setError("password", {message: err.response.data});
-            }
-          })
-          .then(function () {
-            // always executed
-          });
+        API.signup(info, (user : any) => props.authenticate(user), (err: any) => setError("password", {message: err}))
     }
 
     return (
