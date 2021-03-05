@@ -15,6 +15,9 @@ import InterestQuiz from './pages/interest-quiz/InterestQuiz';
 import Feed from './pages/Feed';
 import Explore from './pages/Explore';
 import AddEvent from './pages/AddEvent';
+import { ClubContext } from './ClubContext';
+import { DD_fake_clubs, DD_guest_user } from './DummyData';
+import ClubProfile from './pages/ClubProfile';
 
 test('renders without crashing', () => {
   const { baseElement } = render(<App />);
@@ -22,7 +25,7 @@ test('renders without crashing', () => {
 });
 
 test('Settings correctly access UserContext', () => {
-  const student = new Student("Vance", "Winstead", 123456789, "Cal Poly SLO", "vance@calpoly.edu", ["Coding", "Music"])
+  const student = new Student("Vance", "Winstead", "123456789" , "Cal Poly SLO", "vance@calpoly.edu", ["Coding", "Music"], ["club club"], ["club club"], "SE", "Engineering", "some type")
   render(
     <UserContext.Provider value={student}>
       <StaticRouter location="/">
@@ -36,9 +39,13 @@ test('Settings correctly access UserContext', () => {
 
 test('Checks My Clubs Page has correct title', () => {
   render(
-    <StaticRouter location='/'>
-      <Route path='/' component={MyClubs}/>
-    </StaticRouter>
+    <UserContext.Provider value={DD_guest_user}>
+        <ClubContext.Provider value={DD_fake_clubs}>
+        <StaticRouter location='/'>
+          <Route path='/' component={MyClubs}/>
+        </StaticRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
   )
   expect( () => screen.getByText('My Clubs')).not.toThrow()
 
@@ -47,8 +54,8 @@ test('Checks My Clubs Page has correct title', () => {
 test('I have an account button sends the user to the right page', () => {
   render(
     <MemoryRouter initialEntries={['/frontPage']}>
-        <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
-        <Route path="/signin" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+        <Route path="/frontPage" render={(props) => <FrontPage {...props} authenticate={() => {}}/>}/>
+        <Route path="/signin" render={(props) => <SignIn {...props} authenticate={() => {}}/>}/>
     </MemoryRouter>
   )
   expect( () => screen.getByText('Log In')).toThrow()
@@ -60,8 +67,8 @@ test('I have an account button sends the user to the right page', () => {
 test('I\'m a new user button sends the user to the right page', () => {
   render(
     <MemoryRouter initialEntries={['/frontPage']}>
-        <Route path="/frontPage" render={(props) => <FrontPage {...props} setLogin={() => {}}/>}/>
-        <Route path="/signup" render={(props) => <SignIn {...props} setLogin={() => {}} setUser={() => {}}/>}/>
+        <Route path="/frontPage" render={(props) => <FrontPage {...props} authenticate={() => {}}/>}/>
+        <Route path="/signup" render={(props) => <SignIn {...props} authenticate={() => {}}/>}/>
     </MemoryRouter>
   )
   expect( () => screen.getByText('Log In')).toThrow()
@@ -72,10 +79,14 @@ test('I\'m a new user button sends the user to the right page', () => {
 
 test('Interest Quiz goes to feed', () => {
   render(
-    <MemoryRouter initialEntries={['/interestQuiz']}>
-        <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => {}} finishQuiz={() => {}} />}/>
-        <Route path="/feed" component={Feed} exact={true} />
-    </MemoryRouter>
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/interestQuiz']}>
+            <Route path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => {}} finishQuiz={() => {}} />}/>
+            <Route path="/feed" component={Feed} exact={true} />
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
   )
   const button = screen.getByTitle('skipButton')
   ionFireEvent.click(button)
@@ -84,12 +95,16 @@ test('Interest Quiz goes to feed', () => {
 
 test('The AddEvent Button functions', () => {
   render(
-    <MemoryRouter initialEntries={['/Explore']}>
-         <Route path="/explore" component={Explore} exact={true} />
-        <Route path="/addEvent" component={AddEvent} />
-    </MemoryRouter>
+    <UserContext.Provider value={DD_guest_user}>
+      <ClubContext.Provider value={DD_fake_clubs}>
+        <MemoryRouter initialEntries={['/club/id2']}>
+            <Route path="/club/:id" component={ClubProfile} exact={true} />
+            <Route path="/addEvent/:id" component={AddEvent} />
+        </MemoryRouter>
+      </ClubContext.Provider>
+    </UserContext.Provider>
   )
-  const button = screen.getByTitle('addButton')
+  const button = screen.getByTitle('addButton');
   ionFireEvent.click(button)
   expect( () => screen.getByText('Event Adder')).not.toThrow()
 })

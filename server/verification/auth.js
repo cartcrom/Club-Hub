@@ -47,11 +47,14 @@ async function sign_up(details) {
     user.email = details.email;
     user.password = details.password;
     user.school = school;
-    email_verification(details.email, user._id).then((ok) => {
-      user.save().then((obj) => {
-        resolve(obj);
-      });
+    user.save().then((obj) => {
+      resolve(obj);
     });
+    // email_verification(details.email, user._id).then((ok) => {
+    //   user.save().then((obj) => {
+    //     resolve(obj);
+    //   });
+    // });
   });
 }
 

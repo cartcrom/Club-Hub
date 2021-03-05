@@ -7,11 +7,14 @@ export default class DataList extends React.Component {
     constructor(props) {
         super(props);
     }
+    match = (currentInput, item) =>
+        item.label.toLowerCase().includes(currentInput.toLowerCase());
 
     render() {
         return (
             <DataListInput
-            inputClassName="drop-down-button"
+            match = {this.match}
+            inputClassName="datalist-input"
             placeholder={this.props.placeholder}
             items={this.props.items}
             onSelect={this.props.onSelect}
