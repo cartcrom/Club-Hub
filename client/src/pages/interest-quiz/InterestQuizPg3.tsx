@@ -9,12 +9,12 @@ interface InterestQuizProps {
 
 const InterestQuizPg3 = (props: InterestQuizProps) => {
   const checkboxes =
-    [ { title: "Performance + Arts", val: "performingArts" },
-      { title: "Publications + Media", val: "publicationsMedia" },
-      { title: "Service + Social Justice", val: "serviceSocialJustice" },
-      { title: "Sports", val: "sports" },
-      { title: "STEM", val: "stem" },
-      { title: "Sustainability + Wellness", val: "sustainability" }];
+    [ { title: "Performance + Arts", val: "Performance + Arts" },
+      { title: "Publications + Media", val: "Media" },
+      { title: "Social Justice", val: "Social Justice" },
+      { title: "Sports", val: "Sports" },
+      { title: "STEM", val: "STEM" },
+      { title: "Sustainability + Wellness", val: "Sustainability" }];
 
 
   return (

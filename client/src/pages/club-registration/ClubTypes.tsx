@@ -9,23 +9,23 @@ interface ClubTypeProps extends RouteComponentProps {
 
 const ClubTypes: React.FC<ClubTypeProps> = (props) => {
     const checkboxes = 
-    [{ title: "Business", val: "business" },
-     { title: "Community Service", val: "service" },
-     { title: "Greek Life", val: "greek" },
-     { title: "History, Law, and Politics", val: "history" },
-     { title: "Language and Culture", val: "culture" },
-     { title: "Nature and Agriculture", val: "nature" },
-     { title: "Performance + Arts", val: "performingArts" },
-     { title: "Publications + Media", val: "publicationsMedia" },
-     { title: "Service + Social Justice", val: "serviceSocialJustice" },
-     { title: "Sports", val: "sports" },
-     { title: "STEM", val: "stem" },
-     { title: "Sustainability + Wellness", val: "sustainability" },
-     { title: "Social", val: "social" },
-     { title: "Professional", val: "professional" },
-     { title: "Project Based", val: "project" },
-     { title: "Competition Based", val: "competition" },
-     { title: "Religious", val: "religious" }]
+    [{ title: "Business", val: "Business" },
+     { title: "Community Service", val: "Service" },
+     { title: "Greek Life", val: "Greek Life" },
+     { title: "History, Law, and Politics", val: "History" },
+     { title: "Language and Culture", val: "Culture" },
+     { title: "Nature and Agriculture", val: "Nature" },
+     { title: "Performance + Arts", val: "Performance + Arts" },
+     { title: "Publications + Media", val: "Media" },
+     { title: "Social Justice", val: "Social Justice" },
+     { title: "Sports", val: "Sports" },
+     { title: "STEM", val: "STEM" },
+     { title: "Sustainability + Wellness", val: "Sustainability" },
+     { title: "Social", val: "Social" },
+     { title: "Professional", val: "Professional" },
+     { title: "Project Based", val: "Project" },
+     { title: "Competition Based", val: "Competitive" },
+     { title: "Religious", val: "Religious" }]
 
      const checkboxList = checkboxes.map(({title, val}, i) => (
         <IonItem key={i}>

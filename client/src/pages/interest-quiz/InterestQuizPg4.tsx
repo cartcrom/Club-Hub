@@ -9,11 +9,11 @@ interface InterestQuizProps {
 
 const InterestQuizPg4 = (props: InterestQuizProps) => {
   const checkboxes =
-    [ { title: "Social", val: "social" },
-      { title: "Professional", val: "professional" },
-      { title: "Project Based", val: "project" },
-      { title: "Competition Based", val: "competition" },
-      { title: "Religious", val: "religious" }];
+    [ { title: "Social", val: "Social" },
+      { title: "Professional", val: "Professional" },
+      { title: "Project Based", val: "Project" },
+      { title: "Competition Based", val: "Competitive" },
+      { title: "Religious", val: "Religious" }];
 
   return (
     <IonPage>
