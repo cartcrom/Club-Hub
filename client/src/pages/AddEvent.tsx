@@ -29,7 +29,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       }
       let start = ""
       if(document.getElementById("startID") != null){
-      let start = (document.getElementById("startID") as HTMLIonInputElement).value as string;}
+      start = (document.getElementById("startID") as HTMLIonInputElement).value as string;}
       //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
   
       if(name == "" || desc == "" || loc == "" || date == ""){
@@ -44,9 +44,6 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
           buttons={['OK']}
         />)
       }
-  
-
-    
 
     let id = props.match.params.id;
     let currentClub = clubs!.get(id);
@@ -54,10 +51,6 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       throw new Error("Undefined club error with ID " + id);
     }
 
-
-    /*Date d = new Date();
-    String s = d.toString;
-    Date theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(s);*/
     let now = new Date
     currentClub.addEvent("id", desc, now , "https://placeimg.com/640/640/nature", name.toString(), now.toString() , start, loc);
 
