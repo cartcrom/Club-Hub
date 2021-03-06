@@ -1,5 +1,5 @@
 import React from 'react';
-import { findByTitle, fireEvent, prettyDOM, render, screen } from '@testing-library/react';
+import {render, screen } from '@testing-library/react';
 import App from './App';
 import { UserContext } from './UserContext';
 import Student from './components/Student';
@@ -10,7 +10,6 @@ import SignIn from './pages/front-pages/SignIn';
 import SignUp from './pages/front-pages/SignUp';
 import { ionFireEvent } from '@ionic/react-test-utils';
 import MyClubs from './pages/MyClubs';
-import InterestQuizIntro from './pages/interest-quiz/InterestQuizIntro';
 import InterestQuiz from './pages/interest-quiz/InterestQuiz';
 import Feed from './pages/Feed';
 import Explore from './pages/Explore';
@@ -19,7 +18,7 @@ import { ClubContext } from './ClubContext';
 import { DD_fake_clubs, DD_guest_user } from './DummyData';
 import ClubProfile from './pages/ClubProfile';
 import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
-import { add } from 'lodash';
+
 
 
 
