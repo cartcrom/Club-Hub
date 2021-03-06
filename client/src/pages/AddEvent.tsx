@@ -1,49 +1,50 @@
-import React, { useRef, useContext, useState} from 'react';
-import API from '../services/api'
+import React, { useRef, useContext, useState } from 'react';
+import API from '../services/api';
 import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
 import { ClubContext } from '../ClubContext';
 import { RouteComponentProps } from 'react-router';
 import './AddEvent.css';
 import Club from '../components/Club';
 
-interface AddEventProps extends RouteComponentProps<{id : string}> {
+interface AddEventProps extends RouteComponentProps<{ id: string; }> {
   saveEvent: Function;
 }
 
 const AddEvent: React.FC<AddEventProps> = (props) => {
   const [showAlert1, setShowAlert1] = useState(false);
 
-  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
-    if (clubs === undefined) {
-      throw new Error("Undefined clubs error");
-    }
+  let clubs: Map<string, Club> | undefined = useContext(ClubContext);
+  if (clubs === undefined) {
+    throw new Error("Undefined clubs error");
+  }
 
-    
-    const addEvent = () => {
-      let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
-      let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
-      let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
-      let img = (document.getElementById("imageID") as HTMLIonInputElement).value as string;
-      let date = "";
-      if(document.getElementById("dateID") != null){
-        date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
-      }
-      let start = ""
-      if(document.getElementById("startID") != null){
-      start = (document.getElementById("startID") as HTMLIonInputElement).value as string;}
-      //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
-  
-      if(name == "" || desc == "" || loc == "" || date == ""){
-        setShowAlert1(true)
-        return(
-          <IonAlert
+
+  const addEvent = () => {
+    let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
+    let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
+    let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+    let img = (document.getElementById("imageID") as HTMLIonInputElement).value as string;
+    let date = "";
+    if (document.getElementById("dateID") != null) {
+      date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
+    }
+    let start = "";
+    if (document.getElementById("startID") != null) {
+      start = (document.getElementById("startID") as HTMLIonInputElement).value as string;
+    }
+    //let end = (document.getElementById("endID") as HTMLIonInputElement).value;
+
+    if (name == "" || desc == "" || loc == "" || date == "") {
+      setShowAlert1(true);
+      return (
+        <IonAlert
           isOpen={true}
           onDidDismiss={() => setShowAlert1(false)}
           header={'Must fill all fields.'}
           message={'Please fill out each field for your event.'}
           buttons={['OK']}
-        />)
-      }
+        />);
+    }
 
     let id = props.match.params.id;
     let currentClub = clubs!.get(id);
@@ -54,7 +55,6 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     let now = new Date
     currentClub.addEvent("id", desc, now , img, name.toString(), now.toString() , start, loc);
 
-    
     clubs!.set(id, currentClub);
 
     name = name.toString();
@@ -62,6 +62,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     let postDate = now.toString();
     
     API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.history.goBack(), (err : any) => console.log(err))
+    props.history.goBack();
   }
 
     return (
