@@ -9,13 +9,13 @@
 }
 
 .club-item {
-  font-family: "Proxima Nova", "Sans-Serif" !important;
+  font-family: "Proxima Nova", "Sans-serif" !important;
   font-size: 14pt !important;
   padding: 10pt 0 10pt 0;
 }
 
 .settings-label {
-  font-family: "Proxima Nova" , "Sans-Serif"!important;
+  font-family: "Proxima Nova" , "Sans-serif"!important;
   font-size: 16pt !important;
 }
 
@@ -24,18 +24,18 @@
 }
 
 .data {
-  font-family: "Proxima Nova", "Sans-Serif" !important;
+  font-family: "Proxima Nova", "Sans-serif" !important;
   font-size: 12pt !important;
   line-height: 20pt !important;
 }
 
 .data ion-label {
-  font-family: "Proxima Nova Bold", "Sans-Serif" !important;
+  font-family: "Proxima Nova Bold", "Sans-serif" !important;
   font-size: 12pt !important;
 }
 
 .data ion-button {
-  font-family: "Proxima Nova", "Sans-Serif" !important;
+  font-family: "Proxima Nova", "Sans-serif" !important;
   font-size: 12pt !important;
   height: 20pt;
   width:100%;
@@ -50,7 +50,7 @@
 }
 
 .tag {
-  font-family: "Proxima Nova", "Sans-Serif" !important;
+  font-family: "Proxima Nova", "Sans-serif" !important;
   font-size: 12pt !important;
   padding: 0 10pt;
   margin: 5pt;
