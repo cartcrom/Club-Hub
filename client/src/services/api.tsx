@@ -2,14 +2,15 @@ import { backend_URL } from '../constants';
 import Club from '../components/Club'
 import Student from '../components/Student';
 import axios from 'axios';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 export default class API {
     static login(loginInfo : {email: string, password: string}, callback: Function, error : Function)  {
         axios.post(backend_URL + '/login', loginInfo)
-            .then((res : {data : object}) => {
+            .then((res : {data : any}) => {
                 // handle success
                 if (res.data) {
-                    callback(res.data)
+                    callback(this.convertUser(res.data))
                 }
                 else
                     error("Invalid Login")
@@ -31,9 +32,9 @@ export default class API {
 
     static signup(signupInfo : {firstName: string, lastName: string, college: string | undefined, email: string, password: string}, callback: Function, error : Function) {
         axios.post(backend_URL + '/SignUp', signupInfo)
-            .then((res : any) => {
+            .then((res : {data : any}) => {
                 // handle success
-                callback(res.data)
+                callback(this.convertUser(res.data))
             })
             .catch((err : any) => {
                 if (!err.response) {
@@ -43,6 +44,57 @@ export default class API {
                     error(err.response.data);
                 }
             })
+    }
+
+    static logout(callback: Function) {
+        axios.get(backend_URL + '/logout')
+            .then(() => callback())
+            .catch((err : any) => {
+                if (!err.response) {
+                    // network error
+                    alert("Network Connection Error");
+                } else {
+                    console.log(err.response.data);
+                }
+            })
+    }
+
+    static convertUser(s : any) : Student {
+        let joined_clubs = s.joined_clubs
+        if (joined_clubs.length && !(joined_clubs[0] instanceof String))
+            joined_clubs = joined_clubs.map((c : any) => c._id)
+            
+        let lead_clubs = s.lead_clubs
+        if (lead_clubs.length && !(lead_clubs[0] instanceof String))
+            lead_clubs = lead_clubs.map((c : any) => c._id)
+        return(new Student (
+            s.firstName,
+            s.lastName,
+            s._id,
+            s.school,
+            s.email,
+            s.interests,
+            joined_clubs,
+            lead_clubs,
+            s.major,
+            s.collegeOf,
+            undefined
+        ))
+    }
+
+    static verifyUser(studentId: string, callback: Function, error: Function) {
+        console.log("test");
+        let id_obj = {id: studentId}
+        axios.post(backend_URL + '/verify/user', id_obj)
+        .then(res => {
+            if (res.data) {
+                callback()
+            }
+            else {
+                error("Invalid Verification Attempt")
+            }
+        })
+        .catch(err => console.log(err))
     }
 
     static updateInterests(quizData : {school: string, collegeOf: string, major:string, interests: Array<string>, id: string}, callback: Function, error : Function) {

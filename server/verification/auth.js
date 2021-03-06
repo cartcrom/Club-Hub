@@ -11,8 +11,11 @@ function login(email, pass) {
           resolve(docs);
         } else if (docs.password === pass && !docs.isVerified) {
           console.log("User is not verified the email :", docs.email);
-          email_verification(docs.email, docs._id);
-          resolve(false);
+
+          resolve(docs);
+
+          // email_verification(docs.email, docs._id);
+          // resolve(false);
         } else {
           console.log(
             "Acoount Found:",
@@ -48,11 +51,14 @@ async function sign_up(details, env) {
     user.email = details.email;
     user.password = details.password;
     user.school = school;
-    email_verification(details.email, user._id, env).then((ok) => {
-      user.save().then((obj) => {
-        resolve(obj);
-      });
+    user.save().then((obj) => {
+      resolve(obj);
     });
+    // email_verification(details.email, user._id, env).then((ok) => {
+    //   user.save().then((obj) => {
+    //     resolve(obj);
+    //   });
+    // });
   });
 }
 

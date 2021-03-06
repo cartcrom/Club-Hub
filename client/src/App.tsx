@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import api from './services/api'
+import API from './services/api'
+import VerificationPage from './services/VerificationPage'
 
 /* Ionic */
 import {
@@ -15,7 +16,7 @@ import {
 
 /* Router */
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route, Switch, Link, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import history from './history';
 
@@ -78,7 +79,6 @@ import Student from './components/Student';
 
 import { backendToClub, backendToStudent } from './components/backendDataConversion';
 import { ClubRegistrationManager } from './pages/club-registration/ClubRegistrationManager';
-import API from './services/api';
 
 // put 'md' here for android view, put 'ios' here for ios view
 setupConfig({
@@ -135,7 +135,7 @@ export default class App extends React.Component<{}, AppState> {
 
   authenticate = (user : any) => {
     if (user) {
-      this.setState({user : backendToStudent(user)})
+      this.setState({user : user})
       this.fetch_club_data();
     }
     else {
@@ -179,6 +179,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   logOut = () => {
+    API.logout(() => {})
     this.setState({isAuthenticated: false, user: undefined, club_data: undefined})
     history.push("/")
   }
@@ -259,7 +260,7 @@ export default class App extends React.Component<{}, AppState> {
                     <Route path="/signin" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignIn {...props} authenticate={this.authenticate}/>}/>
                     <Route path="/signup" render={(props) => (isauth) ? <Redirect to={'/'} /> : <SignUp {...props} authenticate={this.authenticate} />} />
                     <Route path="/login"  render={(props) => (isauth) ? <Redirect to={'/'} /> : <FrontPage {...props} authenticate={this.authenticate} />} />
-                    <Route path="/verification?id=:id"  render={(props) => (isauth) ? <Redirect to={'/'} /> : <FrontPage {...props} authenticate={this.authenticate} />} />
+                    <Route path="/verification/:id" component={VerificationPage} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/feed' component={Feed} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/explore' component={Explore} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path='/myclubs' component={MyClubs} />
