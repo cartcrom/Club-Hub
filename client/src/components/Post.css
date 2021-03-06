@@ -83,7 +83,7 @@
 }
 
 .event-date {
-  font: bold 10pt "Proxima Nova";
+  font-family: bold 10pt "Proxima Nova", Sans-serif;
   padding: 10pt;
   text-align: right;
   justify-content: right;
@@ -96,7 +96,7 @@
 }
 
 .event-description {
-  font: bold 10pt "Proxima Nova";
+  font-family: bold 10pt "Proxima Nova", Sans-serif;
   padding: 5pt;
 
   display: flex;
@@ -105,7 +105,7 @@
 }
 
 .event-timesince {
-  font: bold 10pt "Proxima Nova";
+  font-family: bold 10pt "Proxima Nova", Sans-serif;
   color: rgb(48, 48, 48);
   padding: 0 0 5pt 18pt;
 }

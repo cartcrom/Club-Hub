@@ -58,11 +58,11 @@ ion-toolbar:after {
   position: absolute;
   margin: 6pt 20pt 0 calc(2% + 74pt);
 
-  font: 13pt "Proxima Nova";
+  font-family: 13pt "Proxima Nova", Sans-serif;
 }
 
 .following {
-  font: 12pt "Proxima Nova";
+  font-family: 12pt "Proxima Nova", Sans-serif;
 
   border: 1pt solid lightgrey;
   border-radius: 10pt;
@@ -77,19 +77,16 @@ ion-toolbar:after {
 }
 
 .club-tag {
-  font-family: "Proxima Nova" !important;
+  font-family: "Proxima Nova", Sans-serif !important;
   font-size: 12pt !important;
   margin: 6pt 6pt 0 0;
-
-
   background-color: #61FF76;
-  font-size: 12pt;
 }
 
 .club-tag-grey {
   background-color: lightgrey;
 }
 .content-label {
-  font-family: "Proxima Nova Bold" !important;
+  font-family: "Proxima Nova Bold", Sans-serif !important;
   font-size: 14pt !important;
 }

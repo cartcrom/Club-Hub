@@ -1,10 +1,10 @@
-import React from 'react'
-import {IonContent, IonHeader, IonPage, IonItem, IonCheckbox, IonLabel, IonToolbar, IonTitle, IonButtons, IonBackButton} from '@ionic/react'
-import { RouteComponentProps } from 'react-router';
+import React from "react";
+import { IonContent, IonHeader, IonPage, IonItem, IonCheckbox, IonLabel, IonToolbar, IonTitle, IonButtons, IonBackButton } from "@ionic/react";
+import { RouteComponentProps } from "react-router";
 
 interface ClubTypeProps extends RouteComponentProps {
-    addTag: Function,
-    tags: string[]
+  addTag: Function,
+  tags: string[];
 }
 
 const ClubTypes: React.FC<ClubTypeProps> = (props) => {
@@ -27,28 +27,28 @@ const ClubTypes: React.FC<ClubTypeProps> = (props) => {
      { title: "Competition Based", val: "Competitive" },
      { title: "Religious", val: "Religious" }]
 
-     const checkboxList = checkboxes.map(({title, val}, i) => (
-        <IonItem key={i}>
-            <IonCheckbox slot="start" value={title} checked={props.tags.includes(title)}
-                onIonChange={e => props.addTag(e.detail.checked, e.detail.value)}></IonCheckbox>
-            <IonLabel>{title}</IonLabel>
-        </IonItem>
-     ))
+  const checkboxList = checkboxes.map(({ title, val }, i) => (
+    <IonItem key={i}>
+      <IonCheckbox slot="start" value={title} checked={props.tags.includes(title)}
+        onIonChange={e => props.addTag(e.detail.checked, e.detail.value)}></IonCheckbox>
+      <IonLabel>{title}</IonLabel>
+    </IonItem>
+  ));
 
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton />
-                    </IonButtons>
-                    <IonTitle>Club Type</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>
-                {checkboxList}
-            </IonContent>
-        </IonPage>
-    );
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton />
+          </IonButtons>
+          <IonTitle>Club Type</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        {checkboxList}
+      </IonContent>
+    </IonPage>
+  );
 };
-export default ClubTypes
+export default ClubTypes;

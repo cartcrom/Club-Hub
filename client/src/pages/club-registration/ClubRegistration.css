@@ -1,18 +1,17 @@
 .center {
-    display: flex;
-    align-items: center;
-    
+  display: flex;
+  align-items: center;
 }
 
 .vertical {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 #profile-holder {
-    padding: 35px 0;
+  padding: 35px 0;
 }
 
 #profile {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
