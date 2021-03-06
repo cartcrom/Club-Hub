@@ -1,21 +1,21 @@
-import Student from './Student';
-import Event from './Event';
+import Student from "./Student";
+import Event from "./Event";
 
 export default class Club {
-  name : string;
+  name: string;
   id: string;
   description: string;
   profileImage: string;
   bannerImage: string;
-  clubLeaders: Array<Student>
+  clubLeaders: Array<Student>;
   school: string;
   tags: Array<string>;
   meetings?: Array<Event>;
-  socialMedia: Array<string>
-  events: Array<Event>
+  socialMedia: Array<string>;
+  events: Array<Event>;
   //ratings: Array<Number>
 
-  constructor(name : string, id: string, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
+  constructor(name: string, id: string, description: string, profileImage: string, bannerImage: string, clubLeaders: Array<Student>,
     school: string, tags: Array<string>, meetings: Array<Event> | undefined, socialMedia: Array<string>, events: Array<Event>) {
     this.name = name;
     this.id = id;
@@ -38,7 +38,7 @@ export default class Club {
 
   addEvent(id: string, description: string, date: Date, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
-    let e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
+    const e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
     this.events.push(e);
   }
 }
