@@ -35,11 +35,8 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
-  let interests = user.interests.map(interest => <IonChip key={interest} className="explore-tag">{interest}</IonChip>)
 
-
-  let club_views = Array.from(clubs.values()).map(c => <ClubCard {...props} key={c.name} club={c}/>)
-
+  const [currentTag, setCurrentTag] = useState<string>("");
   const [search, setSearch] = useState<string>();
   const [query, setQuery] = useState<string>();
 
@@ -47,6 +44,17 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     setSearch(value);
     setQuery(value);
   }
+
+  let interests = user.interests.map(interest => 
+    <IonChip key={interest} className="explore-tag" onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
+
+
+  let club_views = Array.from(clubs.values()).map(c => {
+    if (currentTag == "" || c.tags.includes(currentTag))
+      return <ClubCard {...props} key={c.name} club={c}/>
+  })
+
+
 
   const ExploreHome = () => {
     return(
