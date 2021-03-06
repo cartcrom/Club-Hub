@@ -1,15 +1,13 @@
-import React from 'react';
-import {  IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow, IonText} from '@ionic/react';
-import './Post.css';
-import Post from './Post'
-import Club from './Club'
-import { heart, heartOutline, calendarOutline } from 'ionicons/icons';
+import React from "react";
+import { IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow, IonText } from "@ionic/react";
+import "./Post.css";
+import Post from "./Post";
+import Club from "./Club";
+import { heart, heartOutline, calendarOutline } from "ionicons/icons";
 
-function timeSince(date : Date) {
-
-  var seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-
-  var interval = seconds / 31536000;
+function timeSince(date: Date) {
+  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+  let interval = seconds / 31536000;
 
   if (interval > 1) {
     return Math.floor(interval) + " years ago";
@@ -33,49 +31,47 @@ function timeSince(date : Date) {
   return Math.floor(seconds) + " seconds ago";
 }
 
-class EventView extends React.Component<{e : Event, useHeader: boolean, route : Function | undefined}, {loved : boolean}> {
+class EventView extends React.Component<{ e: Event, useHeader: boolean, route: Function | undefined; }, { loved: boolean; }> {
   constructor(props: any) {
-    super(props)
+    super(props);
     this.state = {
-      loved : false
-    }
+      loved: false
+    };
   }
 
-  
-
   render() {
-    let e = this.props.e;
+    const e = this.props.e;
 
     return (
-      <IonGrid className='post'>
-        {this.props.useHeader && 
-          <IonRow className='post-header' onClick={() => this.props.route!()}>
+      <IonGrid className="post">
+        {this.props.useHeader &&
+          <IonRow className="post-header" onClick={() => this.props.route!()}>
             <IonImg src={e.club.profileImage} className="post-profile-image"></IonImg>
             <IonCol size="auto">
-              <IonLabel className='post-club-name'>{e.club.name}</IonLabel>
+              <IonLabel className="post-club-name">{e.club.name}</IonLabel>
             </IonCol>
           </IonRow>
         }
-        
+
         <IonRow>
           <div className="container">
-            <IonImg className='post-image' src={e.image}></IonImg>
+            <IonImg className="post-image" src={e.image}></IonImg>
           </div>
         </IonRow>
         <IonRow className="event-data">
           <IonItem lines="none" className="calendar">
             <IonIcon src={calendarOutline}></IonIcon>
           </IonItem>
-          
+
           <IonCol size="8" className="event-description">{"EVENT - " + e.title}</IonCol>
           <IonCol className="event-date">{e.eventDate}</IonCol>
         </IonRow>
 
         <IonRow>
           <IonItem lines="none">
-            <IonIcon className={(this.state.loved) ? "heart" : ""} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({loved: !this.state.loved})}></IonIcon>
+            <IonIcon className={(this.state.loved) ? "heart" : ""} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({ loved: !this.state.loved })}></IonIcon>
           </IonItem>
-          
+
           <IonCol className="event-description">{e.description}</IonCol>
         </IonRow>
 
@@ -86,7 +82,7 @@ class EventView extends React.Component<{e : Event, useHeader: boolean, route : 
         </IonRow>
 
       </IonGrid>
-    )
+    );
   }
 }
 
@@ -97,7 +93,7 @@ export default class Event extends Post {
   location: string;
   loved: boolean = false;
 
-  constructor(club : Club, id: string, description: string, date: Date, image: string,
+  constructor(club: Club, id: string, description: string, date: Date, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
     super(club, id, description, date, image);
     this.title = title;
@@ -108,7 +104,7 @@ export default class Event extends Post {
 
   getFeedItem(useHeader: boolean, route: Function | undefined) {
     return (
-      <EventView e={this} route={route} useHeader={useHeader} key={this.id}/>
-    )
+      <EventView e={this} route={route} useHeader={useHeader} key={this.id} />
+    );
   }
 }

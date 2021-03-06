@@ -1,5 +1,5 @@
 export default class Student {
-  fn : string;
+  fn: string;
   ln: string;
   id: string;
   school: string;
@@ -8,10 +8,10 @@ export default class Student {
   major?: string;
   collegeOf?: string;
   favoriteClubType?: string;
-  joined_clubs: Array<string>;      // Stores ID's of clubs this student joined
+  joined_clubs: Array<string>; // Stores ID's of clubs this student joined
   lead_clubs: Array<string>; // Stores ID's of clubs this student leads
 
-  constructor(fn : string, ln: string, id: string, school: string, email: string, interests: Array<string>, clubs: Array<string>, 
+  constructor(fn: string, ln: string, id: string, school: string, email: string, interests: Array<string>, clubs: Array<string>,
     lead_clubs: Array<string>, major?: string, collegeOf?: string, favoriteClubType?: string) {
     this.fn = fn;
     this.ln = ln;
@@ -32,6 +32,6 @@ export default class Student {
   }
 
   addLeadClub(clubId: string) {
-    this.lead_clubs.push(clubId)
+    this.lead_clubs.push(clubId);
   }
 }
