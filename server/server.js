@@ -99,7 +99,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.get("/verify/user", (req, res) => {
+app.post("/verify/user", (req, res) => {
   auth.verify_user(req.query.id).then((result) => {
     res.send(result);
   });

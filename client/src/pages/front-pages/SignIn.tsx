@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../../services/api'
+import Student from '../../components/Student'
 import { IonContent, IonLabel, IonPage, IonFooter,  IonInput, IonIcon, IonItem, IonButton} from '@ionic/react';
 import { alertCircleOutline, lockClosedOutline, personOutline } from 'ionicons/icons';
 import './FrontPage.css';
@@ -21,7 +22,7 @@ const SignIn: React.FC<LoginProps> = (props) => {
     const {control, handleSubmit, setError, errors} = useForm<LoginInfo>();
 
     const logIn = async (loginInfo: LoginInfo) => {
-        API.login(loginInfo, (data: Object) => {props.authenticate(data);}, (err : any) => setError("password", {message: err}))
+        API.login(loginInfo, (user : Student) => {props.authenticate(user);}, (err : any) => setError("password", {message: err}))
     }
 
     return (
