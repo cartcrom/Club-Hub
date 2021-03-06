@@ -1,108 +1,102 @@
 /* Background */
-
 .gradient-content {
-    --background: linear-gradient(145deg, rgba(255,112,147,1) 0%, rgba(119,64,255,1) 75%, rgba(83,55,255,1) 100%);
-    text-align: center;
-    display: flex;
+  --background: linear-gradient(145deg, rgba(255,112,147,1) 0%, rgba(119,64,255,1) 75%, rgba(83,55,255,1) 100%);
+  text-align: center;
+  display: flex;
 }
 
 /* Formatting for Logo */
-
 #logo {
-    padding-top: 20%;
+  padding-top: 20%;
 }
 
 #name {
-    color: white;
-    font: bold 20px "Proxima Nova Rg", Helvetica, sans-serif;
-    padding-top: 16px;
-    margin: 0;
+  color: white;
+  font: bold 20px "Proxima Nova Rg", Helvetica, sans-serif;
+  padding-top: 16px;
+  margin: 0;
 }
 
 /* General Rules */
-
 .center-elements {
-    text-align: center;
+  text-align: center;
 }
 
 .white-color {
-    --color: white;
+  --color: white;
 }
 
 .transparent {
-    --background: transparent;
-    --border-color: transparent;
+  --background: transparent;
+  --border-color: transparent;
 }
 
 /* Button and Input Formattig */
-
 .chip-button, .chip-button-outline, .chip-input {
-    width: 80%;
-    height: 50px;
-    --border-radius: 25px;
-    margin: 10px auto;
-    text-align: center;
+  width: 80%;
+  height: 50px;
+  --border-radius: 25px;
+  margin: 10px auto;
+  text-align: center;
 }
 
 .chip-button {
-    --background: white;
-    --color: #7B87F2;
+  --background: white;
+  --color: #7B87F2;
 }
 
 .chip-button-outline, .chip-input {
-    --background: transparent;
-    --border-width: 2px;
-    --border-color: white;
-    --color: white;
+  --background: transparent;
+  --border-width: 2px;
+  --border-color: white;
+  --color: white;
 }
 
 .chip-input {
-    text-align: left;
+  text-align: left;
 }
 
 .chip-input ion-input {
-    --placeholder-opacity: white;
+  --placeholder-opacity: white;
 }
 
 .bottom-button {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 #form-button {
-    font-size: 18px;
-    margin-top: 50px;
+  font-size: 18px;
+  margin-top: 50px;
 }
 
 /* Dividing Lines */
-
 hr {
-    height: 5px;
-    background: white;
-    margin: 15px 0;
+  height: 5px;
+  background: white;
+  margin: 15px 0;
 }
 
 /* Forgot Password */
-
 #forgot-password {
-    --color: white;
-    text-decoration: underline;
+  --color: white;
+  text-decoration: underline;
 }
 
 /* Form Error */
 .form-error {
-    width: 80%;
-    margin: 0 auto;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
+  width: 80%;
+  margin: 0 auto;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 
 .form-error ion-icon {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .form-error ion-label {
-    padding-left: 10px;
-    font-size: 15px;
+  padding-left: 10px;
+  font-size: 15px;
 }
