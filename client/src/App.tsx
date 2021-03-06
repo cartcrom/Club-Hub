@@ -308,7 +308,7 @@ export default class App extends React.Component<{}, AppState> {
     if (event.key !== "`") {
       return;
     }
-    API.login({ email: "maxkennedy@school.edu", password: "1234" }, (data: Object) => this.authenticate(data), (err: any) => alert(err));
+    API.login({ email: "ccromer@calpoly.edu", password: "1234" }, (data: Object) => this.authenticate(data), (err: any) => alert(err));
   };
 
 }

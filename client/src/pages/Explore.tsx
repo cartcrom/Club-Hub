@@ -9,12 +9,13 @@ import { ClubContext } from '../ClubContext';
 
 
 interface ClubCardProps extends RouteComponentProps {
+  interests: Array<String>,
   club: Club
 }
 
 const ClubCard: React.FC<ClubCardProps> = (props) => {
-
-  let tags = props.club.tags.map(t => <IonChip key={t + props.club.name} className="tag">{t}</IonChip>)
+  // Sort tags based on commonality with user interests
+  let tags = props.club.tags.sort((a,b) => ((props.interests.includes(b) ? 1 : 0) - (props.interests.includes(a) ? 1 : 0)) ).map(t => <IonChip key={t + props.club.name} className={(props.interests.includes(t)) ? "explore-tag-select" : "explore-tag"}>{t}</IonChip>)
   return(
     <IonCard key={props.club.id} button onClick={() => props.history.push('club/' + props.club.id)}>
       <IonImg src={props.club.bannerImage}></IonImg>
@@ -36,6 +37,9 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     throw new Error("Undefined clubs error");
   }
 
+  let allClubs = Array.from(clubs!.values())
+  let unjoinedClubs = allClubs.filter((c: Club) => !(user!.joined_clubs.includes(c.id)) && !(user!.lead_clubs.includes(c.id))).sort((c1,c2) => (c2.tags.filter(t => user?.interests.includes(t)).length) -  (c1.tags.filter(t => user?.interests.includes(t)).length))
+
   const [currentTag, setCurrentTag] = useState<string>("");
   const [search, setSearch] = useState<string>();
   const [query, setQuery] = useState<string>();
@@ -46,15 +50,9 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   }
 
   let interests = user.interests.map(interest => 
-    <IonChip key={interest} className="explore-tag" onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
+    <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
 
-
-  let club_views = Array.from(clubs.values()).map(c => {
-    if (currentTag == "" || c.tags.includes(currentTag))
-      return <ClubCard {...props} key={c.name} club={c}/>
-  })
-
-
+  let club_views = unjoinedClubs.filter((c => currentTag == "" || c.tags.includes(currentTag))).map(c => <ClubCard {...props} interests={user!.interests} key={c.name} club={c}/>)
 
   const ExploreHome = () => {
     return(
@@ -62,7 +60,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
         <div className="everythingOnOneLine">
               {interests}
             </div>
-        <IonText className="listHeader">Recommended</IonText>
+        <IonText className="listHeader">{(currentTag == "") ? "Recommended" : currentTag + " clubs"}</IonText>
         <IonList>
           {club_views}
         </IonList>
@@ -85,10 +83,10 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   }
 
   const SearchView = () => {
-    let club_list = Array.from(clubs!.values())
-    club_list = club_list.filter(c => c.name.toLowerCase().indexOf(query!.toLowerCase()) > -1)
+
+    let search_list = allClubs.filter(c => c.name.toLowerCase().indexOf(query!.toLowerCase()) > -1)
     
-    let Searches = club_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
+    let Searches = search_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
 
     return(
       <div>
