@@ -17,7 +17,7 @@ export const ClubRegistrationManager: React.FC<ManagerProps> = props => {
   });
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [profile, setProfile] = useState<string>(process.env.PUBLIC_URL + "/avatar.svg");
+  const [profile, setProfile] = useState<string>("");
   const [banner, setBanner] = useState<string>("");
   const addClub = props.addClub;
 

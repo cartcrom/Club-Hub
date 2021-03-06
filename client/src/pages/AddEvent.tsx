@@ -23,6 +23,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
       let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
       let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
       let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+      let img = (document.getElementById("imageID") as HTMLIonInputElement).value as string;
       let date = "";
       if(document.getElementById("dateID") != null){
         date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
@@ -38,7 +39,6 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
           <IonAlert
           isOpen={true}
           onDidDismiss={() => setShowAlert1(false)}
-          cssClass='my-custom-class'
           header={'Must fill all fields.'}
           message={'Please fill out each field for your event.'}
           buttons={['OK']}
@@ -52,7 +52,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
     let now = new Date
-    currentClub.addEvent("id", desc, now , "https://placeimg.com/640/640/nature", name.toString(), now.toString() , start, loc);
+    currentClub.addEvent("id", desc, now , img, name.toString(), now.toString() , start, loc);
 
     
     clubs!.set(id, currentClub);
@@ -60,9 +60,8 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     name = name.toString();
     let eventDate = new Date(date).toDateString().slice(0, -5);
     let postDate = now.toString();
-    let image = "https://placeimg.com/640/640/nature";
     
-    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, image, () => props.history.goBack(), (err : any) => console.log(err))
+    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.history.goBack(), (err : any) => console.log(err))
   }
 
     return (
@@ -95,6 +94,10 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
             <IonItem>
                 <IonLabel position="floating">Location</IonLabel>
                 <IonInput id={"locID"} minlength={1} required={true}></IonInput>
+            </IonItem>
+            <IonItem>
+                <IonLabel position="floating">Image URL</IonLabel>
+                <IonInput type="url" id={"imageID"} required={true}></IonInput>
             </IonItem>
             <IonItem>
                 <IonLabel position="floating">Date</IonLabel>
