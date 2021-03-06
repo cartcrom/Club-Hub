@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { IonAvatar, IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 //import { Plugins } from "@capacitor/core";
 import "./ClubRegistration.css";

@@ -1,10 +1,10 @@
-import React, { useRef, useContext, useState } from 'react';
-import API from '../services/api';
-import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonAlert } from '@ionic/react';
-import { ClubContext } from '../ClubContext';
-import { RouteComponentProps } from 'react-router';
-import './AddEvent.css';
-import Club from '../components/Club';
+import React, { useContext, useState } from "react";
+import API from "../services/api";
+import { IonButton, IonButtons, IonBackButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar, IonAlert } from "@ionic/react";
+import { ClubContext } from "../ClubContext";
+import { RouteComponentProps } from "react-router";
+import "./AddEvent.css";
+import Club from "../components/Club";
 
 interface AddEventProps extends RouteComponentProps<{ id: string; }> {
   saveEvent: Function;
@@ -13,17 +13,16 @@ interface AddEventProps extends RouteComponentProps<{ id: string; }> {
 const AddEvent: React.FC<AddEventProps> = (props) => {
   const [showAlert1, setShowAlert1] = useState(false);
 
-  let clubs: Map<string, Club> | undefined = useContext(ClubContext);
+  const clubs: Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
 
-
   const addEvent = () => {
     let name = (document.getElementById("nameID") as HTMLIonInputElement).value as string;
-    let desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
-    let loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
-    let img = (document.getElementById("imageID") as HTMLIonInputElement).value as string;
+    const desc = (document.getElementById("descID") as HTMLIonInputElement).value as string;
+    const loc = (document.getElementById("locID") as HTMLIonInputElement).value as string;
+    const img = (document.getElementById("imageID") as HTMLIonInputElement).value as string;
     let date = "";
     if (document.getElementById("dateID") != null) {
       date = (document.getElementById("dateID") as HTMLIonInputElement).value as string;
@@ -40,83 +39,83 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
         <IonAlert
           isOpen={true}
           onDidDismiss={() => setShowAlert1(false)}
-          header={'Must fill all fields.'}
-          message={'Please fill out each field for your event.'}
-          buttons={['OK']}
+          header={"Must fill all fields."}
+          message={"Please fill out each field for your event."}
+          buttons={["OK"]}
         />);
     }
 
-    let id = props.match.params.id;
-    let currentClub = clubs!.get(id);
+    const id = props.match.params.id;
+    const currentClub = clubs!.get(id);
     if (!currentClub) {
       throw new Error("Undefined club error with ID " + id);
     }
 
-    let now = new Date
-    currentClub.addEvent("id", desc, now , img, name.toString(), now.toString() , start, loc);
+    const now = new Date;
+    currentClub.addEvent("id", desc, now, img, name.toString(), now.toString(), start, loc);
 
     clubs!.set(id, currentClub);
 
     name = name.toString();
-    let eventDate = new Date(date).toDateString().slice(0, -5);
-    let postDate = now.toString();
-    
-    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.history.goBack(), (err : any) => console.log(err))
-    props.history.goBack();
-  }
+    const eventDate = new Date(date).toDateString().slice(0, -5);
+    const postDate = now.toString();
 
-    return (
-        <IonPage>
-          <IonAlert
-          isOpen={showAlert1}
-          onDidDismiss={() => setShowAlert1(false)}
-          cssClass='my-custom-class'
-          header={'Must fill all fields.'}
-          message={'Please fill out each field for your event.'}
-          buttons={['OK']}
-        />
-          <IonHeader>
-            <IonToolbar className="header">
-              <IonTitle>Event Adder</IonTitle>
-              <IonButtons slot="start">
-                <IonBackButton text="" color="dark"/>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent fullscreen>
-            <IonItem>
-                <IonLabel position="floating">Title</IonLabel>
-                <IonInput id={"nameID"} ></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel position="floating">Description</IonLabel>
-                <IonInput id={"descID"}></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel position="floating">Location</IonLabel>
-                <IonInput id={"locID"} minlength={1} required={true}></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel position="floating">Image URL</IonLabel>
-                <IonInput type="url" id={"imageID"} required={true}></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel position="floating">Date</IonLabel>
-                <IonDatetime id={"dateID"}></IonDatetime>
-            </IonItem>
-            <IonItem>
-                <IonLabel>Start</IonLabel>
-                <IonDatetime id={"startID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
-            </IonItem>
-            <IonItem>
-                <IonLabel>End</IonLabel>
-                <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
-            </IonItem>
-                <IonButton onClick={() => addEvent()} expand="block" id="add-button">Add Event</IonButton>
-                <IonButton expand="full" onClick={() => props.history.goBack()}>Cancel</IonButton>
-          </IonContent>
-        </IonPage>
-    );
+    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.history.goBack(), (err: any) => console.log(err));
+    props.history.goBack();
+  };
+
+  return (
+    <IonPage>
+      <IonAlert
+        isOpen={showAlert1}
+        onDidDismiss={() => setShowAlert1(false)}
+        cssClass="my-custom-class"
+        header={"Must fill all fields."}
+        message={"Please fill out each field for your event."}
+        buttons={["OK"]}
+      />
+      <IonHeader>
+        <IonToolbar className="header">
+          <IonTitle>Event Adder</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton text="" color="dark" />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        <IonItem>
+          <IonLabel position="floating">Title</IonLabel>
+          <IonInput id={"nameID"} ></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Description</IonLabel>
+          <IonInput id={"descID"}></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Location</IonLabel>
+          <IonInput id={"locID"} minlength={1} required={true}></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Image URL</IonLabel>
+          <IonInput type="url" id={"imageID"} required={true}></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Date</IonLabel>
+          <IonDatetime id={"dateID"}></IonDatetime>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Start</IonLabel>
+          <IonDatetime id={"startID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
+        </IonItem>
+        <IonItem>
+          <IonLabel>End</IonLabel>
+          <IonDatetime id={"endID"} display-format="h:mm a" picker-format="h:mm a" value="12:00"></IonDatetime>
+        </IonItem>
+        <IonButton onClick={() => addEvent()} expand="block" id="add-button">Add Event</IonButton>
+        <IonButton expand="full" onClick={() => props.history.goBack()}>Cancel</IonButton>
+      </IonContent>
+    </IonPage>
+  );
 };
 
 export default AddEvent;
