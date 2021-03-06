@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { IonAvatar, IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonRouterOutlet, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
-import { RouteComponentProps } from 'react-router';
-import { Plugins, CameraResultType} from '@capacitor/core';
-import './ClubRegistration.css'
-import { UserContext } from '../../UserContext';
-import { backend_URL } from '../../constants'
-import API from '../../services/api';
+import React, { useContext } from "react";
+import { IonAvatar, IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonTextarea, IonTitle, IonToolbar } from "@ionic/react";
+import { RouteComponentProps } from "react-router";
+//import { Plugins } from "@capacitor/core";
+import "./ClubRegistration.css";
+import { UserContext } from "../../UserContext";
+import API from "../../services/api";
 
 interface ClubRegistrationProps extends RouteComponentProps {
   tags: string[],
-  media: {[key: string]: string},
+  media: { [key: string]: string; },
   name: string,
   description: string,
   profile: string,
@@ -22,11 +21,11 @@ interface ClubRegistrationProps extends RouteComponentProps {
 }
 
 const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
-  const {Camera} = Plugins;
-  const [profileUploaded, setProfileUploaded] = useState<boolean>(false);
-  const student = useContext(UserContext)  
+  //const { Camera } = Plugins;
+  //const [profileUploaded, setProfileUploaded] = useState<boolean>(false);
+  const student = useContext(UserContext);
 
-  const takePhoto = async () => {
+  /*const takePhoto = async () => {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
@@ -34,43 +33,43 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
     });
     //setProfile(image.webPath);
     setProfileUploaded(true);
-  }
+  };*/
 
   // Profile Images
-  const defaultProf = process.env.PUBLIC_URL + '/avatar.svg'
-  const diamondProf = 'https://images.unsplash.com/photo-1546026502-797e11a59f50?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
-  const rainbowProf = 'https://images.unsplash.com/flagged/photo-1579268351234-073f85929562?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80'
-  const spiralProf = 'https://images.unsplash.com/photo-1591616369924-833532b76ebc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=937&q=80'
-  const curlProf = 'https://images.unsplash.com/photo-1598339990682-db6df0fb0529?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'  
-  const brickProf = 'https://images.unsplash.com/photo-1544938400-bdf4ea7a2e43?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-  const geometryProf = 'https://images.unsplash.com/photo-1555679445-50a1042ea2b3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=669&q=80'
-  
+  const defaultProf = process.env.PUBLIC_URL + "/avatar.svg";
+  const diamondProf = "https://images.unsplash.com/photo-1546026502-797e11a59f50?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+  const rainbowProf = "https://images.unsplash.com/flagged/photo-1579268351234-073f85929562?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80";
+  const spiralProf = "https://images.unsplash.com/photo-1591616369924-833532b76ebc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=937&q=80";
+  const curlProf = "https://images.unsplash.com/photo-1598339990682-db6df0fb0529?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+  const brickProf = "https://images.unsplash.com/photo-1544938400-bdf4ea7a2e43?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80";
+  const geometryProf = "https://images.unsplash.com/photo-1555679445-50a1042ea2b3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=669&q=80";
+
   // Banner Images
-  let bannerImage = {
+  const bannerImage = {
     backgroundImage: `url(${props.banner})`,
-    backgroundSize: 'cover',
-  }
+    backgroundSize: "cover",
+  };
 
-  let defaultBanner = {
-    backgroundImage: 'linear-gradient(145deg, rgba(255,112,147,1) 0%, rgba(119,64,255,1) 75%, rgba(83,55,255,1) 100%)'
-  }
+  const defaultBanner = {
+    backgroundImage: "linear-gradient(145deg, rgba(255,112,147,1) 0%, rgba(119,64,255,1) 75%, rgba(83,55,255,1) 100%)"
+  };
 
-  const beachImg = 'https://images.unsplash.com/photo-1530194579541-703b0bbc9363?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80'
-  const mountainImg = 'https://images.unsplash.com/photo-1612875895771-76bba1a61a49?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'
-  const desertImg = 'https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-  const arcImg = 'https://images.unsplash.com/photo-1602003729508-c3c55a51bc20?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'
-  const techImg = 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-  const travelImg = 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1953&q=80'
-  const busImg = 'https://images.unsplash.com/photo-1431540015161-0bf868a2d407?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'
+  const beachImg = "https://images.unsplash.com/photo-1530194579541-703b0bbc9363?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80";
+  const mountainImg = "https://images.unsplash.com/photo-1612875895771-76bba1a61a49?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
+  const desertImg = "https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80";
+  const arcImg = "https://images.unsplash.com/photo-1602003729508-c3c55a51bc20?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
+  const techImg = "https://images.unsplash.com/photo-1518770660439-4636190af475?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80";
+  const travelImg = "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1953&q=80";
+  const busImg = "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
 
   //Submit
   function handleSubmit() {
 
-    if (!student){
-      alert("Student Undefined")
-      return
+    if (!student) {
+      alert("Student Undefined");
+      return;
     }
-      
+
     const newClub = {
       name: props.name,
       description: props.description,
@@ -80,14 +79,13 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
       media: props.media,
       school: student.school,
       leaderId: student.id,
-    }
-
-    API.createClub(newClub, (data: any) => {props.addClub(data); props.history.push('tab2')}, (err: any) => console.log(err))
+    };
+    API.createClub(newClub, (data: any) => { props.addClub(data); props.history.push("tab2"); }, (err: any) => console.log(err));
 
   }
 
   // Other
-  const providedMedia = Object.keys(props.media).filter((m: string) => props.media[m] != '')
+  const providedMedia = Object.keys(props.media).filter((m: string) => props.media[m] != "");
 
   return (
     <IonPage>
@@ -99,22 +97,22 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
       <IonContent fullscreen>
 
         <IonItemGroup>
-          <div className="center vertical" id="profile-holder" style={!!props.banner ? bannerImage : defaultBanner}>
+          <div className="center vertical" id="profile-holder" style={props.banner ? bannerImage : defaultBanner}>
             <IonAvatar id="profile">
               <img src={props.profile} />
             </IonAvatar>
-            {/* <IonButton fill="clear" onClick={() => takePhoto()}>{profileUploaded ? 'Change' : 'Upload'}</IonButton> */}
+            {/* <IonButton fill="clear" onClick={() => takePhoto()}>{profileUploaded ? "Change" : "Upload"}</IonButton> */}
           </div>
           <IonItemDivider>
             <IonLabel>General Info</IonLabel>
           </IonItemDivider>
           <IonItem>
             <IonLabel position="floating">Name</IonLabel>
-            <IonInput value={props.name} onIonChange={(e) => props.setName(e.detail.value ? e.detail.value : '')}></IonInput>
+            <IonInput value={props.name} onIonChange={(e) => props.setName(e.detail.value ? e.detail.value : "")}></IonInput>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Description</IonLabel>
-            <IonTextarea value={props.description} onIonChange={(e) => props.setDescription(e.detail.value ? e.detail.value : '')}></IonTextarea>
+            <IonTextarea value={props.description} onIonChange={(e) => props.setDescription(e.detail.value ? e.detail.value : "")}></IonTextarea>
           </IonItem>
           <IonItem>
             <IonLabel>Profile Image</IonLabel>
@@ -131,7 +129,7 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
           <IonItem>
             <IonLabel>Banner Image</IonLabel>
             <IonSelect value={props.banner} onIonChange={e => props.setBanner(e.detail.value)}>
-              <IonSelectOption value=''>Default</IonSelectOption>
+              <IonSelectOption value="">Default</IonSelectOption>
               <IonSelectOption value={beachImg}>Beach</IonSelectOption>
               <IonSelectOption value={mountainImg}>Mountain</IonSelectOption>
               <IonSelectOption value={desertImg}>Desert</IonSelectOption>
@@ -147,7 +145,7 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
           <IonItemDivider>
             <IonLabel>Meetings</IonLabel>
           </IonItemDivider>
-          <IonItem detail button onClick={() => props.history.push('daysOfWeek')}>
+          <IonItem detail button onClick={() => props.history.push("daysOfWeek")}>
             <IonLabel>Day Of Week</IonLabel>
           </IonItem>
           <IonItem>
@@ -171,14 +169,14 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
             <IonLabel>More Info</IonLabel>
           </IonItemDivider>
 
-          <IonItem detail button onClick={() => props.history.push('clubRegistration/clubTypes')}>
-            <IonLabel>Tags{!!props.tags.length && ':'} {props.tags.join(', ')}</IonLabel>
+          <IonItem detail button onClick={() => props.history.push("clubRegistration/clubTypes")}>
+            <IonLabel>Tags{!!props.tags.length && ":"} {props.tags.join(", ")}</IonLabel>
           </IonItem>
 
-          <IonItem detail button onClick={() => props.history.push('clubRegistration/clubSocials')}>
-            <IonLabel>Social Media{!!providedMedia.length && ':'} {providedMedia.join(', ')}</IonLabel>
+          <IonItem detail button onClick={() => props.history.push("clubRegistration/clubSocials")}>
+            <IonLabel>Social Media{!!providedMedia.length && ":"} {providedMedia.join(", ")}</IonLabel>
           </IonItem>
-          
+
         </IonItemGroup>
         <IonButton expand="full" size="large" onClick={handleSubmit}>Done!</IonButton>
       </IonContent>
