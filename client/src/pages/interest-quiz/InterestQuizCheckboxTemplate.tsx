@@ -1,15 +1,14 @@
 import React from "react";
 import { IonContent, IonProgressBar, IonPage, IonList, IonLabel, IonItem, IonCheckbox } from "@ionic/react";
 import "./InterestQuiz.css";
+import InterestQuizProps from "./InterestQuizProps";
 
 
-interface InterestQuizProps {
-  nextPage: Function
-  addInterest: Function
+interface InterestQuizCheckboxProps extends InterestQuizProps {
   checkboxes: {title: string, val: string}[]
 }
 
-const InterestQuizCheckboxTemplate = (props: InterestQuizProps) => {
+const InterestQuizCheckboxTemplate = (props: InterestQuizCheckboxProps) => {
 
   return (
     <IonPage>

@@ -1,12 +1,8 @@
 import React from "react";
 import "./InterestQuiz.css";
 import InterestQuizCheckboxTemplate from "./InterestQuizCheckboxTemplate";
+import InterestQuizProps from "./InterestQuizProps";
 
-
-interface InterestQuizProps {
-  nextPage: Function
-  addInterest: Function
-}
 
 const InterestQuizPg2 = (props: InterestQuizProps) => {
   const checkboxes =
