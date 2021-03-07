@@ -1,5 +1,5 @@
-describe('Vance\'s login test', () => {
-    it('Tests loging in', () => {
+describe('Adding a new event test', () => {
+    it('Tests logging in and adding an event', () => {
       cy.visit('http://localhost:8100/login')
       cy.contains('I have an account').click()
       cy.get('ion-input').eq(0).type('maxkennedy@school.edu')
