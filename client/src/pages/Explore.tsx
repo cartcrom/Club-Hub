@@ -1,44 +1,44 @@
-import React, { useContext, useState } from 'react';
-import { IonCard, IonCardTitle, IonImg, IonAvatar,  IonChip,  IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import './Explore.css';
-import { RouteComponentProps } from 'react-router';
-import { UserContext } from '../UserContext';
-import Club from '../components/Club';
-import Student from '../components/Student';
-import { ClubContext } from '../ClubContext';
+import React, { useContext, useState } from "react";
+import { IonCard, IonCardTitle, IonImg, IonAvatar, IonChip, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import "./Explore.css";
+import { RouteComponentProps } from "react-router";
+import { UserContext } from "../UserContext";
+import Club from "../components/Club";
+import Student from "../components/Student";
+import { ClubContext } from "../ClubContext";
 
 
 interface ClubCardProps extends RouteComponentProps {
   interests: Array<String>,
-  club: Club
+  club: Club;
 }
 
 const ClubCard: React.FC<ClubCardProps> = (props) => {
   // Sort tags based on commonality with user interests
-  let tags = props.club.tags.sort((a,b) => ((props.interests.includes(b) ? 1 : 0) - (props.interests.includes(a) ? 1 : 0)) ).map(t => <IonChip key={t + props.club.name} className={(props.interests.includes(t)) ? "explore-tag-select" : "explore-tag"}>{t}</IonChip>)
-  return(
-    <IonCard key={props.club.id} button onClick={() => props.history.push('club/' + props.club.id)}>
+  const tags = props.club.tags.sort((a, b) => ((props.interests.includes(b) ? 1 : 0) - (props.interests.includes(a) ? 1 : 0))).map(t => <IonChip key={t + props.club.name} className={(props.interests.includes(t)) ? "explore-tag-select" : "explore-tag"}>{t}</IonChip>);
+  return (
+    <IonCard key={props.club.id} button onClick={() => props.history.push("club/" + props.club.id)}>
       <IonImg src={props.club.bannerImage}></IonImg>
       <IonCardTitle className="cardHeader">{props.club.name}</IonCardTitle>
       <IonGrid>
-          {tags}
+        {tags}
       </IonGrid>
     </IonCard>
-  )
-}
+  );
+};
 
 const Explore: React.FC<RouteComponentProps> = (props) => {
-  let user: Student | undefined = useContext(UserContext)
+  const user: Student | undefined = useContext(UserContext);
   if (user === undefined) {
     throw new Error("Undefined user error");
   }
-  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  const clubs: Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
 
-  let allClubs = Array.from(clubs!.values())
-  let unjoinedClubs = allClubs.filter((c: Club) => !(user!.joined_clubs.includes(c.id)) && !(user!.lead_clubs.includes(c.id))).sort((c1,c2) => (c2.tags.filter(t => user?.interests.includes(t)).length) -  (c1.tags.filter(t => user?.interests.includes(t)).length))
+  const allClubs = Array.from(clubs!.values());
+  const unjoinedClubs = allClubs.filter((c: Club) => !(user!.joined_clubs.includes(c.id)) && !(user!.lead_clubs.includes(c.id))).sort((c1, c2) => (c2.tags.filter(t => user?.interests.includes(t)).length) - (c1.tags.filter(t => user?.interests.includes(t)).length));
 
   const [currentTag, setCurrentTag] = useState<string>("");
   const [search, setSearch] = useState<string>();
@@ -47,31 +47,31 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   const onChange = (value: string) => {
     setSearch(value);
     setQuery(value);
-  }
+  };
 
-  let interests = user.interests.map(interest => 
-    <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
+  const interests = user.interests.map(interest =>
+    <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>);
 
-  let club_views = unjoinedClubs.filter((c => currentTag == "" || c.tags.includes(currentTag))).map(c => <ClubCard {...props} interests={user!.interests} key={c.name} club={c}/>)
+  const club_views = unjoinedClubs.filter((c => currentTag == "" || c.tags.includes(currentTag))).map(c => <ClubCard {...props} interests={user!.interests} key={c.name} club={c} />);
 
   const ExploreHome = () => {
-    return(
+    return (
       <div>
         <div className="everythingOnOneLine">
-              {interests}
-            </div>
+          {interests}
+        </div>
         <IonText className="listHeader">{(currentTag == "") ? "Recommended" : currentTag + " clubs"}</IonText>
         <IonList>
           {club_views}
         </IonList>
       </div>
-    )
-  }
+    );
+  };
 
-  const SearchResult = (stats : {club : Club}) => {
+  const SearchResult = (stats: { club: Club; }) => {
 
-    return(
-      <IonItem lines="none" onClick={() => props.history.push('club/' + stats.club.id) }>
+    return (
+      <IonItem lines="none" onClick={() => props.history.push("club/" + stats.club.id)}>
         <IonAvatar slot="start">
           <img className="club-image" src={stats.club.profileImage} />
         </IonAvatar>
@@ -79,23 +79,23 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
           {stats.club.name}
         </IonLabel>
       </IonItem>
-    )
-  }
+    );
+  };
 
   const SearchView = () => {
 
-    let search_list = allClubs.filter(c => c.name.toLowerCase().indexOf(query!.toLowerCase()) > -1)
-    
-    let Searches = search_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
+    const search_list = allClubs.filter(c => c.name.toLowerCase().indexOf(query!.toLowerCase()) > -1);
 
-    return(
+    const Searches = search_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>);
+
+    return (
       <div>
         {Searches}
       </div>
-    )
-  }
-  let Content = () => { return (query == undefined || query == "") ? <ExploreHome/> : <SearchView/> }
-  
+    );
+  };
+  const Content = () => { return (query == undefined || query == "") ? <ExploreHome /> : <SearchView />; };
+
   return (
     <IonPage>
       <IonHeader>
@@ -104,10 +104,10 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        
-          <IonSearchbar  className="search" value={search} placeholder="search" onIonChange={e => onChange(e.detail.value!)}></IonSearchbar>
-          <Content/>
-            
+
+        <IonSearchbar className="search" value={search} placeholder="search" onIonChange={e => onChange(e.detail.value!)}></IonSearchbar>
+        <Content />
+
       </IonContent>
     </IonPage>
   );
