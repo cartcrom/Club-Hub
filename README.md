@@ -13,7 +13,8 @@ An app  for college students to find on campus clubs
 
 ## Static Code Analysis & Test Coverage
 The static code analysis and test coverage can be viewed at [SonarCloud.com](https://sonarcloud.io/dashboard?id=cartcrom_Club-Hub)\
-**TODO**: Justify current bugs/vulnerabilities/smells
+
+By most of the sonarclous metrics we are doing very well with our static code analysis. The bugs that still remain are left in because sonarcloud doesn’t recognize ionic components. It believes they shouldn’t be referenced in our css files, but this is not actually an issue. We have also reviewed the remaining code smells and have decided that none of them are large enough issues to warrant spending time on fixing. While we do have a small amount of duplicated code, it is not enough to cause any concerns. Other than these issues, we are passing the metrics needed and there are not major issues with our code.
 
 ## Acceptance Tests
 Acceptance Tests are viewable at cypress/integration\
