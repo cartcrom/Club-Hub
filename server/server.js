@@ -117,7 +117,7 @@ app.get("/logout", async (req, res) => {
 app.post("/SignUp", async (req, res) => {
   console.log("route called sign-up");
   // User Error Checking
-  let dupEmail = await User.find({ email: req.body.email.toString() });
+  let dupEmail = await User.find({ email: req.body.email });
   console.log(dupEmail);
   if (dupEmail.length != 0) {
     console.log("Email Already in Use");
