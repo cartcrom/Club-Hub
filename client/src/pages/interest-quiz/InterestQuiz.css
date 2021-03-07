@@ -15,7 +15,7 @@
   border-radius: 18px;
   text-align: center;
   box-sizing: border-box;
-  margin: 3% auto;
+  margin: 10px auto;
 }
 
 .outline-button, .white-outline-button{
@@ -51,9 +51,9 @@
   --background: white;
   color: black;
   border-radius: 8px;
-  height: 42px;
+  height: 8% ;
   width: 274px;
-  margin: 8% auto;
+  margin: 25px auto;
 }
 
 .center-elements {
