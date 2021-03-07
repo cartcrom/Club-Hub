@@ -11,14 +11,22 @@ An app  for college students to find on campus clubs
 7. Call `node server` to host the backend
 8. If you visit localhost:8100 in your browser, you should see a fully functional version of ClubHub!
 
-## Static Code Analysis & Test Coverage
-The static code analysis and test coverage can be viewed at [SonarCloud.com](https://sonarcloud.io/dashboard?id=cartcrom_Club-Hub)\
+### Helpful Commands
+Here are some helpful commands for testing and linting:
+- Use `npx eslint filename` to lint your file
+- Use `npm run test` to run unit tests
+- Use `npm run test -- --coverage --watchAll=false` to run unit tests with a coverage report
+- Use `npx run cypress` to run acceptance tests (you must be in the client directory)
 
-By most of the SonarCloud's metrics we are doing very well with our static code analysis. The bugs that still remain are left in because SonarCloud doesn’t recognize ionic components. It believes they shouldn’t be referenced in our css files, but this is not actually an issue. We have also reviewed the remaining code smells and have decided that none of them are large enough issues to warrant spending time on fixing. While we do have a small amount of duplicated code, it is not enough to cause any concerns. Other than these issues, we are passing the metrics needed and there are not major issues with our code.
+## Static Code Analysis & Test Coverage
+The static code analysis and test coverage can be viewed at [SonarCloud.com](https://sonarcloud.io/dashboard?id=cartcrom_Club-Hub)
+
+By most of the SonarCloud's metrics we are doing very well with our static code analysis. The bugs that still remain are left in because SonarCloud doesn’t recognize ionic components. It believes they shouldn’t be referenced in our css files, but this is not actually an issue. We have also reviewed the remaining code smells and have decided that none of them are large enough issues to warrant spending time on fixing. Most of our duplicated code is in our unit testing file, which is fine because some tests have similar structure but should be self-contained. Currently, we are passing SonarCloud's quality gate, so we are happy with the state of our code quality.
 
 ## Acceptance Tests
-Our Acceptance testing specs are viewable [here](https://docs.google.com/document/d/1sooPNYaO1BtE4iAsqYuWevwXrT-JvAALER9cqf1CmZI/edit?usp=sharing)\
-The implementation of these tests is viewable at `client/cypress/integration`. Use `npx cypress open` while in the client directory to run the integration tests.
+Our Acceptance testing specs are viewable [here](https://docs.google.com/document/d/1sooPNYaO1BtE4iAsqYuWevwXrT-JvAALER9cqf1CmZI/edit?usp=sharing)
+
+The implementation of these tests is viewable at [client/cypress/integration](client/cypress/integration). Use `npx cypress open` while in the client directory to run the integration tests.
 
 ## CI/CD
 Continuous Integration/Continuous Deployment is viewable at [Travis-ci.com](https://travis-ci.com/github/cartcrom/Club-Hub)
