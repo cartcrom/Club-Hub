@@ -1,4 +1,4 @@
-describe("Invalid Explore Test', () => {
+describe("Invalid Explore Test", () => {
   it('Tests finding a nonexistant club', () => {
     cy.visit('http://localhost:8100/login')
     cy.contains('I have an account').click()
