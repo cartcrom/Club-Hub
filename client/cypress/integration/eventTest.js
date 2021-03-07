@@ -1,5 +1,5 @@
-describe('Vance\'s login test', () => {
-    it('Tests loging in', () => {
+describe('Luke\'s levent test', () => {
+    it('Tests making an event', () => {
       cy.visit('http://localhost:8100/login')
       cy.contains('I have an account').click()
       cy.get('ion-input').eq(0).type('maxkennedy@school.edu')
@@ -14,7 +14,7 @@ describe('Vance\'s login test', () => {
       cy.get('ion-input').eq(3).type('https://static.wikia.nocookie.net/unanything/images/7/79/Kung_Fu_Cat.jpg/revision/latest?cb=20140621163548')
       cy.get('ion-datetime').eq(0).click()
       cy.contains('Done').click()
-      cy.contains("Add Event").click()
+      cy.contains("Cancel").click()
       cy.contains("Cool Event!").should('exist')
     })
   })
