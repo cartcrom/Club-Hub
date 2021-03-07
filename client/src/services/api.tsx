@@ -2,7 +2,6 @@ import { backend_URL } from '../constants';
 import Club from '../components/Club'
 import Student from '../components/Student';
 import axios from 'axios';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 export default class API {
     static login(loginInfo : {email: string, password: string}, callback: Function, error : Function)  {

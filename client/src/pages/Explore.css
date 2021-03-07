@@ -16,15 +16,19 @@
     font-size: 10pt;
 }
 
+.explore-tag-select {
+    background-color: #61FF76;
+    border: 1pt solid lightgrey;
+    font-size: 10pt;
+}
+
+
 .everythingOnOneLine {
-    white-space: nowrap;
-    height: 30pt;
     padding-left: 8pt;
+    padding-bottom: 10pt;
 }
    
-.everythingOnOneLine * {
-    display: inline;
-}
+
 
 .listHeader{
     padding-left: 12pt;

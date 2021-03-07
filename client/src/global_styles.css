@@ -1,14 +1,14 @@
 @font-face {
-    font-family: 'Proxima Nova';
-    src: local('Proxima Nova'), url('./fonts/ProximaNova-Regular.otf') format('opentype');
-  }
+  font-family: 'Proxima Nova';
+  src: local('Proxima Nova'), url('./fonts/ProximaNova-Regular.otf') format('opentype');
+}
 
 @font-face {
-    font-family: 'Proxima Nova Bold';
-    src: local('Proxima Nova'), url('./fonts/Proxima Nova Bold.otf') format('opentype');
+  font-family: 'Proxima Nova Bold';
+  src: local('Proxima Nova'), url('./fonts/Proxima Nova Bold.otf') format('opentype');
 }
 
 ion-title {
-    font-family: 'Proxima Nova', Sans-serif;
-    font-size: 16pt;
+  font-family: 'Proxima Nova', Sans-serif;
+  font-size: 16pt;
 }
