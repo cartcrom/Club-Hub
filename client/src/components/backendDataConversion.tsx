@@ -1,18 +1,18 @@
-import Club from './Club';
-import Student from './Student';
+import Club from "./Club";
+import Student from "./Student";
 
 /* Supports populated and depopulated students */
-export function backendToStudent (s : any) : Student{
-  let joined_clubs = s.joined_clubs
+export function backendToStudent(s: any): Student {
+  let joined_clubs = s.joined_clubs;
   if (joined_clubs.length && !(joined_clubs[0] instanceof String)) {
-    joined_clubs = joined_clubs.map((c : any) => c._id)
+    joined_clubs = joined_clubs.map((c: any) => c._id);
   }
-  let lead_clubs = s.lead_clubs
+  let lead_clubs = s.lead_clubs;
   if (lead_clubs.length && !(lead_clubs[0] instanceof String)) {
-    lead_clubs = lead_clubs.map((c : any) => c._id)
+    lead_clubs = lead_clubs.map((c: any) => c._id);
   }
 
-  return new Student (
+  return new Student(
     s.firstName,
     s.lastName,
     s._id,
@@ -24,12 +24,12 @@ export function backendToStudent (s : any) : Student{
     s.major,
     s.collegeOf,
     undefined
-  )
+  );
 }
 
 /* Supports Clubs with populated meetings and events */
-export function backendToClub (c : any) : Club {
-  let club = new Club (
+export function backendToClub(c: any): Club {
+  const club = new Club(
     c.name,
     c._id,
     c.description,
@@ -41,18 +41,18 @@ export function backendToClub (c : any) : Club {
     undefined,  // Currently does not support meetings
     c.mediaPlugs,
     [],
-  )
+  );
   // console.log(club)
   if (c.events) {
-    for (let event of c.events) {
-      backendAddEvent(event, club)
+    for (const event of c.events) {
+      backendAddEvent(event, club);
     }
   }
-  return club
+  return club;
 }
 
 /* Supports Populated and Depopulated Events */
-export function backendAddEvent (e : any, club : Club) {
+export function backendAddEvent(e: any, club: Club) {
   club.addEvent(
     e._id,
     e.desc,
@@ -62,5 +62,5 @@ export function backendAddEvent (e : any, club : Club) {
     e.eventDate,
     e.eventTime,
     e.eventLoc
-  )
+  );
 }

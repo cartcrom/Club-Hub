@@ -38,7 +38,7 @@ export default class Club {
 
   addEvent(id: string, description: string, date: Date, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
-    let e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
+    const e = new Event(this, id, description, date, image, title, eventDate, eventTime, location);
     this.events.push(e);
   }
 }
