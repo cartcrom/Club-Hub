@@ -43,3 +43,7 @@ Continuous Integration/Continuous Deployment is viewable at [Travis-ci.com](http
 6. Use double quotes for strings
 7. Use unix line endings 
 8. Use semicolons
+
+## Code Coverage
+<img width="673" alt="Screen Shot 2021-03-06 at 1 16 03 PM" src="https://user-images.githubusercontent.com/46412149/110366215-d78fa900-7ffa-11eb-8df3-c59dce7dc11c.png">
+
