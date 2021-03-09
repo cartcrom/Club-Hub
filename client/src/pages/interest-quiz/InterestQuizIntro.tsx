@@ -1,6 +1,7 @@
 import React from "react";
 import "./InterestQuiz.css";
-import { IonContent, IonLabel, IonPage, IonItem } from "@ionic/react";
+import { IonContent, IonFooter, IonLabel, IonPage, IonItem} from "@ionic/react";
+import interests_graphic from '../../images/interests_graphic.png'
 
 interface InterestQuizProps {
   nextPage: Function;
@@ -14,16 +15,19 @@ const InterestQuizIntro = (props: InterestQuizProps) => {
   return (
     <IonPage>
       <IonContent fullscreen >
-        <h2 id="title">Interest Quiz</h2>
-        <p className="quiz-p">now let's take a short quiz to find the best clubs for you</p>
-        <IonItem button detail={false} className="gradient-button" onClick={() => props.nextPage()}>
-          <IonLabel>let's go!</IonLabel>
-        </IonItem>
-        <IonItem button title="skipButton" detail={false} className="outline-button" onClick={() => props.skipQuiz()}>
-          <IonLabel>skip</IonLabel>
-        </IonItem>
+        <p id="title">Interest Quiz</p>
+        <p className="quiz-p">A short quiz to find clubs you'd like!</p>
+        <img src={interests_graphic} className={"interests-graphic"}/>
 
       </IonContent>
+      <IonFooter>
+        <IonItem button lines="none" detail={false} className="gradient-button" onClick={() => props.nextPage()}>
+          <IonLabel>let's go!</IonLabel>
+        </IonItem>
+        <IonItem button lines="none" title="skipButton" detail={false} className="outline-button" onClick={() => props.skipQuiz()}>
+          <IonLabel>skip</IonLabel>
+        </IonItem>
+      </IonFooter>
     </IonPage>
   );
 };

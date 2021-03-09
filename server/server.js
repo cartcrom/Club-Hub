@@ -249,7 +249,6 @@ app.post("/interest/quiz", (req, res) => {
     User.findOne({ _id: req.body.id })
       .then((usr) => {
         if (usr) {
-          usr.school = req.body.school;
           usr.collegeOf = req.body.collegeOf;
           usr.major = req.body.major;
           usr.interests = req.body.interests;

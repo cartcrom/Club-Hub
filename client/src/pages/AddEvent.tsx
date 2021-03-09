@@ -7,7 +7,7 @@ import "./AddEvent.css";
 import Club from "../components/Club";
 
 interface AddEventProps extends RouteComponentProps<{ id: string; }> {
-  saveEvent: Function;
+  updateEvents: Function;
 }
 
 const AddEvent: React.FC<AddEventProps> = (props) => {
@@ -52,17 +52,14 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
     }
 
     const now = new Date;
-    currentClub.addEvent("id", desc, now, img, name.toString(), now.toString(), start, loc);
-
-    clubs!.set(id, currentClub);
-
     name = name.toString();
     const eventDate = new Date(date).toDateString().slice(0, -5);
     const postDate = now.toString();
 
-    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.history.goBack(), (err: any) => console.log(err));
-    props.history.goBack();
+    API.pushNewEvent(id, name, desc, postDate, eventDate, start, loc, img, () => props.updateEvents(), (err: any) => console.log(err));
   };
+
+  const max_year = (new Date().getFullYear() + 1).toString()
 
   return (
     <IonPage>
@@ -101,7 +98,7 @@ const AddEvent: React.FC<AddEventProps> = (props) => {
         </IonItem>
         <IonItem>
           <IonLabel position="floating">Date</IonLabel>
-          <IonDatetime id={"dateID"}></IonDatetime>
+          <IonDatetime max={max_year} id={"dateID"}></IonDatetime>
         </IonItem>
         <IonItem>
           <IonLabel>Start</IonLabel>

@@ -58,14 +58,6 @@ import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
 
-/* Optional CSS utils that can be commented out */
-import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
-import "@ionic/react/css/text-alignment.css";
-import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
-
 /* Theme variables */
 import "./theme/variables.css";
 
@@ -84,8 +76,6 @@ setupConfig({
 
 type AppState = {
   isAuthenticated: boolean;
-  hasTakenQuiz: boolean;
-  skipQuiz: boolean;
   user: Student | undefined;
   club_data: Map<string, Club> | undefined;
 };
@@ -96,27 +86,14 @@ export default class App extends React.Component<{}, AppState> {
     super(props);
     this.state = {
       isAuthenticated: false,
-      hasTakenQuiz: false,
-      skipQuiz: false,
       user: undefined,
       club_data: undefined
     };
   }
 
-  // Before the component mounts, we initialise our state
   componentWillMount() {
-    this.setState({
-      isAuthenticated: false, // Can probably call the browser to find any recent auth rather than default to false
-      hasTakenQuiz: false,    // Should actually be set by data received from server
-      skipQuiz: false         // Default to false
-    });
-
     //Auto Login, remove later
     document.addEventListener("keydown", this.logIn, false);
-  }
-
-  // After the component did mount, we set the state
-  componentDidMount() {
   }
 
   componentWillUnmount() {
@@ -124,106 +101,59 @@ export default class App extends React.Component<{}, AppState> {
     document.removeEventListener("keydown", this.logIn, false);
   }
 
-  fetch_club_data() {
-    API.getAllClubs((clubs: Map<string, Club>) =>
+  authenticate = (user: Student | undefined) => {
+    if (!user)
+      user = new Student("Guest", "", "", "", "", [], [], [])
+    this.setState({ user: user });
+    
+    this.setState({ isAuthenticated: true });
+    API.getAllClubs((clubs: Map<string, Club>) => {
       this.setState({ club_data: clubs })
+      if (user!.interests.length != 0)
+        history.push("/feed");
+      else
+      history.push("/interestQuiz")
+    }
     );
   }
 
-  authenticate = (user: any) => {
-    if (user) {
-      this.setState({ user: user });
-      this.fetch_club_data();
-    }
-    else {
-      this.setState({ user: new Student("Guest", "", "", "", "", [], [], []) });
-      this.setState({ club_data: new Map<string, Club>() });
-    }
-
-    history.push("/");
-
-    this.setState({ isAuthenticated: true });
-  };
-
-  addClub = (newClub: any) => {
+  addClub = (newClub: Club) => {
     console.log("Adding a new Club!");
     // Add club to club_data
 
-    this.setState(prevState => {
-      if (prevState.club_data === undefined) {
-        return {
-          club_data: new Map<string, Club>([[newClub._id, backendToClub(newClub)]])
-        };
-      }
-      else {
-        const prevClubs = Array.from(prevState.club_data.entries());
-        return {
-          club_data: new Map<string, Club>([...prevClubs, [newClub._id, backendToClub(newClub)]])
-        };
-      }
-    });
-    // Add clubId to user"s lead_clubs
-    this.setState(prevState => {
-      if (prevState.user !== undefined) {
-        const userCopy: Student = Object.assign(Object.create(Object.getPrototypeOf(prevState.user)), prevState.user);
-        userCopy.addLeadClub(newClub._id);
-        return { user: userCopy };
-      }
-      else {
-        return { user: undefined };
-      }
-    });
-  };
+    let user = this.state.user
+    if (user && this.state.club_data) {
+      this.state.club_data.set(newClub.id, newClub)
+      user.addLeadClub(newClub.id)
+      this.setState({user: user})
+    }
+  }
+
+  updateEvents = () => {
+    history.push("/feed");
+    this.setState({ club_data: undefined })
+    API.getAllClubs((clubs: Map<string, Club>) => {
+      this.setState({ club_data: clubs })
+    })
+  }
 
   logOut = () => {
     API.logout(() => { });
     this.setState({ isAuthenticated: false, user: undefined, club_data: undefined });
     history.push("/");
-  };
+  }
 
-  setUser = (u: any) => {
+  finishQuiz = (interests: Array<string>, college: string, major: string) => {
+
+    const updated_user = this.state.user;
+    if (updated_user) {
+      updated_user.interests = interests
+      updated_user.collegeOf = college
+      updated_user.major = major
+    }
+    
     this.setState({
-      user: new Student(
-        u.firstName,
-        u.lastName,
-        u._id,
-        u.school,
-        u.email,
-        ["social", "recreation", "outdoors", "athletic", "games"],
-        ["John Club", "John Club 2"],
-        ["Ice Cream Club"],
-        "",
-        "",
-        undefined
-      )
-    });
-  };
-
-  skipQuiz = () => {
-    this.setState({
-      skipQuiz: true
-    });
-  };
-
-  finishQuiz = (interests: Array<string>, school: string, college: string, major: string) => {
-
-    const user = this.state.user;
-
-    this.setState({
-      hasTakenQuiz: true,
-      user: new Student(
-        user!.fn,
-        user!.ln,
-        user!.id,
-        school,
-        user!.email,
-        interests,
-        user!.joined_clubs,
-        user!.lead_clubs,
-        major,
-        college,
-        user!.favoriteClubType
-      )
+      user: updated_user
     });
   };
 
@@ -234,7 +164,7 @@ export default class App extends React.Component<{}, AppState> {
     let default_route = <Route render={() => <Redirect to="/login" />} exact={true} />;
 
     if (this.state.isAuthenticated) {
-      if (this.state.hasTakenQuiz) {
+      if (this.state.user!.interests.length > 0) {
         default_route = <Route render={() => <Redirect to="/feed" />} exact={true} />;
       }
       else {
@@ -264,10 +194,10 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/myclubs" component={MyClubs} />
                     <ProtectedRoute {...ProtectedRouteProps} path="/club/:id" component={ClubProfile} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/profile" render={(props) => <UserSettings {...props} logOut={(this.logOut)} />} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/addEvent/:id" component={AddEvent} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/addEvent/:id" render={(props) => <AddEvent {...props} updateEvents={this.updateEvents}/>}/>
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/clubColleges" component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/daysOfWeek" component={DaysOfWeek} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => history.push("/feed")} finishQuiz={this.finishQuiz} />} />
                     <ProtectedRoute {...ProtectedRouteProps} path="/clubRegistration" render={(props) => <ClubRegistrationManager {...props} addClub={this.addClub} />} />
                     {default_route}
                   </Switch>
@@ -308,7 +238,7 @@ export default class App extends React.Component<{}, AppState> {
     if (event.key !== "`") {
       return;
     }
-    API.login({ email: "ccromer@calpoly.edu", password: "1234" }, (data: Object) => this.authenticate(data), (err: any) => alert(err));
+    API.login({ email: "ccromer@calpoly.edu", password: "1234" }, (user: Student) => this.authenticate(user), (err: any) => alert(err));
   };
 
 }

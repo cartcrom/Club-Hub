@@ -15,7 +15,8 @@ interface ClubCardProps extends RouteComponentProps {
 
 const ClubCard: React.FC<ClubCardProps> = (props) => {
   // Sort tags based on commonality with user interests
-  let tags = props.club.tags.sort((a,b) => ((props.interests.includes(b) ? 1 : 0) - (props.interests.includes(a) ? 1 : 0)) ).map(t => <IonChip key={t + props.club.name} className={(props.interests.includes(t)) ? "explore-tag-select" : "explore-tag"}>{t}</IonChip>)
+  let tags = props.club.tags.sort((a,b) => ((props.interests.includes(b) ? 1 : 0) - (props.interests.includes(a) ? 1 : 0)) )
+    .map(t => <IonChip key={t + props.club.name} className={(props.interests.includes(t)) ? "explore-tag-select" : "explore-tag"}>{t}</IonChip>)
   return(
     <IonCard key={props.club.id} button onClick={() => props.history.push('club/' + props.club.id)}>
       <IonImg src={props.club.bannerImage}></IonImg>
@@ -38,16 +39,11 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   }
 
   let allClubs = Array.from(clubs!.values())
-  let unjoinedClubs = allClubs.filter((c: Club) => !(user!.joined_clubs.includes(c.id)) && !(user!.lead_clubs.includes(c.id))).sort((c1,c2) => (c2.tags.filter(t => user?.interests.includes(t)).length) -  (c1.tags.filter(t => user?.interests.includes(t)).length))
+  let unjoinedClubs = allClubs.filter((c: Club) => !(user!.joined_clubs.includes(c.id)) && !(user!.lead_clubs.includes(c.id)))
+    .sort((c1,c2) => (c2.tags.filter(t => user?.interests.includes(t)).length) -  (c1.tags.filter(t => user?.interests.includes(t)).length))
 
   const [currentTag, setCurrentTag] = useState<string>("");
   const [search, setSearch] = useState<string>();
-  const [query, setQuery] = useState<string>();
-
-  const onChange = (value: string) => {
-    setSearch(value);
-    setQuery(value);
-  }
 
   let interests = user.interests.map(interest => 
     <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
@@ -84,7 +80,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
 
   const SearchView = () => {
 
-    let search_list = allClubs.filter(c => c.name.toLowerCase().indexOf(query!.toLowerCase()) > -1)
+    let search_list = allClubs.filter(c => c.name.toLowerCase().indexOf(search!.toLowerCase()) > -1)
     
     let Searches = search_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
 
@@ -94,7 +90,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
       </div>
     )
   }
-  let Content = () => { return (query == undefined || query == "") ? <ExploreHome/> : <SearchView/> }
+  let Content = () => { return (search == undefined || search == "") ? <ExploreHome/> : <SearchView/> }
   
   return (
     <IonPage>
@@ -105,7 +101,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
       </IonHeader>
       <IonContent>
         
-          <IonSearchbar  className="search" value={search} placeholder="search" onIonChange={e => onChange(e.detail.value!)}></IonSearchbar>
+          <IonSearchbar  className="search" value={search} placeholder="search" onIonChange={e => setSearch(e.detail.value!)}></IonSearchbar>
           <Content/>
             
       </IonContent>

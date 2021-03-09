@@ -43,6 +43,7 @@ function login(email, pass) {
 
 async function sign_up(details, env) {
   let school = await verifier.getInstitutionName(details.email);
+  console.log("SCHOOL FOUND: " + school)
   return new Promise(function (resolve, reject) {
     let user = new User();
     console.log("un verified account created for", details.email);

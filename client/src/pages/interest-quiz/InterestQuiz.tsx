@@ -15,7 +15,6 @@ interface InterestQuizProps extends RouteComponentProps {
 
 type QuizState = {
   page: number;
-  schoolName: string;
   college: string;
   major: string;
   interests: Array<string>;
@@ -29,7 +28,6 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
     const interestArray: string[] = [];
     this.setState({
       page: 0,
-      schoolName: "",
       college: "",
       major: "",
       interests: interestArray
@@ -40,12 +38,12 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
     console.log("submitting...");
     const user = this.context;
     if (!user || !user.id) {
-      this.props.finishQuiz(this.state.interests, this.state.schoolName, this.state.college, this.state.major);
+      this.props.finishQuiz(this.state.interests, this.state.college, this.state.major);
       this.props.history.push("/feed");
       return;
     }
-    API.updateInterests({ school: this.state.schoolName, collegeOf: this.state.college, major: this.state.major, interests: this.state.interests, id: user.id },
-      () => { this.props.finishQuiz(this.state.interests, this.state.schoolName, this.state.college, this.state.major); this.props.history.push("/feed"); },
+    API.updateInterests({collegeOf: this.state.college, major: this.state.major, interests: this.state.interests, id: user.id },
+      () => { this.props.finishQuiz(this.state.interests, this.state.college, this.state.major); this.props.history.push("/feed"); },
       (err: any) => console.log(err));
   };
 

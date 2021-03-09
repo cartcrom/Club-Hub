@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router";
 import "./ClubRegistration.css";
 import { UserContext } from "../../UserContext";
 import API from "../../services/api";
+import Club from "../../components/Club"
 
 interface ClubRegistrationProps extends RouteComponentProps {
   tags: string[],
@@ -65,7 +66,7 @@ const ClubRegistration: React.FC<ClubRegistrationProps> = (props) => {
       school: student.school,
       leaderId: student.id,
     };
-    API.createClub(newClub, (data: any) => { props.addClub(data); props.history.push("tab2"); }, (err: any) => console.log(err));
+    API.createClub(newClub, (new_club: Club) => { props.addClub(new_club); props.history.push("tab2"); }, (err: any) => console.log(err));
 
   }
 

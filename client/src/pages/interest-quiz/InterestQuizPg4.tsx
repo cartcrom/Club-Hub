@@ -1,5 +1,5 @@
 import React from "react";
-import { IonContent, IonProgressBar, IonPage, IonList, IonLabel, IonItem, IonCheckbox } from "@ionic/react";
+import { IonContent, IonFooter, IonProgressBar, IonPage, IonList, IonLabel, IonItem, IonCheckbox } from "@ionic/react";
 import "./InterestQuiz.css";
 
 interface InterestQuizProps {
@@ -29,11 +29,12 @@ const InterestQuizPg4 = (props: InterestQuizProps) => {
           ))}
 
         </IonList>
-        <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
-          <IonLabel>next</IonLabel>
-        </IonItem>
       </IonContent>
-
+      <IonFooter className="transparent">
+        <IonItem button detail={false} lines="none" className="submit-button" onClick={() => props.nextPage()}>
+          <IonLabel>submit</IonLabel>
+        </IonItem>
+      </IonFooter>
     </IonPage>
   );
 };

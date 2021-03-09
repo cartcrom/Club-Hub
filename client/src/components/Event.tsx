@@ -1,7 +1,6 @@
 import React from "react";
 import { IonGrid, IonLabel, IonCol, IonIcon, IonImg, IonItem, IonRow, IonText } from "@ionic/react";
-import "./Post.css";
-import Post from "./Post";
+import "./Event.css";
 import Club from "./Club";
 import { heart, heartOutline, calendarOutline } from "ionicons/icons";
 
@@ -58,25 +57,23 @@ class EventView extends React.Component<{ e: Event, useHeader: boolean, route: F
             <IonImg className="post-image" src={e.image}></IonImg>
           </div>
         </IonRow>
-        <IonRow className="event-data">
-          <IonItem lines="none" className="calendar">
-            <IonIcon src={calendarOutline}></IonIcon>
-          </IonItem>
-
-          <IonCol size="8" className="event-description">{"EVENT - " + e.title}</IonCol>
-          <IonCol className="event-date">{e.eventDate}</IonCol>
+        <IonRow>
+          <div className="event-data">
+            <IonIcon className="calendar" src={calendarOutline}></IonIcon>
+            <div className="event-title">{"EVENT - " + e.title}</div>
+            <div className="event-date">{e.eventDate}</div>
+          </div>
         </IonRow>
 
         <IonRow>
-          <IonItem lines="none">
-            <IonIcon className={(this.state.loved) ? "heart" : ""} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({ loved: !this.state.loved })}></IonIcon>
-          </IonItem>
-
-          <IonCol className="event-description">{e.description}</IonCol>
+          <div className="post-data">
+            <IonIcon className={(this.state.loved) ? "calendar heart" : "calendar"} src={(this.state.loved) ? heart : heartOutline} onClick={() => this.setState({ loved: !this.state.loved })}></IonIcon>
+            <div className="post-description">{e.description}</div>
+          </div>
         </IonRow>
 
         <IonRow>
-          <IonText className="event-timesince">
+          <IonText className="post-timesince">
             {timeSince(new Date(e.date))}
           </IonText>
         </IonRow>
@@ -86,7 +83,12 @@ class EventView extends React.Component<{ e: Event, useHeader: boolean, route: F
   }
 }
 
-export default class Event extends Post {
+export default class Event {
+  club: Club;
+  id: string;
+  description: string;
+  date: Date;
+  image: string;
   title: string;
   eventDate: string;
   eventTime: string;
@@ -95,7 +97,11 @@ export default class Event extends Post {
 
   constructor(club: Club, id: string, description: string, date: Date, image: string,
     title: string, eventDate: string, eventTime: string, location: string) {
-    super(club, id, description, date, image);
+    this.club = club;
+    this.id = id;
+    this.description = description;
+    this.date = date;
+    this.image = image;
     this.title = title;
     this.eventDate = eventDate;
     this.eventTime = eventTime;

@@ -32,7 +32,11 @@ const ClubProfile: React.FC<RouteComponentProps<{ id: string; }>> = (props) => {
   const [hasJoined, setHasJoined] = useState(joined);
 
   function joinButton(student: Student | undefined, club: Club | undefined) {
-    if (student != undefined && club != undefined) {
+    if (student && club && student.fn == "Guest") {
+      student.joined_clubs.push(club.id);
+      setHasJoined(true);
+    }
+    if (student && club) {
       if (student.joined_clubs.includes(club.id)) {
         API.leaveClub(student.id, club.id);
         student.joined_clubs = student.joined_clubs.filter((item) => item != club.id ? item : null);

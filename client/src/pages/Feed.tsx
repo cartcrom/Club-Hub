@@ -4,11 +4,19 @@ import { ClubContext } from "../ClubContext";
 import { IonContent, IonHeader, IonInfiniteScroll, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import "./Feed.css";
 import "../global_styles.css";
-import Post from "../components/Post";
 import Event from "../components/Event";
 import Club from "../components/Club";
 import Student from "../components/Student";
 import { RouteComponentProps } from "react-router";
+
+function sort_by_date(a: Event, b: Event) {  
+  let dateA = new Date(a.date).getTime(); 
+  let dateB = new Date(b.date).getTime();
+  console.log(new Date(a.date))
+  console.log(a.date)
+  console.log(dateA > dateB ? 1 : -1)
+  return dateA > dateB ? -1 : 1;  
+};  
 
 const Feed: React.FC<RouteComponentProps> = (props) => {
 
@@ -18,39 +26,40 @@ const Feed: React.FC<RouteComponentProps> = (props) => {
   }
   const clubs: Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
-    throw new Error("Undefined clubs error");
+    return(<div></div>)
   }
 
   function fetch_posts() {
-    const posts: Array<Event> = [];
-
-    if (!user || !clubs)
-      return;
-
-    // Create frames for each club
-    for (const id of user.joined_clubs) {
-      const club = clubs.get(id);
-      if (!club) {
-        throw new Error("Undefined club error with club ID: " + id);
+    let events: Array<Event> = [];
+    if (user && user?.fn !== "Guest" && clubs) {  //If logged in & clubs loaded
+      for (const id of user.joined_clubs) {
+        const club = clubs.get(id);
+        if (!club) {
+          throw new Error("Undefined club error with club ID: " + id);
+        }
+        else {
+          club.events.forEach((e: Event) => events.push(e));
+        }
       }
-      else {
-        club.events.forEach((e: Event) => posts.push(e));
-      }
-    }
-
-    for (const id of user.lead_clubs) {
-      const club = clubs.get(id);
-      if (!club) {
-        throw new Error("Undefined club error with club ID: " + id);
-      }
-      else {
-        club.events.forEach((e: Event) => posts.push(e));
+  
+      for (const id of user.lead_clubs) {
+        const club = clubs.get(id);
+        if (!club) {
+          throw new Error("Undefined club error with club ID: " + id);
+        }
+        else {
+          club.events.forEach((e: Event) => events.push(e));
+        }
       }
     }
-
+    else if (clubs) {   // If guest user has clubs loaded
+      Array.from(clubs!.values()).forEach(club => events = events.concat(club.events))
+    }
+    
+    let sorted_events = events.sort(sort_by_date)
     const feed: Array<JSX.Element> = [];
-    posts.forEach((post: Post) =>
-      feed.push(post.getFeedItem(true, () => props.history.push("club/" + post.club.id)))
+    sorted_events.forEach((event: Event) =>
+      feed.push(event.getFeedItem(true, () => props.history.push("club/" + event.club.id)))
     );
     return feed;
   }

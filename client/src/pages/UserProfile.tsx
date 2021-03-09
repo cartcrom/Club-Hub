@@ -55,7 +55,7 @@ const UserSettings: React.FC<SettingsProps> = (props) => {
             </IonList>
             <IonItem lines="none" className="data" >
               <IonButton onClick={() => props.logOut()}>
-                log out
+                {(user.fn == "Guest") ? "sign up" : "log out"}
               </IonButton>
             </IonItem>
 
@@ -75,7 +75,7 @@ const UserSettings: React.FC<SettingsProps> = (props) => {
           <IonCardContent className="settings-card">
             {interests}
             <IonItem lines="none" className="data" >
-              <IonButton onClick={() => props.history.push("/interestQuiz")}>retake interest quiz</IonButton>
+              <IonButton onClick={() => props.history.push("/interestQuiz")}>{(user.interests.length != 0) ? "retake interest quiz" : "take interest quiz"}</IonButton>
             </IonItem>
           </IonCardContent>
 

@@ -43,7 +43,7 @@ const InterestQuizPg1 = (props: InterestQuizProps): ReactElement => {
       </IonContent>
 
       <IonFooter className="transparent">
-        <IonItem button detail={false} className="white-outline-button" onClick={() => { props.updateSchoolInfo(college, major); props.nextPage(); }}>
+        <IonItem lines="none" button detail={false} className="white-outline-button" onClick={() => { props.updateSchoolInfo(college, major); props.nextPage(); }}>
           <IonLabel>next</IonLabel>
         </IonItem>
       </IonFooter>
