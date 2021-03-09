@@ -12,7 +12,7 @@ const InterestQuizPg4 = (props: InterestQuizProps) => {
       { title: "Religious", val: "Religious" }];
 
   return (
-    <InterestQuizCheckboxTemplate {...props} checkboxes={checkboxes} />
+    <InterestQuizCheckboxTemplate {...props} checkboxes={checkboxes} isSubmit={true}/>
   );
 };
 

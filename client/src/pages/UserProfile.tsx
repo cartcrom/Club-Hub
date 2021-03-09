@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { IonContent, IonItem, IonLabel, IonButton, IonNote, IonList, IonChip, IonCard, IonCardContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 import Student from "../components/Student";
-import "./UserSettings.css";
+import "./UserProfile.css";
 import { UserContext } from "../UserContext";
 
 interface SettingsProps extends RouteComponentProps {

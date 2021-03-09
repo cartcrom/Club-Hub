@@ -5,7 +5,8 @@ import InterestQuizProps from "./InterestQuizProps";
 
 
 interface InterestQuizCheckboxProps extends InterestQuizProps {
-  checkboxes: {title: string, val: string}[]
+  checkboxes: Array<{title: string, val: string}>,
+  isSubmit?: boolean
 }
 
 const InterestQuizCheckboxTemplate = (props: InterestQuizCheckboxProps) => {
@@ -25,7 +26,7 @@ const InterestQuizCheckboxTemplate = (props: InterestQuizCheckboxProps) => {
         </IonList>
       </IonContent>
       <IonFooter className="transparent">
-        <IonItem button detail={false} className="white-outline-button" onClick={() => props.nextPage()}>
+        <IonItem button lines="none" detail={false} className={(props.isSubmit) ? "submit-button" : "white-outline-button" }onClick={() => props.nextPage()}>
           <IonLabel>next</IonLabel>
         </IonItem>
       </IonFooter>

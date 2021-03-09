@@ -110,7 +110,10 @@ export default class App extends React.Component<{}, AppState> {
     API.getAllClubs((clubs: Map<string, Club>) => {
       this.setState({ club_data: clubs })
       if (user!.interests.length != 0)
-        history.push("/feed");
+        if (user!.joined_clubs.length == 0)
+          history.push("/explore");
+        else
+          history.push("/feed");
       else
       history.push("/interestQuiz")
     }

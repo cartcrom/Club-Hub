@@ -12,9 +12,6 @@ import { RouteComponentProps } from "react-router";
 function sort_by_date(a: Event, b: Event) {  
   let dateA = new Date(a.date).getTime(); 
   let dateB = new Date(b.date).getTime();
-  console.log(new Date(a.date))
-  console.log(a.date)
-  console.log(dateA > dateB ? 1 : -1)
   return dateA > dateB ? -1 : 1;  
 };  
 
