@@ -117,16 +117,16 @@ app.get("/logout", async (req, res) => {
 app.post("/SignUp", async (req, res) => {
   console.log("route called sign-up");
   // User Error Checking
-  if (!(await verifier.isAcademic(req.body.email))) {
-    console.log("Non-academic email");
-    res.status(401).send("Email must end in .edu");
-    return;
-  }
   let dupEmail = await User.find({ email: req.body.email });
   console.log(dupEmail);
   if (dupEmail.length != 0) {
     console.log("Email Already in Use");
     res.status(401).send("Email Already in Use");
+    return;
+  }
+  if (!(await verifier.isAcademic(req.body.email))) {
+    console.log("Non-academic email");
+    res.status(401).send("Email must end in .edu and be part of a valid college");
     return;
   }
   // Regular Routes

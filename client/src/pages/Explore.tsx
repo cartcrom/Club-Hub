@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { IonCard, IonCardTitle, IonImg, IonAvatar,  IonChip,  IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import './Explore.css';
-import { RouteComponentProps } from 'react-router';
-import { UserContext } from '../UserContext';
-import Club from '../components/Club';
-import Student from '../components/Student';
-import { ClubContext } from '../ClubContext';
+import React, { useContext, useState } from "react";
+import { IonCard, IonCardTitle, IonImg, IonAvatar, IonChip, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import "./Explore.css";
+import { RouteComponentProps } from "react-router";
+import { UserContext } from "../UserContext";
+import Club from "../components/Club";
+import Student from "../components/Student";
+import { ClubContext } from "../ClubContext";
 
 
 interface ClubCardProps extends RouteComponentProps {
   interests: Array<String>,
-  club: Club
+  club: Club;
 }
 
 const ClubCard: React.FC<ClubCardProps> = (props) => {
@@ -22,18 +22,18 @@ const ClubCard: React.FC<ClubCardProps> = (props) => {
       <IonImg src={props.club.bannerImage}></IonImg>
       <IonCardTitle className="cardHeader">{props.club.name}</IonCardTitle>
       <IonGrid>
-          {tags}
+        {tags}
       </IonGrid>
     </IonCard>
-  )
-}
+  );
+};
 
 const Explore: React.FC<RouteComponentProps> = (props) => {
-  let user: Student | undefined = useContext(UserContext)
+  const user: Student | undefined = useContext(UserContext);
   if (user === undefined) {
     throw new Error("Undefined user error");
   }
-  let clubs : Map<string, Club> | undefined = useContext(ClubContext);
+  const clubs: Map<string, Club> | undefined = useContext(ClubContext);
   if (clubs === undefined) {
     throw new Error("Undefined clubs error");
   }
@@ -45,29 +45,29 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
   const [currentTag, setCurrentTag] = useState<string>("");
   const [search, setSearch] = useState<string>();
 
-  let interests = user.interests.map(interest => 
-    <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>)
+  const interests = user.interests.map(interest =>
+    <IonChip key={interest} className={(currentTag == interest) ? "explore-tag-select" : "explore-tag"} onClick={() => setCurrentTag((currentTag == "") ? interest : "")}>{interest}</IonChip>);
 
-  let club_views = unjoinedClubs.filter((c => currentTag == "" || c.tags.includes(currentTag))).map(c => <ClubCard {...props} interests={user!.interests} key={c.name} club={c}/>)
+  const club_views = unjoinedClubs.filter((c => currentTag == "" || c.tags.includes(currentTag))).map(c => <ClubCard {...props} interests={user!.interests} key={c.name} club={c} />);
 
   const ExploreHome = () => {
-    return(
+    return (
       <div>
         <div className="everythingOnOneLine">
-              {interests}
-            </div>
+          {interests}
+        </div>
         <IonText className="listHeader">{(currentTag == "") ? "Recommended" : currentTag + " clubs"}</IonText>
         <IonList>
           {club_views}
         </IonList>
       </div>
-    )
-  }
+    );
+  };
 
-  const SearchResult = (stats : {club : Club}) => {
+  const SearchResult = (stats: { club: Club; }) => {
 
-    return(
-      <IonItem lines="none" onClick={() => props.history.push('club/' + stats.club.id) }>
+    return (
+      <IonItem lines="none" onClick={() => props.history.push("club/" + stats.club.id)}>
         <IonAvatar slot="start">
           <img className="club-image" src={stats.club.profileImage} />
         </IonAvatar>
@@ -75,8 +75,8 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
           {stats.club.name}
         </IonLabel>
       </IonItem>
-    )
-  }
+    );
+  };
 
   const SearchView = () => {
 
@@ -84,7 +84,7 @@ const Explore: React.FC<RouteComponentProps> = (props) => {
     
     let Searches = search_list.map((c) => <SearchResult key={c.name} club={c}></SearchResult>)
 
-    return(
+    return (
       <div>
         {Searches}
       </div>
