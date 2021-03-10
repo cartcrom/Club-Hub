@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9e79d515f29d7a58b9b034617ba62f69",
+    "revision": "e02aefe0383a88740c6c9fa320e6d0e5",
     "url": "/Club-Hub/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Club-Hub/static/css/6.167ab6b4.chunk.css"
   },
   {
-    "revision": "442364cebb9b82e1cc77",
+    "revision": "01feb8f15d0316aed678",
     "url": "/Club-Hub/static/css/main.fa280d2f.chunk.css"
   },
   {
@@ -288,8 +288,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Club-Hub/static/js/9.4cda5c2f.chunk.js"
   },
   {
-    "revision": "442364cebb9b82e1cc77",
-    "url": "/Club-Hub/static/js/main.54fb7fa6.chunk.js"
+    "revision": "01feb8f15d0316aed678",
+    "url": "/Club-Hub/static/js/main.79e9023e.chunk.js"
   },
   {
     "revision": "c71224a8f51d20a5c754",
