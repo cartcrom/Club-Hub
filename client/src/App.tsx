@@ -158,7 +158,22 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({
       user: updated_user
     });
+
+    if (updated_user!.joined_clubs.length == 0)
+          history.push("/explore");
+        else
+          history.push("/feed");
+
   };
+
+  skipQuiz = () => {
+    if (this.state.user) {
+      if (this.state.user.joined_clubs.length == 0)
+        history.push("/explore");
+      else
+        history.push("/feed");
+    }
+  }
 
   // render will know everything!
   render() {
@@ -200,7 +215,7 @@ export default class App extends React.Component<{}, AppState> {
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/addEvent/:id" render={(props) => <AddEvent {...props} updateEvents={this.updateEvents}/>}/>
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/clubColleges" component={ClubColleges} />
                     <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/daysOfWeek" component={DaysOfWeek} />
-                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={() => history.push("/feed")} finishQuiz={this.finishQuiz} />} />
+                    <ProtectedRoute {...ProtectedRouteProps} exact={true} path="/interestQuiz" render={(props) => <InterestQuiz {...props} skipQuiz={this.skipQuiz} finishQuiz={this.finishQuiz} />} />
                     <ProtectedRoute {...ProtectedRouteProps} path="/clubRegistration" render={(props) => <ClubRegistrationManager {...props} addClub={this.addClub} />} />
                     {default_route}
                   </Switch>

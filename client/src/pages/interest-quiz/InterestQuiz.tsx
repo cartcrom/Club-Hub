@@ -39,11 +39,10 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
     const user = this.context;
     if (!user || !user.id) {
       this.props.finishQuiz(this.state.interests, this.state.college, this.state.major);
-      this.props.history.push("/feed");
       return;
     }
     API.updateInterests({collegeOf: this.state.college, major: this.state.major, interests: this.state.interests, id: user.id },
-      () => { this.props.finishQuiz(this.state.interests, this.state.college, this.state.major); this.props.history.push("/feed"); },
+      () => { this.props.finishQuiz(this.state.interests, this.state.college, this.state.major);},
       (err: any) => console.log(err));
   };
 
@@ -88,13 +87,8 @@ export default class InterestQuiz extends React.Component<InterestQuizProps, Qui
       });
   };
 
-  skip = () => {
-    this.props.skipQuiz();
-    this.props.history.push("/feed");
-  };
-
   book =
-    [ <InterestQuizIntro nextPage={this.nextPage} skipQuiz={this.skip} />,
+    [ <InterestQuizIntro nextPage={this.nextPage} skipQuiz={this.props.skipQuiz} />,
       <InterestQuizPg1 nextPage={this.nextPage} updateSchoolInfo={this.updateSchoolInfo} />,
       <InterestQuizPg2 nextPage={this.nextPage} addInterest={this.addInterest} />,
       <InterestQuizPg3 nextPage={this.nextPage} addInterest={this.addInterest} />,
