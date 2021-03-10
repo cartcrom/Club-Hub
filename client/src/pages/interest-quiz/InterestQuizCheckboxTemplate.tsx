@@ -27,7 +27,7 @@ const InterestQuizCheckboxTemplate = (props: InterestQuizCheckboxProps) => {
       </IonContent>
       <IonFooter className="transparent">
         <IonItem button lines="none" detail={false} className={(props.isSubmit) ? "submit-button" : "white-outline-button" }onClick={() => props.nextPage()}>
-          <IonLabel>next</IonLabel>
+          <IonLabel>{(props.isSubmit) ? "submit" : "next"}</IonLabel>
         </IonItem>
       </IonFooter>
 
