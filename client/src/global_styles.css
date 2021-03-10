@@ -13,6 +13,10 @@ ion-title {
   font-size: 16pt;
 }
 
+ion-tab-bar {
+  height: 8%;
+}
+
 ion-tab-button {
   font-size: 10px;
   --color: rgb(56, 56, 56);

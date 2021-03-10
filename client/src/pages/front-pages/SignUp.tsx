@@ -95,7 +95,7 @@ const SignUp: React.FC<LoginProps> = (props) => {
           />
           <div className="center">
             <IonButton type="submit" className="chip-button" id="form-button">
-              Log In
+              Sign Up
             </IonButton>
           </div>
 
